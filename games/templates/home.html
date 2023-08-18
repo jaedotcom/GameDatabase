@@ -16,14 +16,28 @@
             </header>
             <div id="container">
               <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget tellus vulputate, porttitor
-                      lectus quis, feugiat leo. Sed lacinia hendrerit est, et mollis nisl laoreet eget. Sed non dolor
-                      vitae nisi placerat aliquam. In rhoncus imperdiet odio, eu molestie leo ultrices sed. Praesent in
-                      ipsum posuere mauris gravida tincidunt. Nulla facilisi. Proin ut quam tellus. Aenean elit mi,
-                      facilisis nec mauris sed, ultricies rutrum felis. Nunc a mi leo. Donec non ornare ipsum. Aenean
-                      porta metus et velit facilisis, vel bibendum neque rutrum. Nunc non tempor nulla, sit amet
-                      finibus lacus.
-                  </p>
+                  <strong>Access Games Instantly</strong>
+                  With nearly 30,000 games from AAA to indie and everything in-between.
+                  Enjoy exclusive deals, automatic game updates, and other great perks.
+              </p>
+            </div>
+            <div id="game">
+               <h1>List of Games</h1>
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Release Date</th>
+                    </tr>
+                    {% for game in games %}
+                    <tr>
+                        <td>{{ game['Name'] }}</td>
+                        <td>{{ game['Genre'] }}</td>
+                        <td>{{ game['Release Date'] }}</td>
+                        <td>{{ game['About the game'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
 </div>

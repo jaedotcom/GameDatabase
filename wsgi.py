@@ -7,12 +7,7 @@ app = create_app()
 
 @app.route('/')
 def show_home():
-    games = []
-    with open('games.csv', encoding="utf8") as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            games.append(row)
-    return render_template('home.html', games=games)
+    return render_template('home.html')
 
 @app.route('/gameDescription')
 def show_gameDescription():

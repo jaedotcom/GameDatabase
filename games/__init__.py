@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template
 
+
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 from games.domainmodel.model import Game
@@ -25,15 +26,12 @@ def create_app():
     # Create the Flask app object.
     app = Flask(__name__)
 
-    @app.route('/')
-    def home():
-        # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('home.html')
+    # Build the application - these steps require an application context.
+    with app.app_context():
+        # Register blueprints.
+        from .home import home
+        app.register_blueprint(home.home_blueprint)
 
-    @app.route('/gameDescription')
-    def gameDescription():
-        some_game = create_some_game()
-        # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('gameDescription.html', game=some_game)
+
 
     return app

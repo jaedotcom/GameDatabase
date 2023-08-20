@@ -3,6 +3,7 @@ from games.domainmodel.model import Game
 
 games_blueprint = Blueprint('games_bp', __name__)
 
+
 def create_some_game():
     some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
     some_game.release_date = "Nov 12, 2007"
@@ -13,6 +14,7 @@ def create_some_game():
     )
     some_game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/7940/header.jpg?t=1646762118"
     return some_game
+
 
 @games_blueprint.route('/gameDescription', methods=['GET'])
 def game_description():

@@ -17,6 +17,6 @@ def create_app():
         app.register_blueprint(home.home_blueprint)
 
         from .games import games
-        app.register_blueprint(games.games_blueprint)
+        app.register_blueprint(games.games_bp)
 
     return app

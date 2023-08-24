@@ -1,22 +1,31 @@
-from flask import Blueprint, render_template
-from games.domainmodel.model import Game
+import os
+import csv
+from flask import Blueprint, render_template, request
 
-games_blueprint = Blueprint('games_bp', __name__)
-
-
-def create_some_game():
-    some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
-    some_game.release_date = "Nov 12, 2007"
-    some_game.price = 9.99
-    some_game.description = (
-        "The new action-thriller from the award-winning team at Infinity Ward, "
-        "the creators of the Call of Duty® series, delivers the most intense and cinematic action experience ever."
-    )
-    some_game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/7940/header.jpg?t=1646762118"
-    return some_game
+games_bp = Blueprint('games_bp', __name__)
 
 
-@games_blueprint.route('/gameDescription', methods=['GET'])
-def game_description():
-    some_game = create_some_game()
-    return render_template('gameDescription.html', some_game=some_game)
+@games_bp.route('/games')
+def games():
+    page = int(request.args.get('page', 1))
+    games_per_page = 10
+    games = get_games_from_csv()
+
+    total_pages = (len(games) + games_per_page - 1) // games_per_page
+
+    start_idx = (page - 1) * games_per_page
+    end_idx = start_idx + games_per_page
+    current_games = games[start_idx:end_idx]
+
+    return render_template('games.html', games=current_games, current_page=page, num_pages=total_pages)
+
+
+def get_games_from_csv():
+    games = []
+    csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'adapters', 'data', 'games.csv')
+
+    with open(csv_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            games.append(row)
+    return games

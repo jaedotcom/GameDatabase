@@ -1,17 +1,16 @@
- <nav>
-          <img src="../static/logoImage/logo.png" alt="Game site logo" width="250" height="250"/>
-          <div class="heading">Game Listing</div>
-          <br>
-          <div class="navbar">
-            <ul>
-              <li><a href=" {{ url_for('home_bp.home') }}">Home</a></li>
-              <li><a href=" {{ url_for('games_bp.game_description') }}">All Games</a></li>
-              <li><a href="#Reviews">Reviews</a></li>
-              <li><a href="#Wishlist">Wishlist</a></li>
-            </ul>
-          </div>
-          <div id="nav-footer">
-            &copy; lste186 | jkim649 | cwan877
-
-          </div>
-        </nav>
+<nav>
+    <img src="../static/logoImage/logo.png" alt="Game site logo" width="250" height="250"/>
+    <div class="heading">Game Listing</div>
+    <br>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home_bp.home') }}">Home</a></li>
+            <li><a href="{{ url_for('games_bp.games') }}">All Games</a></li>
+            <li><a href="#Reviews">Reviews</a></li>
+            <li><a href="#Wishlist">Wishlist</a></li>
+        </ul>
+    </div>
+    <div id="nav-footer">
+        &copy; lste186 | jkim649 | cwan877
+    </div>
+</nav>

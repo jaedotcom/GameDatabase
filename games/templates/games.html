@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block title %}Games{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div id="container">
+        <main id="main">
+            <h2>Available Games</h2>
+            <ul>
+                {% for game in games %}
+                    <li>{{ game['Name'] }} - {{ game['Release date'] }}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagination">
+                {% if current_page > 1 %}
+                    <a class="pagination__item" href="{{ url_for('games_bp.games', page=current_page - 1) }}" rel="prev">Prev</a>
+                {% endif %}
+
+                {% if current_page < 5 %}
+                    {% for i in range(5) %}
+                        <a class="pagination__item {{ 'active' if current_page == i + 1 }}" href="{{ url_for('games_bp.games', page=i + 1) }}">{{ i + 1 }}</a>
+                    {% endfor %}
+                    <span class="pagination__ellipsis">...</span>
+                    <a class="pagination__item" href="{{ url_for('games_bp.games', page=num_pages) }}">{{ num_pages }}</a>
+                {% elif current_page > num_pages - 5 %}
+                    <a class="pagination__item" href="{{ url_for('games_bp.games') }}">1</a>
+                    <span class="pagination__ellipsis">...</span>
+                    {% for i in range(6) %}
+                        <a class="pagination__item {{ 'active' if current_page == num_pages - 5 + i }}" href="{{ url_for('games_bp.games', page=num_pages - 5 + i) }}">{{ num_pages - 5 + i }}</a>
+                    {% endfor %}
+                {% else %}
+                    <a class="pagination__item" href="{{ url_for('games_bp.games') }}">1</a>
+                    <span class="pagination__ellipsis">...</span>
+                    {% for i in range(5) %}
+                        <a class="pagination__item {{ 'active' if current_page == current_page - 2 + i }}" href="{{ url_for('games_bp.games', page=current_page - 2 + i) }}">{{ current_page - 2 + i }}</a>
+                    {% endfor %}
+                    <span class="pagination__ellipsis">...</span>
+                    <a class="pagination__item" href="{{ url_for('games_bp.games', page=num_pages) }}">{{ num_pages }}</a>
+                {% endif %}
+
+                {% if current_page < num_pages %}
+                    <a class="pagination__item" href="{{ url_for('games_bp.games', page=current_page + 1) }}" rel="next">Next</a>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+{% endblock %}

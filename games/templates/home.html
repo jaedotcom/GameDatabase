@@ -1,45 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Description</title>
-    <link
-      rel="stylesheet" href="../static/css/main.css"
-    />
-</head>
-<body>
-    <div> {% include 'navbar.html' %}
-    <div id="content">
-      <header id="header">
-              <h1>CS235 2023: Game Library</h1>
-              <div class="copyright">&copy; lste186 | jkim649 | cwan877 </div>
-            </header>
-            <div id="container">
-              <p>
-                  <strong>Access Games Instantly</strong>
-                  With nearly 30,000 games from AAA to indie and everything in-between.
-                  Enjoy exclusive deals, automatic game updates, and other great perks.
-              </p>
-            </div>
-            <div id="game">
-               <h1>List of Games</h1>
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>Genre</th>
-                        <th>Release Date</th>
-                    </tr>
-                    {% for game in games %}
-                    <tr>
-                        <td>{{ game['Name'] }}</td>
-                        <td>{{ game['Genre'] }}</td>
-                        <td>{{ game['Release Date'] }}</td>
-                        <td>{{ game['About the game'] }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-</div>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div id="container">
+        <p>
+            <strong>Access Games Instantly</strong>
+            With nearly 30,000 games from AAA to indie and everything in-between.
+            Enjoy exclusive deals, automatic game updates, and other great perks.
+        </p>
+    </div>
+{% endblock %}

@@ -2,6 +2,11 @@
 
 from flask import Flask, render_template
 from games.domainmodel.model import Game
+from games.adapters.repository import AbstractRepository
+
+import games.adapters.repository as repo
+from games.adapters.memoryRepository import populate
+from games.adapters.memoryRepository import MemoryRepository
 
 
 def create_app():
@@ -18,5 +23,8 @@ def create_app():
 
         from .games import games
         app.register_blueprint(games.games_bp)
+
+    repo.repo_instance = MemoryRepository()
+    populate(repo.repo_instance)
 
     return app

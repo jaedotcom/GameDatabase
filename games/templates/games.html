@@ -12,8 +12,8 @@
         <main id="main">
             <h2>Available Games</h2>
             <ul>
-                {% for game in games %}
-                    <li>{{ game['Name'] }} - {{ game['Release date'] }}</li>
+                {% for game in some_game %}
+                    <li>{{ game['title'] }} - {{ game['game_release_date'] }}</li>
                 {% endfor %}
             </ul>
 

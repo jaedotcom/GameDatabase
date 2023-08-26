@@ -24,6 +24,9 @@ def create_app():
         from .games import games
         app.register_blueprint(games.games_bp)
 
+        from .descriptions import descriptions
+        app.register_blueprint(descriptions.descriptions_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 

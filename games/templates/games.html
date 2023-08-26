@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
-{% block title %}Games{% endblock %}
+{% block title %}
+    Games
+{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
@@ -11,11 +13,22 @@
     <div id="container">
         <main id="main">
             <h2>Available Games</h2>
-            <ul>
-                {% for game in some_game %}
-                    <li>{{ game['title'] }} - {{ game['game_release_date'] }}</li>
-                {% endfor %}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Release Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in some_game %}
+                        <tr>
+                            <td>{{ game['title'] }}</td>
+                            <td>{{ game['game_release_date'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
             <div class="pagination">
                 {% if current_page > 1 %}

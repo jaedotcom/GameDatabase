@@ -1,7 +1,5 @@
-import os
-import csv
+
 from flask import Blueprint, render_template, request
-import games.games.services
 from games.games import services
 import games.adapters.repository as repo
 
@@ -24,12 +22,4 @@ def games():
     return render_template('games.html', some_game=current_games, current_page=page, num_pages=total_pages)
 
 
-# def get_games_from_csv():
-#     games = []
-#     csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'adapters', 'data', 'games.csv')
-#
-#     with open(csv_path, newline='', encoding='utf-8') as csvfile:
-#         reader = csv.DictReader(csvfile)
-#         for row in reader:
-#             games.append(row)
-#     return games
+

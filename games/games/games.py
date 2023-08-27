@@ -9,7 +9,7 @@ games_bp = Blueprint('games_bp', __name__)
 @games_bp.route('/games')
 def games():
     page = int(request.args.get('page', 1))
-    games_per_page = 10
+    games_per_page = 22
 
     all_games = services.get_games(repo.repo_instance)
 

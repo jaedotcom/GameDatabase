@@ -26,8 +26,6 @@ class MemoryRepository(AbstractRepository):
         return len(self.__games)
 
 
-
-
 def populate(repo: AbstractRepository):
 
     dir_name = os.path.dirname(os.path.abspath(__file__))

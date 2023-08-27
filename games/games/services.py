@@ -1,6 +1,6 @@
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game
-
+from functools import cmp_to_key
 
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
@@ -8,8 +8,9 @@ def get_number_of_games(repo: AbstractRepository):
 
 def get_games(repo: AbstractRepository):
     games = repo.get_games()
+    sorted_games = sorted(games, key=cmp_to_key(compare_games_by_title))
     game_dicts = []
-    for game in games:
+    for game in sorted_games:
         game_dict = {
             'game_id': game.game_id,
             'title': game.title,
@@ -18,3 +19,5 @@ def get_games(repo: AbstractRepository):
         game_dicts.append(game_dict)
     return game_dicts
 
+def compare_games_by_title(game1, game2):
+    return (game1.title > game2.title) - (game1.title < game2.title)

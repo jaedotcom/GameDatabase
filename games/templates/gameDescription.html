@@ -10,8 +10,9 @@
     {% include 'header.html' %}
     <div id="container">
         <main id="content">
-            <p> {{ current['title'] }}</p>
+            <p><strong>{{ current['title'] }}</strong></p>
             <p> {{ current['description'] }}</p>
+            <br>
             <img src=" {{ current['image_url'] }}" alt="Game Header Image">
             <p> {{ current['genres'] }}</p>
 

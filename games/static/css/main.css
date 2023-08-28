@@ -81,7 +81,7 @@ sidebar ul {
 
 
 #content p {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5;
     color: #333;
     margin: 0;
@@ -164,5 +164,4 @@ nav ul li:hover {
 nav ul li a:hover {
     color: white;
 }
-
 

@@ -1,10 +1,12 @@
-<div class="sidebar">
-    <img src="../static/logoImage/genreBarImg1.png" alt="Game Genre image" width="250" height="250"/>
-    <h2>Genres</h2>
+<aside class="sidebar">
+    <!--<img src="../static/logoImage/genreBarImg1.png" alt="Game Genre image" width="250" height="250"/> -->
+    <header>
+        <h2>Genres</h2>
+    </header>
     <ul>
         {% for genre in all_genres %}
         <li>
             <p> {{ genre }} </p></li>
         {% endfor %}
     </ul>
-</div>
+</aside>

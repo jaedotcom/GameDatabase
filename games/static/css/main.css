@@ -165,3 +165,44 @@ nav ul li a:hover {
     color: white;
 }
 
+/*   Games list css   */
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#content th, #content td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#content th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination__item {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: black;
+}
+
+.pagination__item.active {
+    background-color: #55cbeb;
+    color: white;
+}
+
+.pagination__ellipsis {
+    margin: 0 5px;
+}

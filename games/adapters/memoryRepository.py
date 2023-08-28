@@ -14,7 +14,7 @@ class MemoryRepository(AbstractRepository):
 
     def __init__(self):
         self.__games = list()
-
+        self.__genres = list()
 
     def add_game(self, game: Game):
         self.__games.append(game)
@@ -25,6 +25,12 @@ class MemoryRepository(AbstractRepository):
     def get_number_of_games(self):
         return len(self.__games)
 
+    def get_genres(self) -> List[Genre]:
+        return self.__genres
+
+    def add_genre(self, genre: Genre):
+        self.__genres.append(genre)
+
 
 def populate(repo: AbstractRepository):
 
@@ -33,7 +39,12 @@ def populate(repo: AbstractRepository):
     reader = GameFileCSVReader(games_file_name)
     reader.read_csv_file()
     games = reader.dataset_of_games
+    genres = reader.dataset_of_genres
 
     for game in games:
         repo.add_game(game)
+
+    for genre in genres:
+        repo.add_genre(genre)
+
 

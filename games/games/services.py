@@ -2,6 +2,7 @@ from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game
 from functools import cmp_to_key
 
+
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 
@@ -18,6 +19,7 @@ def get_games(repo: AbstractRepository):
             'price': game.price,
             'description': game.description,
             'image_url': game.image_url,
+
         }
         game_dicts.append(game_dict)
     return game_dicts

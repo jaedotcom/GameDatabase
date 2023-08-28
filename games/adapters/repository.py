@@ -2,7 +2,7 @@
 import abc
 from typing import List
 
-from games.domainmodel.model import Game
+from games.domainmodel.model import Game, Genre
 
 repo_instance = None
 
@@ -24,4 +24,12 @@ class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def get_number_of_games(self):
         """Returns no. of games in repository"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_genres(self) -> List[Genre]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_genre(self, genre: Genre):
         raise NotImplementedError

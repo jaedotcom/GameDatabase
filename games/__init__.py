@@ -27,6 +27,9 @@ def create_app():
         from .descriptions import descriptions
         app.register_blueprint(descriptions.descriptions_blueprint)
 
+        from .genreBar import genreBar
+        app.register_blueprint(genreBar.genreBar_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 

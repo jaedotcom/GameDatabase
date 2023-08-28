@@ -2,11 +2,9 @@
     <img src="../static/logoImage/genreBarImg1.png" alt="Game Genre image" width="250" height="250"/>
     <h2>Genres</h2>
     <ul>
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Adventure</a></li>
-        <li><a href="#">RPG</a></li>
-        <li><a href="#">Strategy</a></li>
-        <li><a href="#">Sports</a></li>
-
+        {% for genre in all_genres %}
+        <li>
+            <p> {{ genre }} </p></li>
+        {% endfor %}
     </ul>
 </div>

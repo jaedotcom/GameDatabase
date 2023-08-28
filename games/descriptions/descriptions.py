@@ -9,6 +9,5 @@ descriptions_blueprint = Blueprint(
 def descriptions():
     current_game = request.args.get('current_game')
     current_game_dict = eval(current_game)
-    print(current_game_dict['image_url'])
 
     return render_template('gameDescription.html', current=current_game_dict)

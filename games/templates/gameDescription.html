@@ -14,7 +14,12 @@
             <p> {{ current['description'] }}</p>
             <br>
             <img src=" {{ current['image_url'] }}" alt="Game Header Image">
-            <p> {{ current['genres'] }}</p>
+            <ul>
+                {% for genre in current['genres'] %}
+            <li>
+                <p> {{ genre }} </p></li>
+            {% endfor %}
+    </ul>
 
         </main>
     </div>

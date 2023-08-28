@@ -1,5 +1,5 @@
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game
+from games.domainmodel.model import Game, Genre
 from functools import cmp_to_key
 
 
@@ -12,6 +12,10 @@ def get_games(repo: AbstractRepository):
     sorted_games = sorted(games, key=cmp_to_key(compare_games_by_title))
     game_dicts = []
     for game in sorted_games:
+        game_genres = game.genres
+        genre_names = []
+        for i in game_genres:
+            genre_names.append(i.genre_name)
         game_dict = {
             'game_id': game.game_id,
             'title': game.title,
@@ -19,8 +23,10 @@ def get_games(repo: AbstractRepository):
             'price': game.price,
             'description': game.description,
             'image_url': game.image_url,
-
+            'genres': genre_names
         }
+
+
         game_dicts.append(game_dict)
     return game_dicts
 

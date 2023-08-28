@@ -1,5 +1,3 @@
-import json
-
 from flask import Blueprint, render_template, request
 
 
@@ -10,7 +8,8 @@ descriptions_blueprint = Blueprint(
 @descriptions_blueprint.route('/gameDescription', methods=['GET'])
 def descriptions():
     current_game = request.args.get('current_game')
-    game_dict = request.args.get('game_dict')
-    convert_to_dict = eval(game_dict)
+    current_game_dict = eval(current_game)
+    print(current_game_dict['price'])
 
-    return render_template('gameDescription.html', current=convert_to_dict)
+
+    return render_template('gameDescription.html', current=current_game_dict)

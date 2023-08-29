@@ -3,10 +3,41 @@
 {% block content %}
     {% include 'header.html' %}
     <div id="container">
+
         <div id="content">
+             <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search games...">
+                <select id="selected-genre">
+                    <option value="Gore">Gore</option>
+                    <option value="Early Access">Early Access</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Photo Editing">Photo Editing</option>
+                    <option value="Animation & Modeling">Animation & Modeling</option>
+                    <option value="Game Development">Game Development</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Software Training">Software Training</option>
+                    <option value="Web Publishing">Web Publishing</option>
+                    <option value="Violent">Violent</option>
+                    <option value="Design & Illustration">Design & Illustration</option>
+                    <option value="Audio Production">Audio Production</option>
+                    <option value="Free to Play">Free to Play</option>
+                    <option value="Simulation">Simulation</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Massively Multiplayer">Massively Multiplayer</option>
+                    <option value="Strategy">Strategy</option>
+                    <option value="Video Production">Video Production</option>
+                    <option value="Education">Education</option>
+                    <option value="Indie">Indie</option>
+                    <option value="Action">Action</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Adventure">Adventure</option>
+
+                </select>
+                <button id="search-button" type="button">Search</button>
+            </div>
+            <br>
             <div id="floating-paragraph">
                 <img src="../static/logoImage/HomeImg.png" alt="Home image " style="max-width: 100%;" />
-                <br>
                 <br>
                 <strong>Access Games Instantly</strong>
                 <br>
@@ -14,6 +45,19 @@
                 Enjoy exclusive deals, automatic game updates, and other great perks.
                 <br>
             </div>
+
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const searchButton = document.querySelector("#search-button");
+
+                    searchButton.addEventListener("click", function () {
+                        const searchInput = document.querySelector("#search-input").value;
+                        const selectedGenre = document.querySelector("#selected-genre").value;
+
+                    });
+                });
+            </script>
         </div>
     </div>
 {% endblock %}

@@ -45,4 +45,4 @@ def genre_bar(genre: str):
                 refined_games.append(game)
 
 
-    return render_template('gameGenre.html', games=refined_games, all_genres=all_genres)
+    return render_template('gameGenre.html', games=refined_games, all_genres=all_genres, selected_genre=selected_genre )

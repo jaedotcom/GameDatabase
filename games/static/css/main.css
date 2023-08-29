@@ -72,12 +72,14 @@ sidebar ul {
     background-color: floralwhite;
     border: 1px solid #ddd;
     text-align: center;
-    height: 100vh;
+    height: auto;
     margin-left: 250px;
-    margin-right: 250px;
+    margin-right: 243px;
     display: flex;
     flex-direction: column;
+    padding: 20px;
 }
+
 
 
 

@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+body {
+    background-color: yellow;
+}
+
 h2 {
     font-size: 24px;
     color: #333;

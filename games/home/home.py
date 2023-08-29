@@ -28,7 +28,8 @@ def search_results():
     found_games = []
 
     for game in all_games:
-        if search.lower() in game['title'].lower():
+        if search.lower() == game['title'].lower():
             found_games.append(game)
+            print(found_games)
 
-    return render_template('gameDescription.html', current=found_games, search_query=search, games=found_games)
+    return render_template('gameDescription.html', search_query=search, games=found_games)

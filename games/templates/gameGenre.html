@@ -25,7 +25,7 @@
                 <tbody>
                     {% for game in games %}
                     <tr>
-                        <td>{{ game.title }}</td>
+                        <td><a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">{{ game['title'] }}</a></td>
                         <td>{{ game['game_release_date'] }}</td>
                     </tr>
                     {% endfor %}

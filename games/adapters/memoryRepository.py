@@ -1,11 +1,6 @@
-
 import os.path
-
 from typing import List
-
-
 from games.adapters.repository import AbstractRepository
-
 from games.domainmodel.model import Game, Genre, User, Publisher, Review, Wishlist
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
@@ -15,9 +10,15 @@ class MemoryRepository(AbstractRepository):
     def __init__(self):
         self.__games = list()
         self.__genres = list()
+        self.__games_by_genre = dict()
+
 
     def add_game(self, game: Game):
         self.__games.append(game)
+        for genre_name in game.genres:
+            if genre_name not in self.__games_by_genre:
+                self.__games_by_genre[genre_name] = []
+            self.__games_by_genre[genre_name].append(game)
 
     def get_games(self) -> List[Game]:
         return self.__games
@@ -32,8 +33,7 @@ class MemoryRepository(AbstractRepository):
         self.__genres.append(genre)
 
     def get_games_by_genre(self, genre_name: str) -> List[Game]:
-        genre_filtered_games = [game for game in self.__games if genre_name in game.genres]
-        return genre_filtered_games
+        return self.__games_by_genre.get(genre_name, [])
 
 
 def populate(repo: AbstractRepository):

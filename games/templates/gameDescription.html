@@ -11,8 +11,8 @@
     {% include 'header.html' %}
     <div id="container">
         <main id="content">
-            <h1><strong>{{ current['title'] }}</strong></h1>
-            <p> {{ current['description'] }}</p>
+            <h2><strong>{{ current['title'] }}</strong></h2>
+            <div id="floating-paragraph"> {{ current['description'] }}</div>
             <br>
             <img src=" {{ current['image_url'] }}" alt="Game Header Image">
             <ul>

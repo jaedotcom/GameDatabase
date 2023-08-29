@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request
+
+from games.games.services import get_games
 from games.home import services
 import games.adapters.repository as repo
 
@@ -22,4 +24,11 @@ def search_results():
         search = 'failure'
 
     print(search)
-    return render_template('home.html')
+    all_games = get_games(repo.repo_instance)
+    found_games = []
+
+    for game in all_games:
+        if search.lower() in game['title'].lower():
+            found_games.append(game)
+
+    return render_template('gameDescription.html', current=found_games, search_query=search, games=found_games)

@@ -1,5 +1,8 @@
-
 from flask import Blueprint, render_template, request
+from games.games import services
+from games.genreBar.services import get_games_by_genre
+from games.home import services as sv
+import games.adapters.repository as repo
 
 
 search_bp = Blueprint('search_bp', __name__)
@@ -12,6 +15,11 @@ def search_results(search):
         search = request.form['search']
 
     print(search)
-    return render_template('home.html')
+
+    all_games = services.get_games(repo.repo_instance)
+    for game in all_games:
+        if game.get('game_id') == game(search).id:
+            current_games = game
+    return render_template('gameDescription.html',some_game=current_games)
 
 

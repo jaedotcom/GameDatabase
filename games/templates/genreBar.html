@@ -5,9 +5,10 @@
     <ul>
         {% for genre in all_genres %}
         <li>
-            <a href="{{ url_for('genreBar_bp.genreBar', genre=genre) }}">{{ genre }}</a>
+            <a href="{{ url_for('genreBar_bp.genre_bar', genre=genre) }}">{{ genre }}</a>
         </li>
         {% endfor %}
     </ul>
 </aside>
+
 

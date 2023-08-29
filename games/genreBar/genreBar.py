@@ -34,19 +34,15 @@ def genre_bar(genre: str):
     all_genres = services.get_genres(repo.repo_instance)
     #selected_genre = request.args.get('genre')
     selected_genre = genre
-    print(selected_genre)
 
     genre_games = get_games_by_genre(repo.repo_instance, selected_genre)
-    print(genre_games)
 
     all_games = game_services.get_games(repo.repo_instance)
     refined_games = []
     for id in genre_games:
-        print(id)
         for game in all_games:
             if game.get('game_id') == id:
                 refined_games.append(game)
 
-    print(refined_games)
 
     return render_template('gameGenre.html', games=refined_games, all_genres=all_genres)

@@ -7,6 +7,7 @@
              <div class="search-container">
                 <input type="text" id="search-input" placeholder="Search games...">
                 <select id="selected-genre">
+                    <option value="" selected disabled>Select a genre...</option>
                     {% for genre in all_genres %}
                         <option value="{{ genre }}">{{ genre }}</option>
                     {% endfor %}

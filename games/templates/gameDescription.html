@@ -3,7 +3,7 @@
 {% block title %}Game Description{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 
@@ -12,16 +12,15 @@
     <div id="container">
         <main id="content">
             <h2><strong>{{ current['title'] }}</strong></h2>
-            <div id="floating-paragraph"> {{ current['description'] }}</div>
+            <div id="floating-paragraph">{{ current['description'] }}</div>
             <br>
-            <img src=" {{ current['image_url'] }}" alt="Game Header Image">
+            <img src="{{ current['image_url'] }}" alt="Game Header Image">
             <ul>
                 {% for genre in current['genres'] %}
-            <li>
-                <p> {{ genre }} </p></li>
-            {% endfor %}
-    </ul>
-
+                    <li><p>{{ genre }}</p></li>
+                {% endfor %}
+            </ul>
         </main>
     </div>
 {% endblock %}
+

@@ -3,7 +3,6 @@
 {% block content %}
     {% include 'header.html' %}
     <div id="container">
-
         <div id="content">
              <div class="search-container">
                 <input type="text" id="search-input" placeholder="Search games...">
@@ -24,19 +23,7 @@
                 Enjoy exclusive deals, automatic game updates, and other great perks.
                 <br>
             </div>
-
-
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const searchButton = document.querySelector("#search-button");
-
-                    searchButton.addEventListener("click", function () {
-                        const searchInput = document.querySelector("#search-input").value;
-                        const selectedGenre = document.querySelector("#selected-genre").value;
-
-                    });
-                });
-            </script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         </div>
     </div>
 {% endblock %}

@@ -4,6 +4,7 @@ from .services import get_games_by_genre
 import games.adapters.repository as repo
 from .. import MemoryRepository
 
+
 genreBar_blueprint = Blueprint(
     'genreBar_bp', __name__)
 
@@ -11,11 +12,11 @@ repo = MemoryRepository()
 
 @genreBar_blueprint.route('/genreBar', methods=['GET'])
 def genreBar():
-    all_genres = services.get_genres(repo.repo_instance)
+    all_genres = services.get_genres(repo)
 
     selected_genre = request.args.get('genre')
     if selected_genre:
-        genre_games = get_games_by_genre(repo.repo_instance, selected_genre)
+        genre_games = get_games_by_genre(repo, selected_genre)
     else:
         genre_games = []
 
@@ -23,5 +24,6 @@ def genreBar():
 
 @genreBar_blueprint.route('/genreBar/<genre>')
 def genre_bar(genre):
-    genre_filtered_games = repo.get_games_by_genre(genre)
-    return render_template('gameGenre.html', games=genre_filtered_games)
+    all_genres = services.get_genres(repo)
+    genre_filtered_games = get_games_by_genre(repo, genre)
+    return render_template('gameGenre.html', games=genre_filtered_games, all_genres=all_genres)

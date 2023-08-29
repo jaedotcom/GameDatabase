@@ -30,6 +30,9 @@ def create_app():
         from .genreBar import genreBar
         app.register_blueprint(genreBar.genreBar_blueprint)
 
+        from .searchresults import search
+        app.register_blueprint(search.search_bp)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 

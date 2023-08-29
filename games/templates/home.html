@@ -9,30 +9,18 @@
     {% include 'header.html' %}
     <div id="container">
         <div id="content">
-
-            <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-              <div id="myDropdown" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                <a href="#about">About</a>
-                <a href="#base">Base</a>
-                <a href="#blog">Blog</a>
-                <a href="#contact">Contact</a>
-                <a href="#custom">Custom</a>
-                <a href="#support">Support</a>
-                <a href="#tools">Tools</a>
-              </div>
-            </div>
-
              <div class="search-container">
+                 <form action="{{ url_for('search_bp.search_results') }}">
                 <input type="text" id="search-input" placeholder="Search games...">
-                <select id="selected-genre">
+<!--                <select id="selected-genre">
                     <option value="" selected disabled>Select a genre...</option>
                     {% for genre in all_genres %}
                         <option value="{{ genre }}">{{ genre }}</option>
                     {% endfor %}
-                </select>
-                <button id="search-button" type="button">Search</button>
+                </select>-->
+                <input type="submit" id="search-button"  >
+                 </form>
+
             </div>
             <br>
             <div id="floating-paragraph">

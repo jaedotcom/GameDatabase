@@ -2,10 +2,21 @@
   padding: 20px;
   background: #55cbeb;
   border-bottom: 2px solid #110a1c;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto Light", Arial, sans-serif;
   font-size: 25px;
   font-weight: bold;
   text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    font-family: 'Roboto', Arial, sans-serif;
+
+}
+#floating-paragraph {
+    font-family: 'Roboto', Arial, sans-serif;
 }
 
 .copyright {
@@ -20,7 +31,7 @@
     right: 0;
 
     background-color: #0f1522;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", Arial, sans-serif;
     color: white;
 }
 
@@ -29,7 +40,7 @@
     font-weight: 700;
     color: white;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 sidebar ul {
     list-style: none;
@@ -104,12 +115,12 @@ sidebar ul {
   font-size: small;
   text-align: center;
   word-wrap: break-word;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto Light", Arial, sans-serif;
 }
 
 
 .description p i {
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", sans-serif;
     font-weight: bold;
     font-size: 18px;
     text-transform: uppercase;
@@ -127,7 +138,7 @@ nav {
     float: left;
     padding: 30px 0px;
     background-color: #0f1522;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 
 
@@ -136,7 +147,7 @@ nav .heading {
     font-weight: 700;
     color: white;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 
 nav ul {
@@ -179,11 +190,13 @@ nav ul li a:hover {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 
 #content th {
-    background-color: #f2f2f2;
+    background-color: #55cbeb;
     font-weight: bold;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 
 .pagination {
@@ -191,6 +204,7 @@ nav ul li a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .pagination__item {
@@ -199,6 +213,7 @@ nav ul li a:hover {
     border: 1px solid #ddd;
     text-decoration: none;
     color: black;
+    font-family: "Roboto Light", Arial, sans-serif;
 }
 
 .pagination__item.active {

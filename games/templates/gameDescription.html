@@ -3,6 +3,7 @@
 {% block title %}Game Description{% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 
@@ -10,7 +11,7 @@
     {% include 'header.html' %}
     <div id="container">
         <main id="content">
-            <p><strong>{{ current['title'] }}</strong></p>
+            <h1><strong>{{ current['title'] }}</strong></h1>
             <p> {{ current['description'] }}</p>
             <br>
             <img src=" {{ current['image_url'] }}" alt="Game Header Image">

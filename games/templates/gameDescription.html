@@ -12,15 +12,17 @@
     <div id="container">
         <main id="content">
             <h2><strong>{{ current['title'] }}</strong></h2>
+            <h3><strong>Price:</strong> <strong>${{ current['price'] }}</strong></h3>
+
+            <div>
+                {% for genre in current['genres'] %}
+                    <p>{{ genre }}</p>
+                {% endfor %}
+            </div>
+            <br>
             <div id="floating-paragraph">{{ current['description'] }}</div>
             <br>
             <img src="{{ current['image_url'] }}" alt="Game Header Image">
-            <ul>
-                {% for genre in current['genres'] %}
-                    <li><p>{{ genre }}</p></li>
-                {% endfor %}
-            </ul>
         </main>
     </div>
 {% endblock %}
-

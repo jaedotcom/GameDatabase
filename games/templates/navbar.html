@@ -5,17 +5,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
     <br>
 
-        <!-- Search bar -->
-        <div class="search-container">
-            <input type="text" placeholder="Search by publisher...">
-            <button type="submit">Search</button>
-        </div>
+    <!-- Search bar -->
+    <div class="navbar-search-container">
+        <input type="text" placeholder="Search by publisher...">
+    </div>
 
     <div class="navbar">
         <ul>
             <li><a href="{{ url_for('home_bp.home') }}">Home</a></li>
             <li><a href="{{ url_for('games_bp.games') }}">All Games</a></li>
-
         </ul>
     </div>
     <div id="nav-footer">

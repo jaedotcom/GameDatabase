@@ -1,5 +1,7 @@
 from games.adapters.repository import AbstractRepository
 from functools import cmp_to_key
+from games.home import services as home_services
+from games.games import services as game_services
 
 def get_genres(repo: AbstractRepository):
     genres = repo.get_genres()
@@ -12,17 +14,34 @@ def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 
 
+# def get_games_by_genre(repo: AbstractRepository, genre_name):
+#     games = repo.get_games_by_genre(genre_name)
+#     sorted_games = sorted(games, key=cmp_to_key(compare_games_by_title))
+#     game_dicts = []
+#     for game in sorted_games:
+#         game_dict = {
+#             'title': game.title,
+#             'release_year': game.release_date
+#         }
+#         game_dicts.append(game_dict)
+#     return game_dicts
+
 def get_games_by_genre(repo: AbstractRepository, genre_name):
-    games = repo.get_games_by_genre(genre_name)
-    sorted_games = sorted(games, key=cmp_to_key(compare_games_by_title))
-    game_dicts = []
-    for game in sorted_games:
-        game_dict = {
-            'title': game.title,
-            'release_year': game.release_date
-        }
-        game_dicts.append(game_dict)
-    return game_dicts
+    games = game_services.get_games(repo)
+
+    genre_hit = []
+    for game in games:
+        game_genres = game.get('genres')
+        genre_names = []
+        for i in game_genres:
+            if i == genre_name:
+                genre_hit.append(game.get('game_id'))
+    return genre_hit
+
+def get_genre_lists():
+    genre_list = home_services.get_genres()
+
+
 
 def compare_games_by_title(game1, game2):
     return (game1.title > game2.title) - (game1.title < game2.title)

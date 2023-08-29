@@ -3,9 +3,9 @@
         <h2>Genres</h2>
     </header>
     <ul>
-        {% for genre in all_genres %}
+        {% for x in all_genres %}
         <li>
-            <a href="{{ url_for('genreBar_bp.genre_bar', genre=genre) }}">{{ genre }}</a>
+            <a href="{{ url_for('genreBar_bp.genre_bar', genre=x) }}">{{ x }}</a>
         </li>
         {% endfor %}
     </ul>

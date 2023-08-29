@@ -1,12 +1,13 @@
 <aside class="sidebar">
-    <!--<img src="../static/logoImage/genreBarImg1.png" alt="Game Genre image" width="250" height="250"/> -->
     <header>
         <h2>Genres</h2>
     </header>
     <ul>
         {% for genre in all_genres %}
         <li>
-            <p> {{ genre }} </p></li>
+            <a href="{{ url_for('genreBar_bp.genreBar', genre=genre) }}">{{ genre }}</a>
+        </li>
         {% endfor %}
     </ul>
 </aside>
+

@@ -31,6 +31,10 @@ class MemoryRepository(AbstractRepository):
     def add_genre(self, genre: Genre):
         self.__genres.append(genre)
 
+    def get_games_by_genre(self, genre_name: str) -> List[Game]:
+        genre_filtered_games = [game for game in self.__games if genre_name in game.genres]
+        return genre_filtered_games
+
 
 def populate(repo: AbstractRepository):
 

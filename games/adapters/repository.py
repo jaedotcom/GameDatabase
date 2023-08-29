@@ -33,3 +33,7 @@ class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def add_genre(self, genre: Genre):
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_games_by_genre(self, genre_name: str) -> List[Game]:
+        raise NotImplementedError

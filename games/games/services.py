@@ -1,5 +1,4 @@
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre
 from functools import cmp_to_key
 
 

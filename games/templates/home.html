@@ -10,8 +10,9 @@
     <div id="container">
         <div id="content">
              <div class="search-container">
-                 <form action="{{ url_for('search_bp.search_results') }}">
-                <input type="text" id="search-input" placeholder="Search games...">
+                 <form method="POST" action="/search">
+
+                <input type="text" id="search-input" name="search" placeholder="Search games..." value="{{ request.form['search'] }}">
 <!--                <select id="selected-genre">
                     <option value="" selected disabled>Select a genre...</option>
                     {% for genre in all_genres %}

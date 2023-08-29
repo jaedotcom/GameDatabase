@@ -11,5 +11,5 @@ def descriptions():
     current_game = request.args.get('current_game')
     current_game_dict = eval(current_game)
     all_genres = sv.get_genres(repo.repo_instance)
-    
+
     return render_template('gameDescription.html', current=current_game_dict, all_genres=all_genres)

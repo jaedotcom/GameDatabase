@@ -25,8 +25,6 @@ def get_games(repo: AbstractRepository):
             'image_url': game.image_url,
             'genres': genre_names
         }
-
-
         game_dicts.append(game_dict)
     return game_dicts
 

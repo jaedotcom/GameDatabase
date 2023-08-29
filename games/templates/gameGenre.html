@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Games by Genre</title>
-</head>
-<body>
-    <h1>Games by Genre</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Release Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in games %}
-            <tr>
-                <td>{{ game.title }}</td>
-                <td>{{ game.release_date }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}
+    Games by Genre
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+{% endblock %}
+
+
+{% block content %}
+    {% include 'header.html' %}
+    <div id="container">
+        <main id="content">
+        <img src="../static/logoImage/banner.png" alt="Games Banner" style="max-width: 100%;"/>
+        <h1>Games by Genre</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Release Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr>
+                        <td>{{ game.title }}</td>
+                        <td>{{ game.release_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </div>
+{% endblock %}

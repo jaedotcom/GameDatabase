@@ -11,7 +11,6 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/', methods=['GET', 'POST'])
 def home():
     all_genres = services.get_genres(repo.repo_instance)
-    print('form submitted to here')
     return render_template('home.html', all_genres=all_genres)
 
 

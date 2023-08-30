@@ -160,19 +160,19 @@ class TestService:
         assert str(game.release_date) == 'Oct 21, 2008'
         assert expected_date == datetime(2008, 10, 21, 0, 0)
 
-def test_genre_init():
-    genre1 = Genre("Adventure")
-    assert repr(genre1) == "<Genre Adventure>"
-    assert genre1.genre_name == "Adventure"
+    def test_genre_init(repo):
+        genre1 = Genre("Adventure")
+        assert repr(genre1) == "<Genre Adventure>"
+        assert genre1.genre_name == "Adventure"
 
-    genre2 = Genre("")
-    assert genre2.genre_name is None
+        genre2 = Genre("")
+        assert genre2.genre_name is None
 
-    genre3 = Genre(123)
-    assert genre3.genre_name is None
+        genre3 = Genre(123)
+        assert genre3.genre_name is None
 
-    genre4 = Genre("  Role-Playing  ")
-    assert genre4.genre_name == "Role-Playing"
+        genre4 = Genre("  Role-Playing  ")
+        assert genre4.genre_name == "Role-Playing"
 
-    with pytest.raises(AttributeError):
-        genre4.genre_name = "RPG"
+        with pytest.raises(AttributeError):
+            genre4.genre_name = "RPG"

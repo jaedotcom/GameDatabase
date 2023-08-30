@@ -27,23 +27,27 @@ def search_results():
 
     print(search)
     all_games = get_games(repo.repo_instance)
-    print(all_games)
-    all_genres = set()
-    game_titles = set()
+
+    all_genres = []
+    game_titles = []
 
     for game in all_games:
         for g in game['genres']:
-            all_genres.update(g.lower())
+            if g not in all_genres:
+                all_genres.append(g.lower())
 
     for game in all_games:
-        game_titles.update(game['title'].lower())
+        if game['title'] not in game_titles:
+            game_titles.append(game['title'].lower())
 
     found_games = []
 
     for game in all_games:
-        if (not search or search.lower() in game_titles) and \
-                (not genre_filter or genre_filter.lower() in game['genres']):
+        if (search.lower() in game_titles) and (genre_filter.lower() in all_genres):
             found_games.append(game)
-            print(found_games)
-
+    print("Search is " + search.lower())
+    print("Genre_filter is " + genre_filter.lower())
+    print(found_games)
+    print(all_genres)
+    print(game_titles)
     return render_template('gameDescription.html', search_query=search, games=found_games, all_genres=all_genres)

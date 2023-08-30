@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Game Description{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div id="container">
+        <main id="content">
+            {% if games %}
+                {% for current in games %}
+                    <h2><strong>{{ current['title'] }}</strong></h2>
+                    <h3><strong>Price:</strong> <strong>${{ current['price'] }}</strong></h3>
+                    <div>
+                        {% for genre in current['genres'] %}
+                            <p>{{ genre }}</p>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <div id="floating-paragraph">{{ current['description'] }}</div>
+                    <br>
+                    <img src="{{ current['image_url'] }}" alt="Game Header Image">
+                {% endfor %}
+            {% else %}
+                <p>No games found for your search.</p>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}

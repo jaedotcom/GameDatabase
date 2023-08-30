@@ -48,4 +48,4 @@ def search_results():
                 if genre_filter in list_of_genres:
                     found_games.append(game)
 
-    return render_template('gameDescription.html', search_query=search, games=found_games, all_genres=all_genres)
+    return render_template('gameSearbarResult.html', search_query=search, games=found_games, all_genres=all_genres)

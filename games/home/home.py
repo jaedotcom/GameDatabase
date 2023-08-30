@@ -18,17 +18,32 @@ def home():
 
 @home_blueprint.route('/search', methods=('GET', 'POST'))
 def search_results():
+    global genre_filter
     if request.method == 'POST':
-        search = request.form['search']
+        search = request.form['search'].strip()
+        genre_filter = request.form['genre']
     else:
         search = 'failure'
 
     print(search)
     all_games = get_games(repo.repo_instance)
+    print(all_games)
+    all_genres = set()
+    game_titles = set()
+
+    for game in all_games:
+        for g in game['genres']:
+            all_genres.update(g.lower())
+
+    for game in all_games:
+        game_titles.update(game['title'].lower())
+
     found_games = []
 
     for game in all_games:
-        if search.lower() in game['title'].lower():
+        if (not search or search.lower() in game_titles) and \
+                (not genre_filter or genre_filter.lower() in game['genres']):
             found_games.append(game)
+            print(found_games)
 
-    return render_template('gameDescription.html', current=found_games, search_query=search, games=found_games)
+    return render_template('gameDescription.html', search_query=search, games=found_games, all_genres=all_genres)

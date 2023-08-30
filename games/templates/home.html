@@ -9,19 +9,17 @@
     {% include 'header.html' %}
     <div id="container">
         <div id="content">
-             <div class="search-container">
-                 <form method="POST" action="/search">
-
-                <input type="text" id="search-input" name="search" placeholder="Search games..." value="{{ request.form['search'] }}">
-<!--                <select id="selected-genre">
-                    <option value="" selected disabled>Select a genre...</option>
-                    {% for genre in all_genres %}
-                        <option value="{{ genre }}">{{ genre }}</option>
-                    {% endfor %}
-                </select>-->
-                <input type="submit" id="search-button"  >
-                 </form>
-
+            <div class="search-container">
+                <form method="POST" action="{{ url_for('home_bp.search_results') }}">
+                    <input type="text" id="search-input" name="search" placeholder="Search games..." value="{{ request.form['search'] }}">
+                       <select id="selected-genre" name="genre">
+                        <option value="" selected disabled>Select a genre...</option>
+                        {% for genre in all_genres %}
+                            <option value="{{ genre }}">{{ genre }}</option>
+                        {% endfor %}
+                         </select>
+                    <input type="submit" id="search-button" value="Search">
+                </form>
             </div>
             <br>
             <div id="floating-paragraph">
@@ -33,9 +31,9 @@
                 Enjoy exclusive deals, automatic game updates, and other great perks.
                 <br>
                 <br>
-                <img src="../static/logoImage/HomeImg.png" alt="Home image " style="max-width: 100%;" />
+                <img src="{{ url_for('static', filename='logoImage/HomeImg.png') }}" alt="Home image" style="max-width: 100%;">
             </div>
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         </div>
     </div>
 {% endblock %}

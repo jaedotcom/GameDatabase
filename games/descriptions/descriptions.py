@@ -9,6 +9,7 @@ descriptions_blueprint = Blueprint(
 
 @descriptions_blueprint.route('/gameDescription', methods=['GET'])
 def descriptions():
+    global current_game_dict
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')
     try:
@@ -21,7 +22,7 @@ def descriptions():
 
     all_genres = sv.get_genres(repo.repo_instance)
 
-    return render_template('gameDescription.html', current=current_game_dict, all_genres=all_genres)
+    return render_template('gameDescription.html', games=current_game_dict, all_genres=all_genres)
 
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
@@ -38,4 +39,4 @@ def search_game_description(game_id):
         pass
 
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('gameDescription.html', current=current_game_dict, all_genres=all_genres)
+    return render_template('gameDescription.html', games=current_game_dict, all_genres=all_genres)

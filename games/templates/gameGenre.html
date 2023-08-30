@@ -8,13 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 {% endblock %}
 
-
 {% block content %}
     {% include 'header.html' %}
     <div id="container">
         <main id="content">
-        <img src="../static/logoImage/genre_bar_banner.png" alt="Genre Banner" style="max-width: 100%;"/>
-        <h2>Games by {{ selected_genre }}</h2>
+            <img src="../static/logoImage/genre_bar_banner.png" alt="Genre Banner" style="max-width: 100%;" />
+            <h2>Games by {{ selected_genre }}</h2>
             <table>
                 <thead>
                     <tr>
@@ -24,13 +23,62 @@
                 </thead>
                 <tbody>
                     {% for game in games %}
-                    <tr>
-                        <td><a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">{{ game['title'] }}</a></td>
-                        <td>{{ game['game_release_date'] }}</td>
-                    </tr>
+                        <tr>
+                            <td><a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">{{ game['title'] }}</a></td>
+                            <td>{{ game['game_release_date'] }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
+<!-- Pagination links -->
+<div class="pagination">
+    {% if current_page > 1 %}
+        <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=current_page - 1) }}" rel="prev">Prev</a>
+    {% endif %}
+
+    {% if num_pages > 0 %}
+        {% if current_page < 5 %}
+            {% for i in range(5) %}
+                {% if i < num_pages %}
+                    <a class="pagination__item {{ 'active' if current_page == i + 1 }}" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=i + 1) }}">{{ i + 1 }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if num_pages > 5 %}
+                <span class="pagination__ellipsis">...</span>
+                <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=num_pages) }}">{{ num_pages }}</a>
+            {% endif %}
+        {% elif current_page > num_pages - 5 %}
+            <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=1) }}">1</a>
+            {% if num_pages > 6 %}
+                <span class="pagination__ellipsis">...</span>
+            {% endif %}
+            {% for i in range(num_pages - 6, num_pages) %}
+                <a class="pagination__item {{ 'active' if current_page == i + 1 }}" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=i + 1) }}">{{ i + 1 }}</a>
+            {% endfor %}
+        {% else %}
+            <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=1) }}">1</a>
+            {% if num_pages > 6 %}
+                <span class="pagination__ellipsis">...</span>
+            {% endif %}
+            {% for i in range(current_page - 3, current_page + 2) %}
+                {% if i >= 0 and i < num_pages %}
+                    <a class="pagination__item {{ 'active' if current_page == i + 1 }}" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=i + 1) }}">{{ i + 1 }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if num_pages > current_page + 2 %}
+                <span class="pagination__ellipsis">...</span>
+                <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=num_pages) }}">{{ num_pages }}</a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% if current_page < num_pages %}
+        <a class="pagination__item" href="{{ url_for('genreBar_bp.genre_bar', genre=selected_genre, page=current_page + 1) }}" rel="next">Next</a>
+    {% endif %}
+</div>
+
+
         </main>
     </div>
 {% endblock %}

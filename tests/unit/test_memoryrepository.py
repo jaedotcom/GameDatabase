@@ -57,9 +57,7 @@ class TestRepository:
         return MemoryRepository()
 
 
-
 class TestRepository:
-
 
     @pytest.fixture
     def repo(self):
@@ -120,7 +118,6 @@ class TestRepository:
         repo.add_genre(new_genre)
         updated_num_genres = len(repo.get_genres())
         assert updated_num_genres == initial_num_genres + 1
-
 
     def test_get_games_by_genre_name(self, repo):
         sample_game_data1 = Game(123411, 'I hate writing testings 8')

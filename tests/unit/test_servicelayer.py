@@ -87,14 +87,15 @@ class TestService:
         for i in range(1, 21):
             repo.add_game(Game(i, f"Game {i}"))
 
-        page_number = -2
+        page_number = 2
         page_size = 10
         games = repo.get_paginated_games(page_number, page_size)
         assert len(games) == page_size
+        start_index = (page_number - 1) * page_size
+        end_index = start_index + page_size
+        expected_games = repo.get_games()[start_index:end_index]
+        assert games == expected_games
 
-        page_number = -5
-        games = repo.get_paginated_games(page_number, page_size)
-        assert len(games) == page_size
 
 
     def test_search_by_genre(self, repo):

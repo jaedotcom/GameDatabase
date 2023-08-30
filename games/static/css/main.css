@@ -12,13 +12,26 @@ body {
     background-color: snow;
 }
 
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h3 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
 h2 {
     font-size: 24px;
     color: #333;
     font-weight: bold;
     font-family: 'Roboto', Arial, sans-serif;
-
 }
+
 #floating-paragraph {
     font-family: 'Roboto', Arial, sans-serif;
 }

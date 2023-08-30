@@ -7,6 +7,7 @@ from games.adapters.memoryRepository import MemoryRepository
 from games.adapters.repository import AbstractRepository
 
 class MemoryRepository(AbstractRepository):
+
     def __init__(self):
         self.__games = list()
         self.__genres = list()
@@ -35,20 +36,19 @@ class MemoryRepository(AbstractRepository):
         return self.__games_by_genre.get(genre_name, [])
 
 
-def populate(repo: AbstractRepository):
-    dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(dir_name, "data/games.csv")
-    reader = GameFileCSVReader(games_file_name)
-    reader.read_csv_file()
-    games = reader.dataset_of_games
-    genres = reader.dataset_of_genres
+    def populate(repo: AbstractRepository):
+        dir_name = os.path.dirname(os.path.abspath(__file__))
+        games_file_name = os.path.join(dir_name, "data/games.csv")
+        reader = GameFileCSVReader(games_file_name)
+        reader.read_csv_file()
+        games = reader.dataset_of_games
+        genres = reader.dataset_of_genres
 
-    for game in games:
-        repo.add_game(game)
+        for game in games:
+            repo.add_game(game)
 
-    for genre in genres:
-        repo.add_genre(genre)
-
+        for genre in genres:
+            repo.add_genre(genre)
 
 class TestRepository:
 
@@ -69,7 +69,7 @@ class TestRepository:
         retrieved_game = repo.get_games()
         assert retrieved_game is not None
         assert retrieved_game[0].game_id == 12347
-        assert retrieved_game[0].title == 'I hate writing testgs 3'
+        assert retrieved_game[0].title == 'I hate writing tests 3'
 
 
     def test_retrieve_game_object(self, repo):

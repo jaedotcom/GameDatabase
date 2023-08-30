@@ -33,3 +33,13 @@ def compare_games_by_title(game1, game2):
 
 def compare_games_by_release_date(game1, game2):
     return (game1.release_date > game2.release_date) - (game1.release_date < game2.release_date)
+
+def get_games_by_search_key(search_key: str, repo):
+    games = repo.get_games()
+    if not search_key or not isinstance(search_key, str):
+        raise ValueError("Invalid search key")
+    matching_games = []
+    for game in games:
+        if search_key.lower() in game.title.lower():
+            matching_games.append(game)
+    return matching_games

@@ -40,3 +40,5 @@ def genre_bar(genre: str):
         current_page=page,
         num_pages=num_pages,
     )
+
+

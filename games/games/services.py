@@ -27,19 +27,6 @@ def get_games(repo: AbstractRepository):
         game_dicts.append(game_dict)
     return game_dicts
 
-#def get_games_sorted_by_release_date(repo: AbstractRepository):
- #   games = repo.get_games()
-  #  sorted_games = sorted(games, key=cmp_to_key(compare_games_by_release_date))
-
-   # game_dicts = []
-    #for game in sorted_games:
-     #   game_dict = {
-      #      'game_id': game.game_id,
-       #     'title': game.title,
-        #    'game_release_date': game.release_date,
-        #}
-        #game_dicts.append(game_dict)
-    #return game_dicts
 
 def compare_games_by_title(game1, game2):
     return (game1.title > game2.title) - (game1.title < game2.title)

@@ -64,16 +64,16 @@ class TestRepository:
         return MemoryRepository()
 
     def test_add_game_object(self, repo):
-        new_game = Game(12347, 'I hate writing testings 3')
+        new_game = Game(12347, 'I hate writing tests 3')
         repo.add_game(new_game)
         retrieved_game = repo.get_games()
         assert retrieved_game is not None
         assert retrieved_game[0].game_id == 12347
-        assert retrieved_game[0].title == 'I hate writing testings 3'
+        assert retrieved_game[0].title == 'I hate writing testgs 3'
 
 
     def test_retrieve_game_object(self, repo):
-        new_game = Game(12349, 'I hate writing testings 4')
+        new_game = Game(12349, 'I hate writing tests 4')
         new_game.add_genre(Genre('Action'))
         repo.add_game(new_game)
         retrieved_game = repo.get_games_by_genre("Action")
@@ -81,22 +81,22 @@ class TestRepository:
         assert len(retrieved_game) == 0
 
     def test_retrieve_correct_number_of_game_objects(self, repo):
-        sample_game_data = [Game(123410, 'I hate writing testings 6'), Game(12346, 'I hate writing testings 2')]
-        repo.add_game(Game(123410, 'I hate writing testings 6'))
-        repo.add_game(Game(12346, 'I hate writing testings 2'))
+        sample_game_data = [Game(123410, 'I hate writing tests 6'), Game(12346, 'I hate writing tests 2')]
+        repo.add_game(Game(123410, 'I hate writing tests 6'))
+        repo.add_game(Game(12346, 'I hate writing tests 2'))
         num_games = repo.get_number_of_games()
         assert num_games == len(sample_game_data)
 
     def test_number_of_unique_genres(self, repo):
-        sample_game_data1 = Game(123411, 'I hate writing testings 8')
-        sample_game_data2 = Game(123499, 'I hate writing testings 12')
+        sample_game_data1 = Game(123411, 'I hate writing tests 8')
+        sample_game_data2 = Game(123499, 'I hate writing tests 12')
         sample_game_data1.add_genre(Genre('Horror'))
         sample_game_data1.add_genre(Genre('R18'))
         sample_game_data1.add_genre(Genre('Love Story'))
         sample_game_data2.add_genre(Genre('Adventure'))
         sample_game_data2.add_genre(Genre('R18'))
-        repo.add_game(Game(123411, 'I hate writing testings 8'))
-        repo.add_game(Game(123499, 'I hate writing testings 12'))
+        repo.add_game(Game(123411, 'I hate writing tests 8'))
+        repo.add_game(Game(123499, 'I hate writing tests 12'))
         all_game_number = repo.get_number_of_games()
         assert all_game_number == 2
         all_game = repo.get_games()
@@ -120,9 +120,9 @@ class TestRepository:
         assert updated_num_genres == initial_num_genres + 1
 
     def test_get_games_by_genre_name(self, repo):
-        sample_game_data1 = Game(123411, 'I hate writing testings 8')
+        sample_game_data1 = Game(123411, 'I hate writing tests 8')
         sample_game_data1.add_genre(Genre('Adventure'))
-        repo.add_game(Game(123411, 'I hate writing testings 8'))
+        repo.add_game(Game(123411, 'I hate writing tests 8'))
         all_game = repo.get_games()
         for game in all_game:
             game.add_genre(Genre('Adventure'))

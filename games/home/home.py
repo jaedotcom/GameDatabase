@@ -21,20 +21,19 @@ def search_results():
     global genre_filter
     if request.method == 'POST':
         search = request.form['search'].strip()
-        genre_filter = request.form['genre']
+        genre_filter = request.form['genre'].strip()
     else:
         search = 'failure'
 
-    print(search)
     all_games = get_games(repo.repo_instance)
-
-    all_genres = []
     game_titles = []
+    all_genres = set()
 
     for game in all_games:
         for g in game['genres']:
-            if g not in all_genres:
-                all_genres.append(g.lower())
+            all_genres.add(g.lower())
+
+    all_genres = list(set(all_genres))
 
     for game in all_games:
         if game['title'] not in game_titles:
@@ -43,11 +42,10 @@ def search_results():
     found_games = []
 
     for game in all_games:
+        list_of_genres = game['genres']
         if (search.lower() in game_titles) and (genre_filter.lower() in all_genres):
-            found_games.append(game)
-    print("Search is " + search.lower())
-    print("Genre_filter is " + genre_filter.lower())
-    print(found_games)
-    print(all_genres)
-    print(game_titles)
+            if game['title'].lower() == search.lower():
+                if genre_filter in list_of_genres:
+                    found_games.append(game)
+
     return render_template('gameDescription.html', search_query=search, games=found_games, all_genres=all_genres)

@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template, request
 from games.games import services
-from games.genreBar.services import get_games_by_genre
-from games.home import services as sv
 import games.adapters.repository as repo
 
 

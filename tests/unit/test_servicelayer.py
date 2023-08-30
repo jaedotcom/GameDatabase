@@ -96,8 +96,6 @@ class TestService:
         expected_games = repo.get_games()[start_index:end_index]
         assert games == expected_games
 
-
-
     def test_search_by_genre(self, repo):
         genre = "Action"
         game1 = Game(1, "Game 1")

@@ -56,6 +56,8 @@ def test_game_release_date_validation():
 
     expected_date = datetime.strptime("Oct 21, 2008", "%b %d, %Y")
     assert str(game.release_date) == 'Oct 21, 2008'
+    assert expected_date == datetime(2008, 10, 21, 0, 0)
+
 
 
 

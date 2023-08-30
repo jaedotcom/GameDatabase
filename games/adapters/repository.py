@@ -1,14 +1,14 @@
-
 import abc
 from typing import List
-
 from games.domainmodel.model import Game, Genre
 
 repo_instance = None
 
+
 class RepositoryException(Exception):
     def __init__(self, message=None):
         print(f'RepositoryException: {message}')
+
 
 class AbstractRepository(abc.ABC):
     @abc.abstractmethod

@@ -1,7 +1,6 @@
 """App entry point."""
 from games import create_app
-from flask import Flask, render_template
-import csv
+
 
 app = create_app()
 

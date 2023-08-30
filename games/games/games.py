@@ -11,11 +11,8 @@ games_bp = Blueprint('games_bp', __name__)
 def games():
     page = int(request.args.get('page', 1))
     games_per_page = 22
-
     all_games = services.get_games(repo.repo_instance)
-
     total_pages = (len(all_games) + games_per_page - 1) // games_per_page
-
     start_idx = (page - 1) * games_per_page
     end_idx = start_idx + games_per_page
     current_games = all_games[start_idx:end_idx]

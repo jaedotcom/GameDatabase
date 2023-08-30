@@ -1,17 +1,16 @@
 import os.path
 from typing import List
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, User, Publisher, Review, Wishlist
+from games.domainmodel.model import Game, Genre
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
+
 class MemoryRepository(AbstractRepository):
-    # Articles ordered by date, not id. id is assumed unique.
 
     def __init__(self):
         self.__games = list()
         self.__genres = list()
         self.__games_by_genre = dict()
-
 
     def add_game(self, game: Game):
         self.__games.append(game)
@@ -50,5 +49,3 @@ def populate(repo: AbstractRepository):
 
     for genre in genres:
         repo.add_genre(genre)
-
-

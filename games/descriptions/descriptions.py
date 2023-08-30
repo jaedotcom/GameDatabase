@@ -19,9 +19,7 @@ def descriptions():
         for game in all_games:
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
-
     all_genres = sv.get_genres(repo.repo_instance)
-
     return render_template('gameDescription.html', games=current_game_dict, all_genres=all_genres)
 
 

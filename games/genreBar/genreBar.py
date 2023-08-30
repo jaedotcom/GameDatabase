@@ -26,12 +26,10 @@ def genre_bar(genre: str):
             if game.get('game_id') == id:
                 refined_games.append(game)
 
-    games_per_page = 20  # You can adjust this value as needed
+    games_per_page = 20
     page = int(request.args.get('page', 1))
     paginated_games = paginate_games(refined_games, page, games_per_page)
-
     num_pages = (len(refined_games) + games_per_page - 1) // games_per_page
-
     return render_template(
         'gameGenre.html',
         games=paginated_games,

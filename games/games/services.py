@@ -31,8 +31,10 @@ def get_games(repo: AbstractRepository):
 def compare_games_by_title(game1, game2):
     return (game1.title > game2.title) - (game1.title < game2.title)
 
+
 def compare_games_by_release_date(game1, game2):
     return (game1.release_date > game2.release_date) - (game1.release_date < game2.release_date)
+
 
 def get_games_by_search_key(search_key: str, repo):
     games = repo.get_games()

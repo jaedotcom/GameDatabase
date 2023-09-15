@@ -12,6 +12,7 @@ from games.adapters.memoryRepository import MemoryRepository
 authentication_blueprint = Blueprint(
     'authentication_bp', __name__, url_prefix='/authentication')
 
+
 @authentication_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -41,6 +42,7 @@ def register():
         form=form,
         featured_genres=featured_genres,
     )
+
 
 @authentication_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
@@ -83,10 +85,12 @@ def login():
         password_error_message=password_does_not_match_username,
     )
 
+
 @authentication_blueprint.route('/logout', methods=['GET'])
 def logout():
     session.clear()
     return redirect(url_for("home_bp.home"))
+
 
 def login_required(view):
     @wraps(view)
@@ -96,6 +100,7 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
 
 class PasswordValid:
     def __init__(self, message=None):
@@ -114,6 +119,7 @@ class PasswordValid:
         if not schema.validate(field.data):
             raise ValidationError(self.message)
 
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [
         DataRequired(message="Username is required"),
@@ -128,6 +134,7 @@ class RegistrationForm(FlaskForm):
         DataRequired(message="Password confirmation required"),
     ])
     submit = SubmitField("Sign Up")
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', [

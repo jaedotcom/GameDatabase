@@ -1,5 +1,4 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import User
 
@@ -17,18 +16,13 @@ class AuthenticationException(Exception):
 
 
 def add_user(username: str, password: str, repo: AbstractRepository):
-    # Check the username is not taken
-    user = repo.get_user(username)
-
-    if user:
-        raise NameNotUniqueException
-
     # Encrypt password
     password_hash = generate_password_hash(password)
+    # Create new User
+    new_user = User(username, password_hash)
+    # check username is not taken
+    repo.add_user(new_user)
 
-    # Create and store new User with given username & encrypted password
-    user = User(username, password_hash)
-    repo.add_user(user)
 
 def get_user(username: str, repo: AbstractRepository):
     user = repo.get_user(username)
@@ -38,6 +32,7 @@ def get_user(username: str, repo: AbstractRepository):
         raise UnknownUserException
 
     return user_to_dict(user)
+
 
 def authenticate_user(username: str, password: str, repo: AbstractRepository):
     authenticated = False

@@ -27,7 +27,7 @@ def register():
             services.add_user(form.username.data, form.password.data, MemoryRepository())
 
             # Success, redirect the user to the login page
-            return redirect(url_for("authentication_bp.login"))
+            return redirect(url_for("profile_bp.profile"))
         except services.NameNotUniqueException:
             username_not_unique = "Username is already taken. Please try again."
 
@@ -56,6 +56,7 @@ def login():
         # Use the service layer to look up the user
         try:
             user = services.get_user(form.username.data, MemoryRepository())
+
 
             # Authenticate user
             services.authenticate_user(user['username'], form.password.data, MemoryRepository())
@@ -123,7 +124,7 @@ class PasswordValid:
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [
         DataRequired(message="Username is required"),
-        Length(min=3, max=256, message="Username must be between 3 and 256 characters long.")
+        Length(min=3, max=50, message="Username must be between 3 and 50 characters long.")
     ])
     password = PasswordField("Password", [
         DataRequired(message="Password is required"),

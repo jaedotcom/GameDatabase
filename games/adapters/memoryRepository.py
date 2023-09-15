@@ -1,5 +1,5 @@
 import os.path
-from typing import List
+from typing import List, Dict
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game, Genre
 from games.adapters.datareader.csvdatareader import GameFileCSVReader

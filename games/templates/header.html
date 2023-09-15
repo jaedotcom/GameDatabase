@@ -2,4 +2,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
   <h1>CS235 2023: My Game Library</h1>
   <div class="copyright">&copy; lste186 | jkim649 | cwan877 </div>
+    {% if 'username' in session %}
+    Logged in as <i>{{ session['username'] }}</i>. <a href="{{ url_for("authentication_bp.logout") }}">Log Out?</a>
+{% else %}
+    <div class="auth-links">
+        <a href="{{ url_for("authentication_bp.register") }}">Sign Up</a> or <a href="{{ url_for("authentication_bp.login") }}">Sign In</a>
+    </div>
+{% endif %}
 </header>

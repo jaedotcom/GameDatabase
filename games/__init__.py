@@ -9,11 +9,16 @@ from games.adapters.memoryRepository import populate
 from games.adapters.memoryRepository import MemoryRepository
 
 
+
 def create_app():
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'your_secret_key_here'
+
+    repo.repo_instance = MemoryRepository()
+    populate(repo.repo_instance)
 
     # Build the application - these steps require an application context.
     with app.app_context():
@@ -32,6 +37,9 @@ def create_app():
 
         from .searchresults import search
         app.register_blueprint(search.search_bp)
+
+        from .authentication import authentication
+        app.register_blueprint(authentication.authentication_blueprint)
 
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)

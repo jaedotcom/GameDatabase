@@ -27,7 +27,7 @@ def register():
             services.add_user(form.username.data, form.password.data, MemoryRepository())
 
             # Success, redirect the user to the login page
-            return redirect(url_for("profile_bp.profile"))
+            return redirect(url_for("authentication_bp.login"))
         except services.NameNotUniqueException:
             username_not_unique = "Username is already taken. Please try again."
 
@@ -65,7 +65,7 @@ def login():
             session.clear()
             session['username'] = user['username']
 
-            return redirect(url_for("home_bp.home"))
+            return redirect(url_for("profile_bp.profile"))
 
         except services.UnknownUserException:
             # Username does not exist

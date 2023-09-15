@@ -35,13 +35,15 @@ def get_user(username: str, repo: AbstractRepository):
 
 
 def authenticate_user(username: str, password: str, repo: AbstractRepository):
-    authenticated = False
+    #authenticated = False
 
     user = repo.get_user(username)
     if user is not None:
         authenticated = check_password_hash(user.password, password)
-    if not authenticated:
-        raise AuthenticationException
+
+    #if not authenticated:
+     #   raise AuthenticationException
+
 
 # ============================================
 # Functions to convert model entities to dicts

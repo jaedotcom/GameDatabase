@@ -19,13 +19,15 @@ def register():
     featured_genres = MemoryRepository().get_genres()
 
     username_not_unique = None
+    registration_success = False
 
     if form.validate_on_submit():
         # Successful POST -- the username & password have passed validation checking
         # Use the service layer to attempt to add the new user
         try:
             services.add_user(form.username.data, form.password.data, MemoryRepository())
-
+            registration_success = True
+            print(registration_success)
             # Success, redirect the user to the login page
             return redirect(url_for("authentication_bp.login"))
         except services.NameNotUniqueException:
@@ -41,6 +43,7 @@ def register():
         password_error_message=None,
         form=form,
         featured_genres=featured_genres,
+        registration_success=registration_success,
     )
 
 

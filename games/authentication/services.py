@@ -7,8 +7,10 @@ from games.domainmodel.model import User
 class NameNotUniqueException(Exception):
     pass
 
+
 class UnknownUserException(Exception):
     pass
+
 
 class AuthenticationException(Exception):
     pass

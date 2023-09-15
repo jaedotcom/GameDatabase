@@ -1,7 +1,7 @@
 import os.path
 from typing import List, Dict
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre
+from games.domainmodel.model import Game, Genre, User
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 
@@ -11,6 +11,13 @@ class MemoryRepository(AbstractRepository):
         self.__games = list()
         self.__genres = list()
         self.__games_by_genre = dict()
+        self.__users = list()
+
+    def add_user(self, user: User):
+        self.__users.append(user)
+
+    def get_user(self, user_name) -> User:
+        return next((user for user in self.__users if user.user_name == user_name), None)
 
     def add_game(self, game: Game):
         self.__games.append(game)

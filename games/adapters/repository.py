@@ -1,6 +1,6 @@
 import abc
 from typing import List
-from games.domainmodel.model import Game, Genre
+from games.domainmodel.model import Game, Genre, User
 
 repo_instance = None
 
@@ -38,5 +38,17 @@ class AbstractRepository(abc.ABC):
     def get_games_by_genre(self, genre_name: str) -> List[Game]:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def add_user(self, user: User):
+        """ Adds a user to the repository """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_user(self, user_name) -> User:
+        """ Returns the User named user_name from the repository.
+
+        If there is no User with the given user_name, this method returns None.
+        """
+        raise NotImplementedError
 
 

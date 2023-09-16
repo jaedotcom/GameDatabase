@@ -60,6 +60,7 @@ def login():
         try:
             user = services.get_user(form.username.data, MemoryRepository())
 
+
             # Authenticate user
             services.authenticate_user(user['username'], form.password.data, MemoryRepository())
 
@@ -67,7 +68,7 @@ def login():
             session.clear()
             session['username'] = user['username']
 
-            return redirect(url_for("home_bp.home"))
+            return redirect(url_for("profile_bp.profile"))
 
         except services.UnknownUserException:
             # Username does not exist
@@ -126,7 +127,7 @@ class PasswordValid:
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [
         DataRequired(message="Username is required"),
-        Length(min=3, max=256, message="Username must be between 3 and 256 characters long.")
+        Length(min=3, max=50, message="Username must be between 3 and 50 characters long.")
     ])
     password = PasswordField("Password", [
         DataRequired(message="Password is required"),

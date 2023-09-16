@@ -14,10 +14,16 @@ class MemoryRepository(AbstractRepository):
         self.__users = list()
 
     def add_user(self, user: User):
+        for already_user in self.__users:
+            if already_user.username == user.username:
+                return "Username already taken."
         self.__users.append(user)
 
     def get_user(self, user_name) -> User:
-        return next((user for user in self.__users if user.user_name == user_name), None)
+        for user in self.__users:
+            if user.username == user_name:
+                return user
+
 
     def add_game(self, game: Game):
         self.__games.append(game)

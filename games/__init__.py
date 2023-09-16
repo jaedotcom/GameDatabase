@@ -41,6 +41,9 @@ def create_app():
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
+        from .profile import profile
+        app.register_blueprint(profile.profile_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 

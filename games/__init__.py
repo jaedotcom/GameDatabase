@@ -1,6 +1,6 @@
 """Initialize Flask app."""
-
-from flask import Flask, render_template
+import os
+from flask import Flask
 from games.domainmodel.model import Game
 from games.adapters.repository import AbstractRepository
 
@@ -9,13 +9,12 @@ from games.adapters.memoryRepository import populate
 from games.adapters.memoryRepository import MemoryRepository
 
 
-
 def create_app():
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your_secret_key_here'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
@@ -43,8 +42,5 @@ def create_app():
 
         from .profile import profile
         app.register_blueprint(profile.profile_blueprint)
-
-    repo.repo_instance = MemoryRepository()
-    populate(repo.repo_instance)
 
     return app

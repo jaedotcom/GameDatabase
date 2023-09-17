@@ -40,9 +40,8 @@ def authenticate_user(username: str, password: str, repo: AbstractRepository):
     user = repo.get_user(username)
     if user is not None:
         authenticated = check_password_hash(user.password, password)
-
-    #if not authenticated:
-     #   raise AuthenticationException
+        if not authenticated:
+            raise AuthenticationException("Authentication failed")
 
 
 # ============================================

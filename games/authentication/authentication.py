@@ -30,8 +30,9 @@ def register():
 
             session['user_name'] = form.username.data
 
-            # Success, redirect the user to the login page
+            # 302 / Success, redirect the user to the login page
             return redirect(url_for("authentication_bp.login"))
+        # 200 OK / unsuccessful registration, return to registration form with message.
         except services.NameNotUniqueException:
             username_not_unique = "Username is already taken. Please try again."
 

@@ -14,7 +14,12 @@
     <br>
     <div class="navbar">
         <ul>
+        {% if 'username' not in session %}
+            <li><a href="{{ url_for('authentication_bp.register') }}">Register</a></li>
+        {% else %}
             <li><a href="{{ url_for('authentication_bp.logout') }}">Logout</a></li>
+        {% endif %}
+            <li><a href="{{ url_for('authentication_bp.login') }}">Log In</a></li>
             <li><a href="{{ url_for('home_bp.home') }}">Home</a></li>
             <li><a href="{{ url_for('games_bp.games') }}">All Games</a></li>
             <li><a href="{{ url_for('profile_bp.profile') }}">Profile</a></li>

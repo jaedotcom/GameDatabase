@@ -1,5 +1,7 @@
 """Initialize Flask app."""
 import os
+from pathlib import Path
+
 from flask import Flask
 from games.domainmodel.model import Game
 from games.adapters.repository import AbstractRepository
@@ -9,15 +11,22 @@ from games.adapters.memoryRepository import populate
 from games.adapters.memoryRepository import MemoryRepository
 
 
-def create_app():
+def create_app(test_config=None):
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
+    app.config.from_object('config.Config')
+    data_path = Path('games') / 'adapters' / 'data'
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+        data_path = app.config['TEST_DATA_PATH'] # Make sure to change TEST_DATA_PATH : games/tests/data and TESTING: True in .env for testing
+
     repo.repo_instance = MemoryRepository()
-    populate(repo.repo_instance)
+    populate(data_path, repo.repo_instance)
 
     # Build the application - these steps require an application context.
     with app.app_context():

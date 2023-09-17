@@ -55,9 +55,11 @@ class MemoryRepository(AbstractRepository):
         self.__reviews.append(review)
         return review
 
-def populate(repo: AbstractRepository):
-    dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(dir_name, "data/games.csv")
+
+def populate(data_path: str, repo: AbstractRepository):
+    # dir_name = os.path.dirname(os.path.abspath(__file__))
+    # games_file_name = os.path.join(dir_name, "data/games.csv")
+    games_file_name = os.path.join(data_path, "games.csv")
     reader = GameFileCSVReader(games_file_name)
     reader.read_csv_file()
     games = reader.dataset_of_games

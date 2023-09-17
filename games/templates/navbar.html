@@ -2,7 +2,13 @@
     <a href="{{ url_for('home_bp.home') }}">
     <img src="../static/logoImage/logo.png" alt="Game site logo" width="250" height="250"/>
     </a>
-    <div class="heading">Game Listing</div>
+    <div class="heading">
+        {% if session['user_name'] %}
+            Hello {{ session['user_name'] }}!
+        {% else %}
+            Hi there
+        {% endif %}
+    </div>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
     <br>

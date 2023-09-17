@@ -27,7 +27,9 @@ def register():
         try:
             services.add_user(form.username.data, form.password.data, MemoryRepository())
             registration_success = True
-            print(registration_success)
+
+            session['user_name'] = form.username.data
+
             # Success, redirect the user to the login page
             return redirect(url_for("authentication_bp.login"))
         except services.NameNotUniqueException:
@@ -60,13 +62,13 @@ def login():
         try:
             user = services.get_user(form.username.data, MemoryRepository())
 
-
             # Authenticate user
             services.authenticate_user(user['username'], form.password.data, MemoryRepository())
 
             # Initialize the session and redirect the user to the home page
             session.clear()
             session['username'] = user['username']
+            session['user_name'] = user['username']
 
             return redirect(url_for("profile_bp.profile"))
 

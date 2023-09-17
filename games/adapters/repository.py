@@ -1,6 +1,6 @@
 import abc
 from typing import List
-from games.domainmodel.model import Game, Genre, User
+from games.domainmodel.model import Game, Genre, User, Review
 
 repo_instance = None
 
@@ -50,5 +50,12 @@ class AbstractRepository(abc.ABC):
         If there is no User with the given user_name, this method returns None.
         """
         raise NotImplementedError
+
+    def add_review(self, review) -> Review:
+        raise NotImplementedError
+
+    def get_game_by_id(self, game_id) -> Game:
+        raise NotImplementedError
+
 
 

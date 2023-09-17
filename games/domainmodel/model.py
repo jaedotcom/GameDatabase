@@ -208,6 +208,13 @@ class Game:
             return False
         return self.__game_id < other.game_id
 
+    def add_review(self, review):
+        if not isinstance(review, self.__class__):
+            return False
+        self.__reviews.append(review)
+        return True
+
+
 
 class User:
     def __init__(self, username: str, password: str):

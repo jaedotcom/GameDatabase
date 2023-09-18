@@ -20,7 +20,7 @@ def descriptions():
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('gameDescription.html', games=current_game_dict, all_genres=all_genres)
+    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
 
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
@@ -37,4 +37,4 @@ def search_game_description(game_id):
         pass
 
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('gameDescription.html', games=current_game_dict, all_genres=all_genres)
+    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)

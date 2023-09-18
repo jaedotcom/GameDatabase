@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 
-games_bp = Blueprint('games_bp', __name__)
+games_bp = Blueprint('games_bp', __name__, url_prefix='/games')
 
 
 @games_bp.route('/games')
@@ -20,7 +20,7 @@ def games():
     end_idx = start_idx + games_per_page
     current_games = all_games[start_idx:end_idx]
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('games.html', some_game=current_games, current_page=page, num_pages=total_pages,
+    return render_template('browse/games.html', some_game=current_games, current_page=page, num_pages=total_pages,
                            all_genres=all_genres)
 
 

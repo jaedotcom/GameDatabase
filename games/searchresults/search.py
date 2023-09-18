@@ -14,6 +14,6 @@ def search_results(search):
     for game in all_games:
         if game.get('game_id') == game(search).id:
             current_games = game
-    return render_template('gameDescription.html',some_game=current_games)
+    return render_template('browse/gameDescription.html',some_game=current_games)
 
 

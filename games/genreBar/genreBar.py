@@ -31,7 +31,7 @@ def genre_bar(genre: str):
     paginated_games = paginate_games(refined_games, page, games_per_page)
     num_pages = (len(refined_games) + games_per_page - 1) // games_per_page
     return render_template(
-        'gameGenre.html',
+        'genre/gameGenre.html',
         games=paginated_games,
         all_genres=all_genres,
         selected_genre=selected_genre,

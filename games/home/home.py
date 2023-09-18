@@ -11,7 +11,7 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/', methods=['GET', 'POST'])
 def home():
     all_genres = services.get_genres(repo.repo_instance)
-    return render_template('home.html', all_genres=all_genres)
+    return render_template('home/home.html', all_genres=all_genres)
 
 
 @home_blueprint.route('/search', methods=('GET', 'POST'))
@@ -39,4 +39,4 @@ def search_results():
             if game['title'].lower() == search.lower():
                 if genre_filter in list_of_genres:
                     found_games.append(game)
-    return render_template('gameSearbarResult.html', search_query=search, games=found_games, all_genres=all_genres)
+    return render_template('search/gameSearbarResult.html', search_query=search, games=found_games, all_genres=all_genres)

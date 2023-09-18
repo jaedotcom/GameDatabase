@@ -55,18 +55,14 @@ def login():
     form = LoginForm()
     username_not_recognised = None
     password_does_not_match_username = None
-    #featured_genres = repo.get_genres()
 
     if form.validate_on_submit():
-        # Successful POST, so the username and password have passed validation checks
-        # Use the service layer to look up the user
         try:
             user = services.get_user(form.username.data, repo.repo_instance)
 
             # Authenticate user
             services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
 
-            # Initialize the session and redirect the user to the home page
             session.clear()
             session['username'] = user['username']
             session['user_name'] = user['username']
@@ -74,11 +70,9 @@ def login():
             return redirect(url_for("profile_bp.profile"))
 
         except services.UnknownUserException:
-            # Username does not exist
-            username_not_recognized = "Username not recognized. Please try again or sign up."
+            username_not_recognised = "Username not recognized. Please try again or sign up."
 
         except services.AuthenticationException:
-            # Incorrect Password
             password_does_not_match_username = "Incorrect password. Please try again."
 
     return render_template(
@@ -87,9 +81,8 @@ def login():
         form_title="Log In",
         form=form,
         handler_url=url_for("authentication_bp.login"),
-        #featured_genres=featured_genres,
-        username_error_message=username_not_recognised,
-        password_error_message=password_does_not_match_username,
+        username_error_message=username_not_recognised,  # Corrected variable name
+        password_error_message=password_does_not_match_username,  # Corrected variable name
     )
 
 

@@ -6,7 +6,8 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError, EqualTo
 from password_validator import PasswordValidator
 import games.authentication.services as services
-from games.adapters.memoryRepository import MemoryRepository
+import games.adapters.repository as repo
+
 
 # Configure Blueprint
 authentication_blueprint = Blueprint(
@@ -16,8 +17,7 @@ authentication_blueprint = Blueprint(
 @authentication_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    featured_genres = MemoryRepository().get_genres()
-
+    #featured_genres = repo.get_genres()
     username_not_unique = None
     registration_success = False
 
@@ -25,10 +25,10 @@ def register():
         # Successful POST -- the username & password have passed validation checking
         # Use the service layer to attempt to add the new user
         try:
-            services.add_user(form.username.data, form.password.data, MemoryRepository())
+            services.add_user(form.username.data, form.password.data, repo.repo_instance)
             registration_success = True
 
-            session['user_name'] = form.username.data
+            session['username'] = form.username.data
 
             # 302 / Success, redirect the user to the login page
             return redirect(url_for("authentication_bp.login"))
@@ -45,7 +45,7 @@ def register():
         username_error_message=username_not_unique,
         password_error_message=None,
         form=form,
-        featured_genres=featured_genres,
+        #featured_genres=featured_genres,
         registration_success=registration_success,
     )
 
@@ -55,16 +55,16 @@ def login():
     form = LoginForm()
     username_not_recognised = None
     password_does_not_match_username = None
-    featured_genres = MemoryRepository().get_genres()
+    #featured_genres = repo.get_genres()
 
     if form.validate_on_submit():
         # Successful POST, so the username and password have passed validation checks
         # Use the service layer to look up the user
         try:
-            user = services.get_user(form.username.data, MemoryRepository())
+            user = services.get_user(form.username.data, repo.repo_instance)
 
             # Authenticate user
-            services.authenticate_user(user['username'], form.password.data, MemoryRepository())
+            services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
 
             # Initialize the session and redirect the user to the home page
             session.clear()
@@ -87,7 +87,7 @@ def login():
         form_title="Log In",
         form=form,
         handler_url=url_for("authentication_bp.login"),
-        featured_genres=featured_genres,
+        #featured_genres=featured_genres,
         username_error_message=username_not_recognised,
         password_error_message=password_does_not_match_username,
     )

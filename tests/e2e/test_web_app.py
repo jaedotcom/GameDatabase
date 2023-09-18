@@ -31,8 +31,8 @@ def test_register(client):
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
         (",", b'Your username is required'),
-        ('cj', ", b'Your username is too short' "), # ask about "
-        ('test', ", b'Your password is required' "), # ask about "
+        ('cj', '', b'Your username is too short' ), # ask about "
+        ('test', "", b'Your password is required' ), # ask about "
         ('test', 'test',
          b'Your password must be at least 8 characters, and contain an upper case letter, a lower case letter and a '
          b'digit'),

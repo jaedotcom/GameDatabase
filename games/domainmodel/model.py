@@ -348,7 +348,6 @@ class Wishlist:
         if not isinstance(user, User):
             raise ValueError("User must be an instance of User class")
         self.__user = user
-
         self.__list_of_games = []
 
     def list_of_games(self):

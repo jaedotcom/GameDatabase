@@ -8,7 +8,7 @@ from games.domainmodel.model import User
 profile_blueprint = Blueprint('profile_bp', __name__)
 
 
-@profile_blueprint.route('/profile')
+@profile_blueprint.route('/profile', methods=['GET', 'POST'])
 def profile():
     user = request.args.get('current_user')
     print(type(user))

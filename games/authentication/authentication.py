@@ -60,15 +60,16 @@ def login():
         try:
             user = services.get_user(form.username.data, repo.repo_instance)
 
+
             # Authenticate user
-            services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
-            current_user = services.get_current_user(form.username.data, repo.repo_instance)
-            print(user)
+            current_user = services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
+            #current_user = services.get_current_user(form.username.data, repo.repo_instance)
+            current_user_name = current_user.username
             session.clear()
             session['username'] = user['username']
             session['user_name'] = user['username']
 
-            return redirect(url_for("profile_bp.profile", current_user = current_user))
+            return redirect(url_for("profile_bp.profile", current_user=current_user_name))
 
         except services.UnknownUserException:
             username_not_recognised = "Username not recognized. Please try again or sign up."

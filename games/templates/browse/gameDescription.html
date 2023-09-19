@@ -18,6 +18,11 @@
                     <p>{{ genre }}</p>
                 {% endfor %}
             </div>
+            <div>
+                <form method="post" action="/">
+                    <input type="submit" value="Favourite" name="favourited"/>
+                </form>
+            </div>
             <br>
             <div id="floating-paragraph">{{ games['description'] }}</div>
             <br>

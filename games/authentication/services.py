@@ -24,8 +24,8 @@ def add_user(username: str, password: str, repo: AbstractRepository):
     repo.add_user(new_user)
 
 
-def get_current_user(username: str, repo: AbstractRepository):
-    current_user = repo.get_user(username)
+# def get_current_user(username: str, repo: AbstractRepository):
+#     current_user = repo.get_user(username)
 
 def get_user(username: str, repo: AbstractRepository):
     user = repo.get_user(username)
@@ -45,6 +45,8 @@ def authenticate_user(username: str, password: str, repo: AbstractRepository):
         authenticated = check_password_hash(user.password, password)
         if not authenticated:
             raise AuthenticationException("Authentication failed")
+
+    return user
 
 
 # ============================================

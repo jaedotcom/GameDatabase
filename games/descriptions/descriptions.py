@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session
 from games.home import services as sv
 from games.games import services as game_services
+from games.profile import services as profile_services
 import games.adapters.repository as repo
 
 descriptions_blueprint = Blueprint(
@@ -35,6 +36,27 @@ def search_game_description(game_id):
 
     if current_game_dict is None:
         pass
+
+    all_genres = sv.get_genres(repo.repo_instance)
+    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
+
+
+@descriptions_blueprint.route('/gameDescription/favourite', methods=['GET', 'POST'])
+def favourite():
+    current_game = request.args.get('current_game')
+    game_id = request.args.get('current_game_id')
+    try:
+        current_game_dict = eval(current_game)
+    except SyntaxError:
+        all_games = game_services.get_games(repo.repo_instance)
+        for game in all_games:
+            if game.get('game_id') == int(game_id):
+                current_game_dict = game
+
+    user = session['username']
+    current_user = profile_services.get_user(user, repo.repo_instance)
+
+    print(type(current_game_dict))
 
     all_genres = sv.get_genres(repo.repo_instance)
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)

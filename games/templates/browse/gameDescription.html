@@ -19,9 +19,11 @@
                 {% endfor %}
             </div>
             <div>
-                <form method="post" action="/profile">
-                    <input type="submit" value="Favourite" name="favourited"/>
-                </form>
+<!--                <form method="post" action="/profile">-->
+<!--                    <input type="submit" value="Favourite" name="favourited"/>-->
+<!--                </form>-->
+
+                <a href=" {{ url_for('profile_bp.profile') }} ">Favourite</a>
             </div>
             <br>
             <div id="floating-paragraph">{{ games['description'] }}</div>

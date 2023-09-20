@@ -11,12 +11,10 @@ profile_blueprint = Blueprint('profile_bp', __name__)
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
 def profile():
     user = request.args.get('current_user')
-    print(type(user))
-    print(user)
-
     #get user from user list in memory repo
     current_user = profile_services.get_user(user, repo.repo_instance)
-
-
-    #favourite_list = profile_services.get_favourites(user)
+    favourite_list = profile_services.get_favourites(current_user)
+    print(favourite_list)
     return render_template('profile.html')
+
+

@@ -17,24 +17,16 @@ authentication_blueprint = Blueprint(
 @authentication_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    #featured_genres = repo.get_genres()
     username_not_unique = None
     registration_success = False
 
     if form.validate_on_submit():
-        # Successful POST -- the username & password have passed validation checking
-        # Use the service layer to attempt to add the new user
         try:
             services.add_user(form.username.data, form.password.data, repo.repo_instance)
             registration_success = True
-
-            session['username'] = form.username.data
-
-            # 302 / Success, redirect the user to the login page
             return redirect(url_for("authentication_bp.login"))
-        # 200 OK / unsuccessful registration, return to registration form with message.
         except services.NameNotUniqueException:
-            username_not_unique = "Username is already taken. Please try again."
+            username_not_unique = "Username is already taken. Please try again."    # This is not working#
 
     # For a GET or failed POST request, return the Registration web page
     return render_template(
@@ -45,7 +37,6 @@ def register():
         username_error_message=username_not_unique,
         password_error_message=None,
         form=form,
-        #featured_genres=featured_genres,
         registration_success=registration_success,
     )
 

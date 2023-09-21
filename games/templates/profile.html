@@ -12,9 +12,11 @@
     <div id="container">
         <main id="content">
             <h2><strong>Profile Page</strong></h2>
-
-
-
+            <div>
+                {% for fave in favourites %}
+                    <p>{{ fave }}</p>
+                {% endfor %}
+            </div>
         </main>
     </div>
 {% endblock %}

@@ -33,7 +33,7 @@ class MemoryRepository(AbstractRepository):
     def get_games(self) -> List[Game]:
         return self.__games
 
-    def get_game_by_id(self, game_id) -> Any | None:
+    def get_game_by_id(self, game_id) -> Game | None:
         for game in self.__games:
             if game.game_id == game_id:
                 return game

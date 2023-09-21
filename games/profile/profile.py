@@ -18,8 +18,6 @@ def profile():
     current_user = profile_services.get_user(user, repo.repo_instance)
     favourite_list = profile_services.get_favourites(current_user)
     # need to add favourite list to profile.html and pass favourite_list when render template.
-
-
-    return render_template('profile.html')
+    return render_template('profile.html', favourites=favourite_list)
 
 

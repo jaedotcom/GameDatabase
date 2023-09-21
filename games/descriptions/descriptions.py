@@ -4,6 +4,7 @@ from games.games import services as game_services
 from games.profile import services as profile_services
 import games.adapters.repository as repo
 
+
 descriptions_blueprint = Blueprint(
     'descriptions_bp', __name__)
 
@@ -45,6 +46,7 @@ def search_game_description(game_id):
 def favourite():
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')
+
     try:
         current_game_dict = eval(current_game)
     except SyntaxError:
@@ -52,11 +54,15 @@ def favourite():
         for game in all_games:
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
+                print(type(game))
 
     user = session['username']
     current_user = profile_services.get_user(user, repo.repo_instance)
+    #turn the current_game_dict into a Game object and pass that into add_to_favourites function in profile_services
+    #get the game from the list of games in memory repository
 
-    print(type(current_game_dict))
+    game1 = repo.repo_instance.get_game_by_id(current_game_dict['game_id'])
 
+    profile_services.add_to_favourites(current_user, game1)
     all_genres = sv.get_genres(repo.repo_instance)
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)

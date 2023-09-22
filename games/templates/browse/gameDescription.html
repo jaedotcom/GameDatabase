@@ -19,10 +19,6 @@
                 {% endfor %}
             </div>
             <div>
-<!--                <form method="post" action="/profile">-->
-<!--                    <input type="submit" value="Favourite" name="favourited"/>-->
-<!--                </form>-->
-
                 <a href=" {{ url_for('descriptions_bp.favourite', current_game=games, current_game_id=games['game_id']) }} ">Favourite</a>
             </div>
             <br>

@@ -15,4 +15,6 @@ def get_user(username: str, repo: AbstractRepository):
     return user
 
 
+def delete_favourites(user: User, game: Game):
+    user.remove_favourite_game(game)
 

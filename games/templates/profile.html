@@ -13,10 +13,28 @@
         <main id="content">
             <h2><strong>Profile Page</strong></h2>
             <div>
+                <h3>Favourites:</h3>
                 {% for fave in favourites %}
                     <p>{{ fave }}</p>
                 {% endfor %}
             </div>
+
+<!--            <table>-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th>Title</th>-->
+<!--                        <th>Release Date</th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                    {% for game in favourites %}-->
+<!--                        <tr>-->
+<!--                            <td><a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">{{ game['title'] }}</a></td>-->
+<!--                            <td>{{ game['game_release_date'] }}</td>-->
+<!--                        </tr>-->
+<!--                    {% endfor %}-->
+<!--                </tbody>-->
+<!--            </table>-->
         </main>
     </div>
 {% endblock %}

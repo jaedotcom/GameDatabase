@@ -1,4 +1,4 @@
-from games.domainmodel.model import Wishlist, User, Game
+from games.domainmodel.model import User, Game
 from games.adapters.repository import AbstractRepository
 
 

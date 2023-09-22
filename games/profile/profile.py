@@ -4,11 +4,13 @@ from games.home import services
 import games.adapters.repository as repo
 from games.profile import services as profile_services
 from games.domainmodel.model import User
+from games.authentication.authentication import login_required
 
 profile_blueprint = Blueprint('profile_bp', __name__)
 
 
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
+@login_required
 def profile():
     #get current user from session???
     user = session['username']

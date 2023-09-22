@@ -3,6 +3,7 @@ from games.home import services as sv
 from games.games import services as game_services
 from games.profile import services as profile_services
 import games.adapters.repository as repo
+from games.authentication.authentication import login_required
 
 
 descriptions_blueprint = Blueprint(
@@ -43,6 +44,7 @@ def search_game_description(game_id):
 
 
 @descriptions_blueprint.route('/gameDescription/favourite', methods=['GET', 'POST'])
+@login_required
 def favourite():
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')

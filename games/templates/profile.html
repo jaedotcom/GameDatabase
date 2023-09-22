@@ -15,27 +15,10 @@
             <div>
                 <h3>Favourites:</h3>
                 {% for fave in favourites %}
-                    <p>{{ fave }}</p>
-                    <a href=" /profile ">Delete</a>
+                    <p>{{ fave['title'] }}</p>
+                    <a href=" {{ url_for('profile_bp.delete_favourite', current_game=fave, current_id=fave.game_id )}} ">Delete</a>
                 {% endfor %}
             </div>
-
-<!--            <table>-->
-<!--                <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Title</th>-->
-<!--                        <th>Release Date</th>-->
-<!--                    </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                    {% for game in favourites %}-->
-<!--                        <tr>-->
-<!--                            <td><a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">{{ game['title'] }}</a></td>-->
-<!--                            <td>{{ game['game_release_date'] }}</td>-->
-<!--                        </tr>-->
-<!--                    {% endfor %}-->
-<!--                </tbody>-->
-<!--            </table>-->
         </main>
     </div>
 {% endblock %}

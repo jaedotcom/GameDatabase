@@ -55,5 +55,7 @@ def create_app(test_config=None):
         from .reviews import reviews
         app.register_blueprint(reviews.reviews_blueprint)
 
+        from .forms import forms
+        app.register_blueprint(forms.forms_blueprint)
 
     return app

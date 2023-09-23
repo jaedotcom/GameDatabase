@@ -7,6 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 
+
 games_bp = Blueprint('games_bp', __name__, url_prefix='/games')
 
 
@@ -29,10 +30,8 @@ def games():
                            all_genres=all_genres)
 
 
-# Add a route to display the game description page.
 @games_bp.route('/game/<int:game_id>')
 def game_description(game_id):
-    # Obtain the user name of the currently logged in user.
     user_name = session.get('username')
     game_details = services.get_games(game_id)
     form = ReviewForm()
@@ -46,16 +45,16 @@ def post_a_review():
     # Obtain the user name of the currently logged in user.
     user_name = session['username']
 
-    class ReviewForm(FlaskForm):
+    class CommentForm(FlaskForm):
         review_text = TextAreaField('Review', validators=[DataRequired()])
         submit = SubmitField('Submit Review')
 
-    form = ReviewForm()
+    form = CommentForm()
 
     if form.validate_on_submit():
         # Get the game ID and review text from the form
         game_id = request.form['game_id']
-        review_text = form.review_text.data
+        review_text = form.comment.data
 
         # Call a service function to post the review
         services.post_review(user_name, int(game_id), review_text, repo.repo_instance)

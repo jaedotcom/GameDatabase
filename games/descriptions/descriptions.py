@@ -30,8 +30,9 @@ def descriptions():
 
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
-def search_game_description(game_id):
-    game = game_services.get_game_by_id(repo.repo_instance, game_id)
+def search_game_description():
+    game_id = request.args.get('game_id')
+    game = game_services.get_game_by_id(game_id, repo.repo_instance)
     if game is None:
         pass
 

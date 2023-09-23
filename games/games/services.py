@@ -3,6 +3,12 @@ from functools import cmp_to_key
 from games.domainmodel.model import Review
 
 
+def get_game_by_id(game_id, repo: AbstractRepository):
+    for game in repo:
+        if game.game_id == game_id:
+            return game
+    return None
+
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 

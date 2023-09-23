@@ -45,7 +45,7 @@ def write_game_review():
         return redirect(url_for('descriptions_bp.view_game', game_id=game_id))
 
     # For a GET request or an unsuccessful POST, retrieve the game details and pass the form.
-    game = repo.get_game_by_id(game_id)
+    game = repo.repo_instance.get_game_by_id(game_id)
     review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
     # if request.method == 'GET':

@@ -12,7 +12,7 @@ import games.adapters.repository as repo
 import games.reviews.services as services
 
 from games.authentication.authentication import login_required
-from games.forms.forms import CommentForm
+
 
 # Configure Blueprint.
 reviews_blueprint = Blueprint(
@@ -100,14 +100,14 @@ class ProfanityFree:
             raise ValidationError(self.message)
 
 
-# class CommentForm(FlaskForm):
-#     comment = TextAreaField('Comment', [
-#         DataRequired(),
-#         Length(min=4, message='Your review is too short'),
-#         ProfanityFree(message='Your review must not contain profanity')])
-#     rating = TextAreaField('Rating', [
-#         DataRequired(),
-#         NumberRange(min=1, max=5, message='Rating must be between 1 and 5')
-#     ])
-#     game_id = HiddenField("game id")
-#     submit = SubmitField('Submit')
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment', [
+        DataRequired(),
+        Length(min=4, message='Your review is too short'),
+        ProfanityFree(message='Your review must not contain profanity')])
+    rating = TextAreaField('Rating', [
+        DataRequired(),
+        NumberRange(min=1, max=5, message='Rating must be between 1 and 5')
+    ])
+    game_id = HiddenField("game id")
+    submit = SubmitField('Submit')

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, request, session, redirect, url_for
 from games.games.services import get_games
 from games.home import services
 import games.adapters.repository as repo
@@ -13,12 +13,13 @@ profile_blueprint = Blueprint('profile_bp', __name__)
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+
     user = session['username']
     current_user = profile_services.get_user(user, repo.repo_instance)
+    if current_user == None:
+        return redirect(url_for("authentication_bp.login"))
+
     favourite_list = profile_services.get_favourites(current_user)
-    for fave in favourite_list:
-        print(type(fave))
-        print(fave.game_id)
     return render_template('profile.html', favourites=favourite_list)
 
 

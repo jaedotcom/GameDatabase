@@ -13,7 +13,6 @@ import games.reviews.services as services
 
 from games.authentication.authentication import login_required
 
-
 # Configure Blueprint.
 reviews_blueprint = Blueprint(
     'reviews_bp', __name__)
@@ -33,16 +32,16 @@ def write_game_review():
     if form.validate_on_submit():
         # Successful POST, i.e. the comment text has passed data validation.
         # Extract the game id, representing the commented review, from the form.
-        game_id = int(form.game_id.data)
 
+        # game_id = int(form.game_id.data)
 
         # Use the service layer to store the new review.
-        services.add_review(game_id, form.comment.data, form.rating.data ,user_name, repo.repo_instance)
+        services.add_review(game_id, form.comment.data, form.rating.data, user_name, repo.repo_instance)
 
         # Retrieve the review in dict form.
         review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
-        return redirect(url_for('descriptions_bp.view_game', game_id=game_id))
+        return redirect(url_for('descriptions_bp.gameDescription', game_id=game_id))
 
     # For a GET request or an unsuccessful POST, retrieve the game details and pass the form.
     game = repo.repo_instance.get_game_by_id(game_id)
@@ -63,8 +62,9 @@ def write_game_review():
     # For a GET or an unsuccessful POST, retrieve the review to comment in dict form, and return a Web page that allows
     # the user to enter a comment. The generated Web page includes a form object.
 
+
     return render_template(
-        'browse/gameDescription.html',  # Adjust this template name as needed
+        'browse/gameDescription.html',
         title='Game review',
         games=game,  # Pass the game data to the template
         reviews=review,  # Pass the reviews data to the template

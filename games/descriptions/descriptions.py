@@ -61,15 +61,17 @@ def favourite():
         for game in all_games:
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
-                print(type(game))
 
-    user = session['username']
-    current_user = profile_services.get_user(user, repo.repo_instance)
-    #turn the current_game_dict into a Game object and pass that into add_to_favourites function in profile_services
-    #get the game from the list of games in memory repository
+    user = session.get('username')
+    if user:
+        current_user = profile_services.get_user(user, repo.repo_instance)
 
-    game1 = repo.repo_instance.get_game_by_id(current_game_dict['game_id'])
+        if current_user:
+            game1 = repo.repo_instance.get_game_by_id(current_game_dict['game_id'])
 
-    profile_services.add_to_favourites(current_user, game1)
+            if game1:
+                profile_services.add_to_favourites(current_user, game1)
+
     all_genres = sv.get_genres(repo.repo_instance)
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
+

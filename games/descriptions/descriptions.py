@@ -1,9 +1,13 @@
 from flask import Blueprint, render_template, request, session
+
 from games.home import services as sv
 from games.games import services as game_services
 from games.profile import services as profile_services
 import games.adapters.repository as repo
 from games.authentication.authentication import login_required
+from flask import Blueprint, render_template, url_for, redirect, session
+from games.forms.forms import CommentForm
+
 
 
 descriptions_blueprint = Blueprint(
@@ -23,7 +27,8 @@ def descriptions():
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
+    form = CommentForm()
+    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)
 
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])

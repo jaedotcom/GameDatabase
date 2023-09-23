@@ -25,6 +25,21 @@
             <div id="floating-paragraph">{{ games['description'] }}</div>
             <br>
             <img src="{{ games['image_url'] }}" alt="Game Header Image">
+
+             <!-- Include Review Form -->
+            {% include 'browse/review_form.html' %}
+
+            <!-- Display Existing Reviews -->
+            <div id="existing-reviews">
+                <h3>Existing Reviews</h3>
+                {% for review in reviews %}
+                    <div class="review">
+                        <p><strong>User:</strong> {{ review.user }}</p>
+                        <p><strong>Rating:</strong> {{ review.rating }}</p>
+                        <p><strong>Comment:</strong> {{ review.comment }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </main>
     </div>
 {% endblock %}

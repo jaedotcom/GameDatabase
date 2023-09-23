@@ -23,8 +23,8 @@ reviews_blueprint = Blueprint(
 @login_required
 def write_game_review():
     # Obtain the user name of the currently logged in user.
-    user_name = session['user_name']
-
+    user_name = session['username']
+    game_id = request.args.get('game_id', type=int)
     # Create form. The form maintains state, e.g. when this method is called with a HTTP GET request and populates
     # the form with an game id, when subsequently called with a HTTP POST request, the review id remains in the
     # form.
@@ -35,35 +35,40 @@ def write_game_review():
         # Extract the game id, representing the commented review, from the form.
         game_id = int(form.game_id.data)
 
+
         # Use the service layer to store the new review.
-        services.add_review(game_id, form.comment.data, user_name, repo.repo_instance)
+        services.add_review(game_id, form.comment.data, form.rating.data ,user_name, repo.repo_instance)
 
         # Retrieve the review in dict form.
         review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
-        return redirect(url_for('browse/games.html', view_reviews_for=game_id))
+        return redirect(url_for('descriptions_bp.view_game', game_id=game_id))
 
-    if request.method == 'GET':
-        # Request is a HTTP GET to display the form.
-        # Extract the game id, representing the review to comment, from a query parameter of the GET request.
-        game_id = int(request.args.get('game'))
+    # For a GET request or an unsuccessful POST, retrieve the game details and pass the form.
+    game = repo.get_game_by_id(game_id)
+    review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
-        # Store the article id in the form.
-        form.game_id.data = game_id
-    else:
-        # Request is a HTTP POST where form validation has failed.
-        # Extract the game id of the review being commented from the form.
-        game_id = int(form.game_id.data)
+    # if request.method == 'GET':
+    #     # Request is a HTTP GET to display the form.
+    #     # Extract the game id, representing the review to comment, from a query parameter of the GET request.
+    #     game_id = int(request.args.get('game'))
+    #
+    #     # Store the article id in the form.
+    #     form.game_id.data = game_id
+    # else:
+    #     # Request is a HTTP POST where form validation has failed.
+    #     # Extract the game id of the review being commented from the form.
+    #     game_id = int(form.game_id.data)
 
     # For a GET or an unsuccessful POST, retrieve the review to comment in dict form, and return a Web page that allows
     # the user to enter a comment. The generated Web page includes a form object.
-    review = services.get_reviews_for_game(game_id, repo.repo_instance)
+
     return render_template(
-        'browse/review_form.html',
+        'browse/gameDescription.html',  # Adjust this template name as needed
         title='Game review',
-        review=review,
+        games=game,  # Pass the game data to the template
+        reviews=review,  # Pass the reviews data to the template
         form=form,
-        handler_url=url_for('reviews_bp.reviews_blueprint')
     )
 
 

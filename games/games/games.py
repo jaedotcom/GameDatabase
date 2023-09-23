@@ -10,6 +10,11 @@ from wtforms.validators import DataRequired
 games_bp = Blueprint('games_bp', __name__, url_prefix='/games')
 
 
+class ReviewForm(FlaskForm):
+    review_text = TextAreaField('Review', validators=[DataRequired()])
+    submit = SubmitField('Submit Review')
+
+
 @games_bp.route('/games')
 def games():
     page = int(request.args.get('page', 1))
@@ -22,6 +27,17 @@ def games():
     all_genres = sv.get_genres(repo.repo_instance)
     return render_template('browse/games.html', some_game=current_games, current_page=page, num_pages=total_pages,
                            all_genres=all_genres)
+
+
+# Add a route to display the game description page.
+@games_bp.route('/game/<int:game_id>')
+def game_description(game_id):
+    # Obtain the user name of the currently logged in user.
+    user_name = session.get('username')
+    game_details = services.get_games(game_id)
+    form = ReviewForm()
+
+    return render_template('browse/gameDescription.html', games=game_details, form=form, user_name=user_name)
 
 
 @games_bp.route('/review', methods=['GET', 'POST'])
@@ -48,7 +64,8 @@ def post_a_review():
         return redirect(url_for('games_bp.games_details', game_id=game_id))
 
     # Render the review form template
-    return render_template('review_form.html', form=form)
+    return render_template('browse/review_form.html', form=form)
+
 
 
 @games_bp.route('/rate', methods=['GET', 'POST'])
@@ -69,4 +86,4 @@ def post_a_rating():
         return redirect(url_for('games_bp.games_details', game_id=game_id))
 
     # Render the rating form template
-    return render_template('rating_form.html')  # Create a rating form template as needed
+    return render_template('browse/review_form.html')  # Create a rating form template as needed

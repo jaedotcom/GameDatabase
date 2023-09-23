@@ -1,29 +1,52 @@
-{% extends 'header.html' %}
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
-
-{% block content %}
-  <div class="container">
-    <h2>Write a Review</h2>
-    <form method="POST" action="{{ url_for('games_bp.post_a_review') }}">
-      {{ form.hidden_tag() }}
-
-      <div class="form-group">
-        {{ form.review_text.label(class="form-control-label") }}
-        {{ form.review_text(class="form-control", placeholder="Write your review here", rows="5") }}
-        {% if form.review_text.errors %}
-          <div class="alert alert-danger">
-            {% for error in form.review_text.errors %}
-              <p>{{ error }}</p>
+{#{% block head %}#}
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+    <!-- Review Form -->
+<div id="review-form-container">
+    <h3>Write a Review</h3>
+    <form method="POST" action="{{ url_for('reviews_bp.write_game_review') }}">
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="game_id" value="{{ games['game_id'] }}">
+        <div class="form-group">
+            <label for="rating">Rating (1-5):</label>
+            {{ form.rating(class="form-control") }}
+            {% for error in form.rating.errors %}
+                <span class="text-danger">{{ error }}</span>
             {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
+        </div>
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            {{ form.comment(class="form-control", rows=4) }}
+            {% for error in form.comment.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
         <button type="submit" class="btn btn-primary">Submit Review</button>
-      </div>
     </form>
-  </div>
-{% endblock %}
+</div>
+
+{#  <div class="container">#}
+{#    <h2>Write a Review</h2>#}
+{#    <form method="POST" action="{{ url_for('games_bp.post_a_review') }}">#}
+{#      {{ form.hidden_tag() }}#}
+{##}
+{#      <div class="form-group">#}
+{#        {{ form.review_text.label(class="form-control-label") }}#}
+{#        {{ form.review_text(class="form-control", placeholder="Write your review here", rows="5") }}#}
+{#        {% if form.review_text.errors %}#}
+{#          <div class="alert alert-danger">#}
+{#            {% for error in form.review_text.errors %}#}
+{#              <p>{{ error }}</p>#}
+{#            {% endfor %}#}
+{#          </div>#}
+{#        {% endif %}#}
+{#      </div>#}
+{##}
+{#      <div class="form-group">#}
+{#        <button type="submit" class="btn btn-primary">Submit Review</button>#}
+{#      </div>#}
+{#    </form>#}
+{#  </div>#}
+{#{% endblock %}#}

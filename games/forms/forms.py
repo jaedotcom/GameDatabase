@@ -3,12 +3,11 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError, NumberRange
 
-from better_profanity import profanity
-
 from games.reviews.reviews import ProfanityFree
 
 forms_blueprint = Blueprint(
     'forms_bp', __name__)
+
 
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment', [

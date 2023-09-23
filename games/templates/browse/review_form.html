@@ -11,7 +11,7 @@
         <input type="hidden" name="game_id" value="{{ games['game_id'] }}">
         <div class="form-group">
             <label for="rating">Rating (1-5):</label>
-            {{ form.rating(class="form-control") }}
+            {{ form.rating(type="number", class="form-control", step="0.01") }}
             {% for error in form.rating.errors %}
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}
@@ -26,6 +26,7 @@
         <button type="submit" class="btn btn-primary">Submit Review</button>
     </form>
 </div>
+
 
 {#  <div class="container">#}
 {#    <h2>Write a Review</h2>#}

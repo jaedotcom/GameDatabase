@@ -33,19 +33,13 @@ def descriptions():
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
 def search_game_description(game_id):
-    all_games = game_services.get_games(repo.repo_instance)
-    current_game_dict = None
-
-    for game in all_games:
-        if game.get('game_id') == game_id:
-            current_game_dict = game
-            break
-
-    if current_game_dict is None:
+    game = game_services.get_game_by_id(repo.repo_instance, game_id)
+    if game is None:
         pass
 
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
+    form = CommentForm()
+    return render_template('browse/gameDescription.html', games=game, all_genres=all_genres, form=form)
 
 
 @descriptions_blueprint.route('/gameDescription/favourite', methods=['GET', 'POST'])

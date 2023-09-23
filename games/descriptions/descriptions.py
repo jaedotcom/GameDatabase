@@ -1,17 +1,12 @@
 from flask import Blueprint, render_template, request, session
-
-from games.home import services as sv
+from games.authentication.authentication import login_required
 from games.games import services as game_services
 from games.profile import services as profile_services
-import games.adapters.repository as repo
-from games.authentication.authentication import login_required
-from flask import Blueprint, render_template, url_for, redirect, session
+from games.adapters import repository as repo
+from games.home import services as sv
 from games.forms.forms import CommentForm
 
-
-
-descriptions_blueprint = Blueprint(
-    'descriptions_bp', __name__)
+descriptions_blueprint = Blueprint('descriptions_bp', __name__)
 
 
 @descriptions_blueprint.route('/gameDescription', methods=['GET'])
@@ -27,7 +22,10 @@ def descriptions():
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
     all_genres = sv.get_genres(repo.repo_instance)
+
+    # Create an instance of CommentForm
     form = CommentForm()
+
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)
 
 
@@ -38,7 +36,10 @@ def search_game_description(game_id):
         pass
 
     all_genres = sv.get_genres(repo.repo_instance)
+
+    # Create an instance of CommentForm
     form = CommentForm()
+
     return render_template('browse/gameDescription.html', games=game, all_genres=all_genres, form=form)
 
 
@@ -67,5 +68,8 @@ def favourite():
                 profile_services.add_to_favourites(current_user, game1)
 
     all_genres = sv.get_genres(repo.repo_instance)
-    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres)
 
+    # Create an instance of CommentForm
+    form = CommentForm()
+
+    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)

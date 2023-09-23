@@ -59,7 +59,15 @@ class AbstractRepository(abc.ABC):
     def get_game_by_id(self, game_id) -> Game:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_reviews_by_game_id(self, game_id) -> Game:
+        raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_last_review(self) -> Review:
+        raise NotImplementedError
 
-
+    @abc.abstractmethod
+    def get_first_review(self) -> Review:
+        raise NotImplementedError
 

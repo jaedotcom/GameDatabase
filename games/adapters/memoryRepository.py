@@ -55,6 +55,23 @@ class MemoryRepository(AbstractRepository):
         self.__reviews.append(review)
         return review
 
+    def get_reviews_by_game_id(self, game_id) -> List[Review]:
+        return [review for review in self.__reviews if review.game_id == game_id]
+
+    def get_last_review(self) -> Review | None:
+        if not self.__reviews:
+            return None
+
+        last_review = self.__reviews[-1]
+        return last_review
+
+    def get_first_review(self) -> Review | None:
+        if not self.__reviews:
+            return None
+
+        first_review = self.__reviews[0]
+        return first_review
+
 
 def populate(data_path: str, repo: AbstractRepository):
     # dir_name = os.path.dirname(os.path.abspath(__file__))

@@ -387,3 +387,10 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
+
+def make_review(user: User, game: Game, rating: int, comment: str):
+    review = Review(user, game, rating, comment)
+    user.add_review(review)
+    game.add_review(comment)
+
+    return comment

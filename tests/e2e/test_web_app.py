@@ -1,4 +1,5 @@
 import pytest
+from flask import session
 
 
 def test_comment(client, auth):

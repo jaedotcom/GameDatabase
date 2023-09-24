@@ -5,8 +5,6 @@ from flask import session
 def test_comment(client, auth):
     auth.login()
 
-    response = client.get('/comment_review?something')
-
     response = client.post(
         '/comment_review',
         data={'comment': 'This game sucks', 'game_id': 1}

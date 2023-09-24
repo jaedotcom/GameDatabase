@@ -296,3 +296,46 @@ class TestAuthenticationService:
         # Attempt to authenticate a user with an empty username
         with pytest.raises(AuthenticationException):
             authenticate_user("", "test_password", repo)
+    def test_profile_page_authenticated(client, auth):
+        # Simulate an authenticated user
+        auth.login()
+
+        # Access the profile page
+        response = client.get('/profile')
+
+        # Check if the response is successful and contains user information
+        assert response.status_code == 200
+        assert b'User Profile' in response.data
+        assert b'Username:' in response.data
+        assert b'Favorite Games' in response.data
+
+    def test_profile_page_unauthenticated(client):
+        # Simulate an unauthenticated user
+        response = client.get('/profile')
+
+        # Check if the response redirects to the login page
+        assert response.status_code == 302
+        assert '/authentication/login' in response.headers['Location']
+
+    def test_delete_favorite_game_authenticated(client, auth):
+        # Simulate an authenticated user
+        auth.login()
+
+        game_id = 1
+        response = client.get(f'/profile/delete/{game_id}')
+
+        # Check if the response is a redirect back to the profile page
+        assert response.status_code == 302
+        assert '/profile' in response.headers['Location']
+
+        # You can also check if the game is removed from the user's favorites in the repository
+
+    def test_delete_favorite_game_unauthenticated(client):
+        # Simulate an unauthenticated user
+        response = client.get('/profile/delete/1')
+
+        # Check if the response redirects to the login page
+        assert response.status_code == 302
+        assert '/authentication/login' in response.headers['Location']
+
+

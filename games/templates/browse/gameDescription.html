@@ -19,7 +19,7 @@
                 {% endfor %}
             </div>
             <div>
-                <a style="font-family: Roboto Light, Arial, sans-serif" href=" {{ url_for('descriptions_bp.favourite', current_game=games, current_game_id=games['game_id']) }} ">Favourite</a>
+                <a style="font-family: Roboto Light, Arial, sans-serif" href=" {{ url_for('descriptions_bp.favourite', current_game=games, current_game_id=games['game_id']) }} ">Favourite &#x2665;</a>
             </div>
             <br>
             <div id="floating-paragraph">{{ games['description'] }}</div>

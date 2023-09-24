@@ -20,33 +20,18 @@ def profile():
         return redirect(url_for("authentication_bp.login"))
 
     favourite_list = profile_services.get_favourites(current_user)
-    return render_template('profile.html', favourites=favourite_list)
+    return render_template('profile.html', favourites=favourite_list, current_user=current_user)
 
 
-@profile_blueprint.route('/profile/delete', methods=['GET', 'POST'])
+@profile_blueprint.route('/profile/delete/<int:game_id>', methods=['GET', 'POST'])
 @login_required
-def delete_favourite():
-    #gets game
-    current_game = request.args.get('current_game')
-    game_id = request.args.get('current_id')
-
-    try:
-        current_game_dict = eval(current_game)
-    except SyntaxError:
-        all_games = game_services.get_games(repo.repo_instance)
-        for game in all_games:
-            if game.get('game_id') == int(game_id):
-                current_game_dict = game
-
-    #gets user
+def delete_favourite(game_id):
+    # Get user
     user = session['username']
     current_user = profile_services.get_user(user, repo.repo_instance)
 
-    game1 = repo.repo_instance.get_game_by_id(current_game_dict['game_id'])
+    game1 = repo.repo_instance.get_game_by_id(game_id)
 
-    #delete game from users favourite list
     profile_services.delete_favourites(current_user, game1)
-    favourite_list = profile_services.get_favourites(current_user)
-    return render_template('profile.html', favourites=favourite_list)
 
-
+    return redirect(url_for('profile_bp.profile'))

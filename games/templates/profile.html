@@ -1,23 +1,39 @@
 {% extends "layout.html" %}
 
-{% block title %}Game Description{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
 {% block content %}
     {% include 'header.html' %}
     <div id="container">
         <main id="content">
-            <h2><strong>Profile Page</strong></h2>
-            <div>
-                <h3>Favourites:</h3>
-                {% for fave in favourites %}
-                    <p>{{ fave['title'] }}</p>
-                    <a href=" {{ url_for('profile_bp.delete_favourite', current_game=fave, current_id=fave.game_id )}} ">Delete</a>
-                {% endfor %}
+            <div class="user-profile">
+                <h2><strong>Profile Page</strong></h2>
+                <div class="user-details">
+                    <h3>User Details:</h3>
+                    <p><strong>Username:</strong> {{ current_user.username }}</p>
+                    <!-- Add more user details here -->
+                </div>
+                <div class="user-activities">
+                    <h3>Favourites:</h3>
+                    <div class="favorite-games">
+    {% for game in favourites %}
+        <div class="favorite-game-item">
+            <a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">
+                <img src="{{ game.image_url }}" alt="{{ game.title }}">
+            </a>
+            <p class="favorite-game-title">
+                {{ game['title'] }}
+            </p>
+            <a href="{{ url_for('profile_bp.delete_favourite', game_id=game['game_id']) }}" class="delete-button">Delete</a>
+        </div>
+    {% endfor %}
+</div>
+                </div>
             </div>
         </main>
     </div>

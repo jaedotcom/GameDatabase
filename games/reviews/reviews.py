@@ -5,7 +5,7 @@ from flask import request, render_template, redirect, url_for, session
 
 from better_profanity import profanity
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, HiddenField, SubmitField, StringField
+from wtforms import TextAreaField, HiddenField, SubmitField, StringField, IntegerField
 from wtforms.validators import DataRequired, Length, ValidationError, NumberRange
 
 import games.adapters.repository as repo
@@ -29,20 +29,26 @@ def write_game_review():
 
     #CRASHES here : ...
     if form.validate_on_submit():
-        game_id = int(form.game_id.data)
-        review_text = str(form.comment.data)
-        rating = int(form.rating.data)
+        game_id = form.game_id.data
 
-        services.add_review(game_id, review_text, user_name,  rating,  repo.repo_instance)
+        if game_id:
+            game_id = int(game_id)
+            review_text = str(form.comment.data)
+            rating = int(form.rating.data)
 
-        # Retrieve the review in dict form.
-        # review = services.get_reviews_for_game(game_id, repo.repo_instance)
+            services.add_review(game_id, review_text, user_name, rating, repo.repo_instance)
 
-        return redirect(url_for('descriptions_bp.search_game_description', game_id=game_id))
+            # Retrieve the review in dict form.
+            # review = services.get_reviews_for_game(game_id, repo.repo_instance)
+
+            return redirect(url_for('descriptions_bp.search_game_description', game_id=game_id))
 
     game_id = request.args.get('game_id', type=int)
     game = repo.repo_instance.get_game_by_id(game_id)
-    review = services.get_reviews_for_game(int(game_id), repo.repo_instance)
+    #review = services.get_reviews_for_game(int(game_id), repo.repo_instance)
+    review = []
+    if game_id is not None:
+        review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
     return render_template(
         'browse/gameDescription.html',
@@ -70,7 +76,7 @@ class CommentForm(FlaskForm):
         Length(min=4, message='Your review is too short'),
         ProfanityFree(message='Your review must not contain profanity')])
 
-    rating = StringField('Rating', [
+    rating = IntegerField('Rating', [
         DataRequired(),
         NumberRange(min=1, max=5, message='Rating must be between 1 and 5')
     ])

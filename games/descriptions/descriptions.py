@@ -54,21 +54,20 @@ def submit_review():
 
     form = CommentForm()
     if form.validate_on_submit():
-        if current_game_dict:
-            try:
-                comment = form.comment.data
-                rating = int(form.rating.data)
-                game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
-                current_game.reviews.append(game_review)
+        try:
+            comment = form.comment.data
+            rating = int(form.rating.data)
+            game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
+            current_game.reviews.append(game_review)
+            print(type(current_game_dict))
+            return redirect(url_for('browse/DescriptionReview.html', review=game_review, games=current_game_dict, game_id=game_id))
 
-                return redirect(url_for('browse/DescriptionReview.html', review=game_review, games=current_game, game_id=game_id))
-
-            except ValueError:
-                pass
+        except ValueError:
+            pass
 
     return render_template(
         'browse/gameDescription.html',
-        games=current_game,
+        games=current_game_dict,
         form=form,
         game_id=game_id,
     )

@@ -6,6 +6,9 @@ from games.domainmodel.model import Publisher, Genre, Game, Review, User
 from datetime import datetime
 from games.adapters.repository import AbstractRepository
 from games.authentication import services as auth_services
+from games.authentication.services import add_user, authenticate_user, UnknownUserException, AuthenticationException
+from games.adapters.memoryRepository import MemoryRepository
+from games.domainmodel.model import User
 
 
 class MemoryRepository(AbstractRepository):
@@ -214,3 +217,82 @@ class TestService:
 
         # Check that password has been encrypted.
         assert user_as_dict['password'].startswith('pbkdf2:sha256:')
+
+
+class TestAuthenticationService:
+
+    @pytest.fixture
+    def repo(self):
+        return MemoryRepository()
+
+    def test_add_user(self, repo):
+        username = "test_user"
+        password = "test_password"
+        add_user(username, password, repo)
+
+        user = repo.get_user(username)
+        assert user is not None
+        assert user.username == username
+        assert user.password != password
+
+    def test_authenticate_user(self, repo):
+        # Create a new user and add them to the repository
+        username = "test_user"
+        password = "test_password"
+        add_user(username, password, repo)
+
+        # Authenticate the user with the correct password
+        authenticated_user = authenticate_user(username, password, repo)
+        assert authenticated_user is not None
+
+        # Try to authenticate the user with an incorrect password
+        with pytest.raises(AuthenticationException):
+            authenticate_user(username, "wrong_password", repo)
+
+    def test_authenticate_unknown_user(self, repo):
+        # Try to authenticate a user that doesn't exist in the repository
+        with pytest.raises(UnknownUserException):
+            authenticate_user("unknown_user", "password", repo)
+
+    def test_get_user(self, repo):
+        # Create a new user and add them to the repository
+        username = "test_user"
+        password = "test_password"
+        add_user(username, password, repo)
+
+        # Retrieve the user using the get_user function
+        user = repo.get_user(username)
+        assert user is not None
+        assert user.username == username
+
+    def test_get_unknown_user(self, repo):
+        # Try to retrieve a user that doesn't exist in the repository
+        with pytest.raises(UnknownUserException):
+            repo.get_user("unknown_user")
+
+    def test_add_duplicate_user(self, repo):
+        # Attempt to add a user with the same username twice
+        username = "test_user"
+        password1 = "test_password1"
+        password2 = "test_password2"
+
+        add_user(username, password1, repo)  # Add the first user
+
+        # Try to add a second user with the same username
+        with pytest.raises(AuthenticationException):
+            add_user(username, password2, repo)
+
+    def test_authenticate_user_with_invalid_username(self, repo):
+        # Attempt to authenticate a user with an invalid username
+        with pytest.raises(UnknownUserException):
+            authenticate_user("invalid_username", "password", repo)
+
+    def test_authenticate_user_with_empty_password(self, repo):
+        # Attempt to authenticate a user with an empty password
+        with pytest.raises(AuthenticationException):
+            authenticate_user("test_user", "", repo)
+
+    def test_authenticate_user_with_empty_username(self, repo):
+        # Attempt to authenticate a user with an empty username
+        with pytest.raises(AuthenticationException):
+            authenticate_user("", "test_password", repo)

@@ -2,7 +2,7 @@
     <a href="{{ url_for('home_bp.home') }}">
     <img src="../static/logoImage/logo.png" alt="Game site logo" width="250" height="250"/>
     </a>
-    <div class="heading">
+    <div style="color: yellow" class="heading">
         {% if session['username'] %}
             Hello {{ session['username'] }}!
         {% else %}

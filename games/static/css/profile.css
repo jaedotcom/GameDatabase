@@ -1,0 +1,97 @@
+.user-profile {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for user details */
+.user-details {
+    margin-bottom: 20px;
+}
+
+.user-details p {
+    font-size: 18px;
+    color: #333;
+    margin: 8px 0;
+}
+
+/* Style for user activities section */
+.user-activities {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.activity-section {
+    margin-bottom: 20px;
+}
+
+.activity-section h4 {
+    font-size: 20px;
+    color: #333;
+    margin: 8px 0;
+}
+
+.activity-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.activity-section ul li {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.favorite-games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.favorite-game-item {
+    width: 30%; /* Adjust the width as needed for your layout */
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-game-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.favorite-game-title {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+}
+
+.delete-button {
+    display: block;
+    text-align: center;
+    background-color: #ff5733;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.delete-button:hover {
+    background-color: #ff301a;
+}
+

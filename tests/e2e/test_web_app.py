@@ -58,3 +58,26 @@ def test_games_with_review(client):  # to do
     assert response.status_code == 200
     assert b'Access Games Instantly' in response.data
     assert b'Access Games Instantly' in response.data
+
+def test_login(client, auth):
+    # Check we retrieve the login page.
+    status_code = client.get('/authentication/login').status_code
+    assert status_code == 200
+
+    # Check successful login redirects to the homepage
+    response = auth.login()
+    assert response.headers["Location"] == "/"
+
+    # Check a session has been created for the user
+    with client:
+        client.get('/')
+        assert session["username"] == "test_user"
+
+def test_logout(client, auth):
+    # Login
+    auth.login()
+
+    # Log out
+    with client:
+        auth.logout()
+        assert "username" not in session

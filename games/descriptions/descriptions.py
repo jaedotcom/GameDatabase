@@ -28,23 +28,20 @@ def descriptions():
             if game.get('game_id') == int(game_id):
                 current_game_dict = game
     all_genres = sv.get_genres(repo.repo_instance)
-
     # Create an instance of CommentForm
     form = CommentForm()
 
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)
 
 
-@descriptions_blueprint.route('/gameDescription/<int:game_id>/review', methods=['GET', 'POST'])
+@descriptions_blueprint.route('/gameDescription/review', methods=['GET', 'POST'])
 @login_required
-def submit_review(game_id):
+def submit_review():
     current_game = request.args.get('current_game')
-    game_id = request.args.get('current_game_id')
-    print('Session is' + str(session))
-    print()
-    print('game_id is' + game_id)
-    print()
-    print('Current game is' + str(current_game))
+    print(current_game)
+    game_id = request.args.get('game_id')
+    print(game_id)
+
     username = session.get('username')
     password = session.get('password')
     user = User(username=username, password=password)
@@ -71,7 +68,7 @@ def submit_review(game_id):
 
     return render_template(
         'browse/gameDescription.html',
-        game=current_game,
+        games=current_game,
         form=form,
         game_id=game_id,
     )

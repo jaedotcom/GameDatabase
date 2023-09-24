@@ -1,7 +1,8 @@
+{% block content %}
     <!-- Review Form -->
 <div id="review-form-container">
     <h3>Write a Review</h3>
-    <form method="POST" action="{{ url_for('reviews_bp.write_game_review') }}">
+    <form method="POST" action="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id']) }}">
         {{ form.csrf_token }}
         {{ form.hidden_tag() }}
         <input type="hidden" name="game_id" value="{{ games['game_id'] }}">
@@ -19,9 +20,16 @@
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}
         </div>
-        {{ form.submit | safe }}
+        <!--game_id is None so it's crashing-->
+        {% if 'username' in session %}
+            <a class="btn-nav" href="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id']) }}">Add a review</a>
+
+        {% else %}
+            <a class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Log in to write a review</a>
+        {% endif %}
+{#        {{ form.submit | safe }}#}
 <!--        <button type="submit" class="btn btn-primary">Submit Review</button>-->
     </form>
 </div>
-
+{% endblock %}
 

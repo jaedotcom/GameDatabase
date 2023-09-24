@@ -41,7 +41,9 @@ def write_game_review():
             # Retrieve the review in dict form.
             # review = services.get_reviews_for_game(game_id, repo.repo_instance)
 
-            return redirect(url_for('descriptions_bp.search_game_description', game_id=game_id))
+            return redirect(url_for('descriptions_bp.descriptions_with_reviews', game_id=game_id))
+            #return redirect(url_for('descriptions_bp.search_game_description', game_id=game_id))
+            #return redirect(url_for('descriptions_bp.game_description'))
 
     game_id = request.args.get('game_id', type=int)
     game = repo.repo_instance.get_game_by_id(game_id)

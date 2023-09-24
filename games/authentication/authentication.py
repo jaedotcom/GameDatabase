@@ -58,7 +58,7 @@ def login():
             current_user_name = current_user.username
             session.clear()
             session['username'] = user['username']
-            session['user_name'] = user['username']
+            session['password'] = user['password']
 
             return redirect(url_for("profile_bp.profile", current_user=current_user_name))
 

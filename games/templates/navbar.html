@@ -3,8 +3,8 @@
     <img src="../static/logoImage/logo.png" alt="Game site logo" width="250" height="250"/>
     </a>
     <div class="heading">
-        {% if session['user_name'] %}
-            Hello {{ session['user_name'] }}!
+        {% if session['username'] %}
+            Hello {{ session['username'] }}!
         {% else %}
             Hi there
         {% endif %}

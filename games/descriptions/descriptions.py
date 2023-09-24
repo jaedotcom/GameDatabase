@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, HiddenField, SubmitField
+from wtforms import TextAreaField, HiddenField, SubmitField, DecimalField
 from wtforms.validators import DataRequired, Length, NumberRange
 from better_profanity import profanity
 from games.authentication.authentication import login_required
@@ -145,9 +145,9 @@ def favourite():
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment', [
         DataRequired(),
-        Length(min=4, message='Your review is too short'),
+        Length(min=4, message="Comment must be at least 4 characters long."),
         ProfanityFree(message='Your review must not contain profanity')])
-    rating = TextAreaField('Rating', [
+    rating = DecimalField('Rating', [
         DataRequired(),
         NumberRange(min=1, max=5, message='Rating must be between 1 and 5')
     ])

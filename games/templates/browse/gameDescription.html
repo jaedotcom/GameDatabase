@@ -28,41 +28,42 @@
 
              <!-- Include Review Form -->
             <div id="review-form-container">
-    <h3>Write a Review</h3>
-    <form method="POST" action="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id'], current_game=games) }}">
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    <input type="hidden" name="game_id" value="{{ games['game_id'] }}">
-    <div style="font-family: Roboto Light, Arial, sans-serif; text-align: center;">
-        <div class="form-group" style="display: inline-block; text-align: center; width: 50%;">
-            {{ form.rating.label }}
-            {{ form.rating(type="number", class="form-control", step="0.01") }}
-            {% for error in form.rating.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="form-group" style="display: inline-block; transform: translateX(-11px); text-align: center; width: 100%;">
-            {{ form.comment.label }}
-            {{ form.comment(class="form-control", rows=4) }}
-            {% for error in form.comment.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-        </div>
-    </div>
-    <!--game_id is None so it's crashing-->
-    {% if 'username' in session %}
-        <a style="font-family: Roboto Light, Arial, sans-serif" class="btn-nav" href="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id']) }}">Add a review</a>
-    {% else %}
-        <a style="font-family: Roboto Light, Arial, sans-serif" class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Log in to write a review</a>
-    {% endif %}
-</form>
+                <h3>Write a Review</h3>
+                <form method="POST" action="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id'], current_game=games) }}">
+                {{ form.csrf_token }}
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="game_id" value="{{ games['game_id'] }}">
+                <div style="font-family: Roboto Light, Arial, sans-serif; text-align: center;">
+                    <div class="form-group" style="display: inline-block; text-align: center; width: 50%;">
+                        {{ form.rating.label }}
+                        {{ form.rating(type="number", class="form-control", step="1.00") }}
+                        {% for error in form.rating.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group" style="display: inline-block; transform: translateX(-11px); text-align: center; width: 100%;">
+                        {{ form.comment.label }}
+                        {{ form.comment(class="form-control", rows=4) }}
+                        {% for error in form.comment.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--game_id is None so it's crashing-->
+                {% if 'username' in session %}
+                    {{ form.submit() }}
+{#                    <a style="font-family: Roboto Light, Arial, sans-serif" class="btn-nav" href="{{ url_for('descriptions_bp.submit_review', game_id=games['game_id']) }}">Add a review</a>#}
+                {% else %}
+                    <a style="font-family: Roboto Light, Arial, sans-serif" class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Log in to write a review</a>
+                {% endif %}
+            </form>
 
 </div>
 
             <!-- Display Existing Reviews -->
             <div id="existing-reviews">
                 <h3>Existing Reviews</h3>
-                {% for review in games.reviews %}
+                {% for review in games['reviews'] %}
                     <div class="review">
                         <p><strong>User:</strong> {{ review.user.username }}</p>
                         <p><strong>Rating:</strong> {{ review.rating }}</p>

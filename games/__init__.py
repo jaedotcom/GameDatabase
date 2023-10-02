@@ -11,6 +11,7 @@ from games.adapters.repository import AbstractRepository
 import games.adapters.repository as repo
 from games.adapters.memoryRepository import populate
 from games.adapters.memoryRepository import MemoryRepository
+from games.adapters.datareader import repository_populate
 
 from games.adapters.database_repository import SqlAlchemyRepository
 from games.adapters.orm import metadata, map_model_to_tables
@@ -30,6 +31,9 @@ def create_app(test_config=None):
     database_uri = 'sqlite:///games.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
+    database_echo = app.config['SQLALCHEMY_ECHO']
+    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+                                    echo=database_echo)
 
     if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
         print("REPOPULATING DATABASE...")

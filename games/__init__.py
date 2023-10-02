@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 
 from flask import Flask
+
+from games.adapters.datareader import database_repository
 from games.domainmodel.model import Game
 from games.adapters.repository import AbstractRepository
 
@@ -30,11 +32,12 @@ def create_app(test_config=None):
     app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
 
     # Create a database engine and connect it to the specified database
-    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
-                                    echo=False)
+    # database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+    #                                 echo=False)
 
     database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
                                     echo=database_echo)
+
     session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
     repo.repo_instance = database_repository.SqlAlchemyRepository(session_factory)
 

@@ -36,7 +36,7 @@ def create_app(test_config=None):
     data_path = Path('games') / 'adapters' / 'data'
     database_echo = app.config['SQLALCHEMY_ECHO']
     database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
-                                    echo=database_echo)
+                                    echo=False)
 
    ## if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
     if app.config['TESTING'] == 'True':

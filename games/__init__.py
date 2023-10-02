@@ -26,7 +26,13 @@ def create_app(test_config=None):
     app = Flask(__name__)
 
     database_uri = 'sqlite:///games.db'
-    database_echo = app.config['SQLALCHEMY_ECHO']
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
+    app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
+
+    # Create a database engine and connect it to the specified database
+    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+                                    echo=False)
+
     database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
                                     echo=database_echo)
     session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)

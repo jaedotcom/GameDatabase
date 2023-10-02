@@ -13,8 +13,8 @@ from games.adapters.memoryRepository import populate
 from games.adapters.memoryRepository import MemoryRepository
 from games.adapters.datareader import repository_populate
 
-from games.adapters.database_repository import SqlAlchemyRepository
-from games.adapters.orm import metadata, map_model_to_tables
+from games.adapters.datareader.database_repository import SqlAlchemyRepository
+from games.adapters.datareader.orm import metadata, map_model_to_tables
 
 # imports from SQLAlchemy
 from sqlalchemy import create_engine, inspect

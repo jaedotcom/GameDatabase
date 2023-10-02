@@ -5,12 +5,13 @@ from pathlib import Path
 from flask import Flask
 
 from games.adapters.datareader import database_repository
+from games.adapters.memoryRepository import MemoryRepository, populate
 from games.domainmodel.model import Game
 from games.adapters.repository import AbstractRepository
 
 import games.adapters.repository as repo
-from games.adapters.memoryRepository import populate
-from games.adapters.memoryRepository import MemoryRepository
+#from games.adapters.memoryRepository import populate
+from games.adapters import memoryRepository
 from games.adapters.datareader import repository_populate
 
 from games.adapters.datareader.database_repository import SqlAlchemyRepository
@@ -28,14 +29,17 @@ def create_app(test_config=None):
     # Create the Flask app object.
     app = Flask(__name__)
 
+    app.config.from_object('config.Config')
     database_uri = 'sqlite:///games.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
+    data_path = Path('games') / 'adapters' / 'data'
     database_echo = app.config['SQLALCHEMY_ECHO']
     database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
                                     echo=database_echo)
 
-    if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
+   ## if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
+    if app.config['TESTING'] == 'True':
         print("REPOPULATING DATABASE...")
         # For testing, or first-time use of the web application, reinitialise the database.
         clear_mappers()
@@ -50,6 +54,12 @@ def create_app(test_config=None):
         repository_populate.populate(data_path, repo.repo_instance, database_mode)
         print("REPOPULATING DATABASE... FINISHED")
 
+    elif app.config['REPOSITORY'] == 'memory':
+        # Create the MemoryRepository implementation for a memory-based repository.
+        repo.repo_instance = memoryRepository.MemoryRepository()
+        # fill the content of the repository from the provided csv files (has to be done every time we start app!)
+        database_mode = False
+        repository_populate.populate(data_path, repo.repo_instance, database_mode)
     elif app.config['REPOSITORY'] == 'database':
         database_uri = app.config['SQLALCHEMY_DATABASE_URI']
         database_echo = app.config['SQLALCHEMY_ECHO']

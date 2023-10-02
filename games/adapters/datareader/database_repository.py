@@ -122,3 +122,31 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def search_games_by_title(self, title_string: str) -> List[Game]:
         pass
+
+    def add_user(self, user: User):
+        pass
+
+    def add_review(self, review: Review) -> Review:
+        pass
+
+    def get_first_review(self) -> Review | None:
+        pass
+
+    def get_game_by_id(self, game_id) -> Game | None:
+        pass
+
+    def get_games_by_genre(self, genre_name: str) -> List[Game]:
+        pass
+
+    def get_last_review(self) -> Review | None:
+        pass
+
+    def get_reviews_by_game_id(self, game_id) -> List[Review]:
+        pass
+
+    def get_user(self, user_name) -> User:
+        pass
+
+
+
+

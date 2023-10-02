@@ -31,16 +31,6 @@ def create_app(test_config=None):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
 
-    # Create a database engine and connect it to the specified database
-    # database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
-    #                                 echo=False)
-
-    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
-                                    echo=database_echo)
-
-    session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
-    repo.repo_instance = database_repository.SqlAlchemyRepository(session_factory)
-
     if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
         print("REPOPULATING DATABASE...")
         # For testing, or first-time use of the web application, reinitialise the database.
@@ -56,6 +46,14 @@ def create_app(test_config=None):
         repository_populate.populate(data_path, repo.repo_instance, database_mode)
         print("REPOPULATING DATABASE... FINISHED")
 
+    elif app.config['REPOSITORY'] == 'database':
+        database_uri = app.config['SQLALCHEMY_DATABASE_URI']
+        database_echo = app.config['SQLALCHEMY_ECHO']
+        database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+                                        echo=database_echo)
+        session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
+        repo.repo_instance = database_repository.SqlAlchemyRepository(session_factory)
+
     else:
         # Solely generate mappings that map domain model classes to the database tables.
         map_model_to_tables()
@@ -67,7 +65,8 @@ def create_app(test_config=None):
     if test_config is not None:
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
-        data_path = app.config['TEST_DATA_PATH'] # Make sure to change TEST_DATA_PATH : games/tests/data and TESTING: True in .env for testing
+        data_path = app.config[
+            'TEST_DATA_PATH']  # Make sure to change TEST_DATA_PATH : games/tests/data and TESTING: True in .env for testing
 
     repo.repo_instance = MemoryRepository()
     populate(data_path, repo.repo_instance)
@@ -111,6 +110,5 @@ def create_app(test_config=None):
         def shutdown_session(exception=None):
             if isinstance(repo.repo_instance, database_repository.SqlAlchemyRepository):
                 repo.repo_instance.close_session()
-
 
     return app

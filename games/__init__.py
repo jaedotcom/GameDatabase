@@ -64,7 +64,7 @@ def create_app(test_config=None):
                                         echo=database_echo)
         session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
         repo.repo_instance = database_repository.SqlAlchemyRepository(session_factory)
-        if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
+        if app.config['TESTING'] == 'True':
             print("REPOPULATING DATABASE...")
             # For testing, or first-time use of the web application, reinitialise the database.
             clear_mappers()

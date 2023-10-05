@@ -30,15 +30,26 @@ def create_app(test_config=None):
     app = Flask(__name__)
 
     app.config.from_object('config.Config')
+
+# database uri that should be used for the connection
     database_uri = 'sqlite:///games.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
-    app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
+
+    app.config['SQLALCHEMY_ECHO'] = True  # logs all SQL statements - useful for debugging
+
     data_path = Path('games') / 'adapters' / 'data'
-    database_echo = app.config['SQLALCHEMY_ECHO']
-    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
-                                    echo=False)
+    # database_echo = app.config['SQLALCHEMY_ECHO'] -> i don't think we need this line
+    #database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+                                 #   echo=False)
 
    ## if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+        data_path = app.config[
+            'TEST_DATA_PATH']  # Make sure to change TEST_DATA_PATH : games/tests/data and TESTING: True in .env for testing
+
+
     if app.config['TESTING'] == 'True':
         print("REPOPULATING DATABASE...")
         # For testing, or first-time use of the web application, reinitialise the database.
@@ -76,11 +87,6 @@ def create_app(test_config=None):
     data_path = Path('games') / 'adapters' / 'data'
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-    if test_config is not None:
-        # Load test configuration, and override any configuration settings.
-        app.config.from_mapping(test_config)
-        data_path = app.config[
-            'TEST_DATA_PATH']  # Make sure to change TEST_DATA_PATH : games/tests/data and TESTING: True in .env for testing
 
     repo.repo_instance = MemoryRepository()
     populate(data_path, repo.repo_instance)

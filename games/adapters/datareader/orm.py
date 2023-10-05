@@ -62,6 +62,7 @@ user_reviews_table = Table(
     Column('game_id', ForeignKey('games.game_id')),
 )
 
+
 def map_model_to_tables():
     mapper(User, users_table, properties={
         '_User__user_name': users_table.c.user_name,

@@ -53,7 +53,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     # region Game_data
     def get_games(self) -> List[Game]:
-        games = self._session_cm.session.query(Game).order_by(Game._Game__game_id).all()
+        games = self._session_cm.session.query(Game).order_by(Game.game_id).all()
         return games
 
     def get_game(self, game_id: int) -> Game:

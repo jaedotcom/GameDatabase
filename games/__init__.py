@@ -56,7 +56,6 @@ def create_app(test_config=None):
         database_mode = False
         repository_populate.populate(data_path, repo.repo_instance, database_mode)
 
-
     elif app.config['REPOSITORY'] == 'database':
         database_uri = app.config['SQLALCHEMY_DATABASE_URI']
         database_echo = app.config['SQLALCHEMY_ECHO']
@@ -70,7 +69,8 @@ def create_app(test_config=None):
             clear_mappers()
             metadata.create_all(database_engine)  # Conditionally create database tables.
             for table in reversed(metadata.sorted_tables):  # Remove any data from the tables.
-                database_engine.execute(table.delete())
+                with database_engine.connect() as conn:
+                    conn.execute(table.delete())
 
             # Generate mappings that map domain model classes to the database tables.
             map_model_to_tables()
@@ -78,17 +78,10 @@ def create_app(test_config=None):
             database_mode = True
             repository_populate.populate(data_path, repo.repo_instance, database_mode)
             print("REPOPULATING DATABASE... FINISHED")
-
-
-
-
     else:
         # Solely generate mappings that map domain model classes to the database tables.
         map_model_to_tables()
 
-
-
-    #
     # repo.repo_instance = MemoryRepository()
     # populate(data_path, repo.repo_instance)
 

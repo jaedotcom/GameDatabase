@@ -212,7 +212,7 @@ class TestService:
 
         auth_services.add_user(new_user_name, new_password, repo)
 
-        user_as_dict = auth_services.get_user(new_user_name, repo)
+        user_as_dict = auth_services.get_user_details(new_user_name, repo)
         assert user_as_dict['user_name'] == new_user_name
 
         # Check that password has been encrypted.

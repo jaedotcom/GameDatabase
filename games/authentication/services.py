@@ -27,7 +27,7 @@ def add_user(username: str, password: str, repo: AbstractRepository):
 # def get_current_user(username: str, repo: AbstractRepository):
 #     current_user = repo.get_user(username)
 
-def get_user(username: str, repo: AbstractRepository):
+def get_user_details(username: str, repo: AbstractRepository):
     user = repo.get_user(username)
 
     # TO DO: handle

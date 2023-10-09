@@ -49,7 +49,7 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = services.get_user(form.username.data, repo.repo_instance)
+            user = services.get_user_details(form.username.data, repo.repo_instance)
 
 
             # Authenticate user

@@ -41,7 +41,7 @@ users_table = Table(
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('username', String(64), nullable=False),
     Column('password', String(64), nullable=False),
-    # Column('reviews', ForeignKey('user_reviews.id')),       #
+    # Column('reviews', ForeignKey('user_reviews.id')),
 )
 
 reviews_table = Table(

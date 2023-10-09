@@ -53,7 +53,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     # region Game_data
     def get_games(self) -> List[Game]:
-        games = self._session_cm.session.query(Game).order_by(Game.game_id).all()
+        games = self._session_cm.session.query(Game).order_by(Game._Game__game_id).all()
         return games
 
     def get_game(self, game_id: int) -> Game:
@@ -68,13 +68,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_game(self, game: Game):
         with self._session_cm as scm:
-            scm.session.add(game)
+            scm.session.merge(game)
             scm.commit()
 
     def add_multiple_games(self, games: List[Game]):
         with self._session_cm as scm:
             for game in games:
-                scm.session.add(game)
+                scm.session.merge(game)
             scm.commit()
 
     def get_number_of_games(self):
@@ -90,13 +90,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_publisher(self, publisher: Publisher):
         with self._session_cm as scm:
-            scm.session.add(publisher)
+            scm.session.merge(publisher)
             scm.commit()
 
     def add_multiple_publishers(self, publishers: List[Publisher]):
         with self._session_cm as scm:
             for publisher in publishers:
-                scm.session.add(publisher)
+                scm.session.merge(publisher)
             scm.commit()
 
     def get_number_of_publishers(self) -> int:
@@ -112,19 +112,18 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_genre(self, genre: Genre):
         with self._session_cm as scm:
-            scm.session.add(genre)
+            scm.session.merge(genre)
             scm.commit()
 
     def add_multiple_genres(self, genres: List[Genre]):
         with self._session_cm as scm:
             for genre in genres:
-                scm.session.add(genre)
+                scm.session.merge(genre)
             scm.commit()
 
     # endregion
-
     def search_games_by_title(self, title_string: str) -> List[Game]:
-        games = self._session_cm.session.query(Game).filter(Game.title.contains(title_string)).all()
+        games = self._session_cm.session.query(Game).filter(Game._Game__game_title.contains(title_string)).all()
         return games
 
     def add_user(self, user: User):
@@ -148,13 +147,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     def get_game_by_id(self, game_id) -> Game | None:
         game = None
         try:
-            game = self._session_cm.session.query(Game).filter(Game.game_id == game_id).one()
+            game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
         except NoResultFound:
             return None
         return game
 
     def get_games_by_genre(self, genre_name: str) -> List[Game]:
-        games = self._session_cm.session.query(Game).join(Genre).filter(Genre.genre_name == genre_name).all()
+        games = self._session_cm.session.query(Game).join(Genre).filter(Genre._Genre__genre_name == genre_name).all()
         return games
 
     def get_last_review(self) -> Review | None:
@@ -165,7 +164,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
 
     def get_reviews_by_game_id(self, game_id) -> List[Review]:
-        reviews = self._session_cm.session.query(Review).filter(Review.game_id == game_id).all()
+        reviews = self._session_cm.session.query(Review).filter(Review._Game__game_id == game_id).all()
         return reviews
 
     def get_user(self, user_name) -> User:

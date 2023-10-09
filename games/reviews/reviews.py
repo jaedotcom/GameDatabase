@@ -26,7 +26,7 @@ def write_game_review():
 
     form = CommentForm()
     user_name = session.get('username')
-
+    print("this is reviews one")
     #CRASHES here : ...
     if form.validate_on_submit():
         game_id = form.game_id.data

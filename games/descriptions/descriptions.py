@@ -36,7 +36,8 @@ def descriptions():
 
 @descriptions_blueprint.route('/gameDescription/review', methods=['GET', 'POST'])
 @login_required
-def submit_review():
+def submit_review(): #### after submit button
+    print("description/submit_review")
     current_game = request.args.get('current_game')
     print(current_game)
     game_id = request.args.get('game_id')
@@ -75,6 +76,7 @@ def submit_review():
 
 @descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
 def search_game_description():
+    print("description search_game_description")
     game_id = request.args.get('current_game_id')
     game = game_services.get_game_by_id(game_id, repo.repo_instance)
     # game = request.args.get('current_game')
@@ -90,6 +92,7 @@ def search_game_description():
 
 @descriptions_blueprint.route('/gameDescription/withReviews', methods=['GET'])
 def descriptions_with_reviews():
+    print("description used!!!!!")
     global current_game_dict
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')

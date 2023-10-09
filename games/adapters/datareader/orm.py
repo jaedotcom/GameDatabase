@@ -3,7 +3,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapper, relationship
 
-from games.domainmodel.model import Game, Publisher, Genre, User, Review, Wishlist
+from games.domainmodel.model import Game, Publisher, Genre, User, Review
 
 metadata = MetaData()
 
@@ -29,7 +29,6 @@ games_table = Table(
     Column('game_image_url', String(255), nullable=True),
     Column('game_website_url', String(255), nullable=True),
     Column('publisher_name', ForeignKey('publishers.name')),
-
 )
 
 genres_table = Table(
@@ -42,47 +41,41 @@ users_table = Table(
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('username', String(64), nullable=False),
     Column('password', String(64), nullable=False),
-    Column('reviews', ForeignKey('reviews.id')),       # is this right?
-    #Column('favourite_game', ForeignKey('wishlists.id'),     # favourite or wishlist?
+    Column('reviews', ForeignKey('user_reviews.id')),       #
+    Column('favourite_game', ForeignKey('user_game_favourites.id')),  #
 )
 
 reviews_table = Table(
     'reviews', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('user_id', ForeignKey('users.user_id')),
+    Column('user_id', ForeignKey('users.id')),
     Column('game_id', ForeignKey('games.game_id')),
     Column('rating', Integer, nullable=False),
     Column('comment', String(1024), nullable=False),
 )
 
-wishlists_table = Table(
-    'wishlists', metadata,
+user_reviews_table = Table(
+    'user_reviews', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('user_id', ForeignKey('users.user_id')),
-    Column('game_id', ForeignKey('games.game_id')), # list of games tho?
+    Column('user_id', ForeignKey('users.id')),
+    Column('review_id', ForeignKey('reviews.id')),
+    Column('game_id', ForeignKey('games.game_id')), # is it needed?
 )
 
-#
-# user_reviews_table = Table(
-#     'user_reviews', metadata,
-#     Column('user_reviews_id', Integer, primary_key=True, autoincrement=True),
-#     Column('user_id', ForeignKey('users.user_id')),
-#     Column('review_id', ForeignKey('reviews.review_id')),
-#     Column('game_id', ForeignKey('games.game_id')),
-# )
+user_games_table = Table(                   #Favourite
+    'user_game_favourites', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('user_id', ForeignKey('users.id')),
+    Column('game_id', ForeignKey('games.game_id')),
+)
 
 
 def map_model_to_tables():
-    mapper(Wishlist, wishlists_table, properties={
-        '_Wishlist__user_id': relationship(User),
-        '_Wishlist__game_id': relationship(Game),
-    })
-
     mapper(User, users_table, properties={
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
         '_User__reviews': relationship(Review),
-        # '_User__favourite_games': relationship(Game, secondary=user_reviews_table), # <-- favourite games but how>
+        '_User__favourite_game': relationship(Game, secondary=user_games_table),
     })
 
     mapper(Review, reviews_table, properties={
@@ -110,6 +103,6 @@ def map_model_to_tables():
         '_Game__website_url': games_table.c.game_website_url,
         '_Game__publisher': relationship(Publisher),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
-        # '_Game__reviews': relationship(Review, secondary=user_reviews_table),
-        # '_Game__users': relationship(User, secondary=user_reviews_table),
+        '_Game__reviews': relationship(Review, secondary=user_reviews_table),
+        '_Game__users': relationship(User, secondary=user_games_table),
     })

@@ -18,14 +18,14 @@ game_genres_table = Table(
 
 publishers_table = Table(
     'publishers', metadata,
-    Column('publisher_id', Integer, primary_key=True),
+    # Column('publisher_id', Integer, primary_key=True),
     Column('name', String(255), primary_key=True)
 )
 
 games_table = Table(
     'games', metadata,
     Column('game_id', Integer, primary_key=True),
-    Column('game_title', Text, nullable=False),
+    Column('game_title', String(50), nullable=False),
     Column('game_price', Float, nullable=False),
     Column('release_date', String(50), nullable=False),
     Column('game_description', String(255), nullable=True),
@@ -37,7 +37,7 @@ games_table = Table(
 
 genres_table = Table(
     'genres', metadata,
-    Column('genre_name', String(64), primary_key=True, nullable=False),
+    Column('genre_name', String(64), primary_key=True),
 )
 
 # users_table = Table(
@@ -52,7 +52,7 @@ genres_table = Table(
 #     Column('review_text', String(1024), nullable=False),
 #     Column('rating', Integer, nullable=False),
 #     Column('user_id', ForeignKey('users.user_id')),
-#     Column('game_id', ForeignKey('games.game_id')),
+#     # Column('game_id', ForeignKey('games.game_id')),
 # )
 #
 # user_reviews_table = Table(
@@ -72,9 +72,8 @@ def map_model_to_tables():
     # })
     #
     # mapper(Review, reviews_table, properties={
-    #     '_Review__review_name': reviews_table.c.review_title,
     #     '_Review__user': relationship(User),
-    #     '_Review__game': relationship(Game),
+    #     # '_Review__game': relationship(Game),
     # })
 
     mapper(Genre, genres_table, properties={
@@ -94,8 +93,7 @@ def map_model_to_tables():
         '_Game__image_url': games_table.c.game_image_url,
         '_Game__website_url': games_table.c.game_website_url,
         '_Game__publisher': relationship(Publisher),
-        '_Game__genres': relationship(Genre, secondary=game_genres_table),
+         '_Game__genres': relationship(Genre, secondary=game_genres_table),
         # '_Game__reviews': relationship(Review, secondary=user_reviews_table),
         # '_Game__users': relationship(User, secondary=user_reviews_table),
-
     })

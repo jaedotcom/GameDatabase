@@ -105,7 +105,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     # region Genre_data
     def get_genres(self) -> List[Genre]:
-        pass
+        genres = self._session_cm.session.query(Genre).all()
+        return genres
+
 
     def add_genre(self, genre: Genre):
         with self._session_cm as scm:

@@ -18,7 +18,6 @@ game_genres_table = Table(
 
 publishers_table = Table(
     'publishers', metadata,
-    # Column('publisher_id', Integer, primary_key=True),
     Column('name', String(255), primary_key=True)
 )
 
@@ -32,7 +31,7 @@ games_table = Table(
     Column('game_image_url', String(255), nullable=True),
     Column('game_website_url', String(255), nullable=True),
     Column('publisher_name', ForeignKey('publishers.name')),
-    # Column('user_reviews', ForeignKey('user_reviews.user_reviews_id')),
+
 )
 
 genres_table = Table(

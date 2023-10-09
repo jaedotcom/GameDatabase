@@ -3,15 +3,13 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapper, relationship
 
-
-from games.domainmodel.model import Game, Publisher, Genre, User, Review
+from games.domainmodel.model import Game, Publisher, Genre, User, Review, Wishlist
 
 metadata = MetaData()
 
-
 game_genres_table = Table(
     'game_genres', metadata,
-    Column('id', Integer, primary_key=True, autoincrement=True ),
+    Column('id', Integer, primary_key=True, autoincrement=True),
     Column('game_id', ForeignKey('games.game_id')),
     Column('genre_name', ForeignKey('genres.genre_name'))
 )
@@ -39,20 +37,31 @@ genres_table = Table(
     Column('genre_name', String(64), primary_key=True),
 )
 
-# users_table = Table(
-#     'users', metadata,
-#     Column('user_id', Integer, primary_key=True, autoincrement=True),
-#     Column('user_name', String(64), nullable=False),
-# )
+users_table = Table(
+    'users', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('username', String(64), nullable=False),
+    Column('password', String(64), nullable=False),
+    Column('reviews', ForeignKey('reviews.id')),       # is this right?
+    #Column('favourite_game', ForeignKey('wishlists.id'),     # favourite or wishlist?
+)
 
-# reviews_table = Table(
-#     'reviews', metadata,
-#     Column('review_id', Integer, primary_key=True, autoincrement=True),
-#     Column('review_text', String(1024), nullable=False),
-#     Column('rating', Integer, nullable=False),
-#     Column('user_id', ForeignKey('users.user_id')),
-#     # Column('game_id', ForeignKey('games.game_id')),
-# )
+reviews_table = Table(
+    'reviews', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('user_id', ForeignKey('users.user_id')),
+    Column('game_id', ForeignKey('games.game_id')),
+    Column('rating', Integer, nullable=False),
+    Column('comment', String(1024), nullable=False),
+)
+
+wishlists_table = Table(
+    'wishlists', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('user_id', ForeignKey('users.user_id')),
+    Column('game_id', ForeignKey('games.game_id')), # list of games tho?
+)
+
 #
 # user_reviews_table = Table(
 #     'user_reviews', metadata,
@@ -64,16 +73,24 @@ genres_table = Table(
 
 
 def map_model_to_tables():
-    # mapper(User, users_table, properties={
-    #     '_User__user_name': users_table.c.user_name,
-    #     '_User__reviews': relationship(Review),
-    #     # '_User__games': relationship(Game, secondary=user_reviews_table),
-    # })
-    #
-    # mapper(Review, reviews_table, properties={
-    #     '_Review__user': relationship(User),
-    #     # '_Review__game': relationship(Game),
-    # })
+    mapper(Wishlist, wishlists_table, properties={
+        '_Wishlist__user_id': relationship(User),
+        '_Wishlist__game_id': relationship(Game),
+    })
+
+    mapper(User, users_table, properties={
+        '_User__username': users_table.c.username,
+        '_User__password': users_table.c.password,
+        '_User__reviews': relationship(Review),
+        # '_User__favourite_games': relationship(Game, secondary=user_reviews_table), # <-- favourite games but how>
+    })
+
+    mapper(Review, reviews_table, properties={
+        '_Review__user_id': relationship(User),
+        '_Review__game_id': relationship(Game),
+        '_Review__rating': reviews_table.c.rating,
+        '_Review__comment': reviews_table.c.comment,
+    })
 
     mapper(Genre, genres_table, properties={
         '_Genre__genre_name': genres_table.c.genre_name,
@@ -92,7 +109,7 @@ def map_model_to_tables():
         '_Game__image_url': games_table.c.game_image_url,
         '_Game__website_url': games_table.c.game_website_url,
         '_Game__publisher': relationship(Publisher),
-         '_Game__genres': relationship(Genre, secondary=game_genres_table),
+        '_Game__genres': relationship(Genre, secondary=game_genres_table),
         # '_Game__reviews': relationship(Review, secondary=user_reviews_table),
         # '_Game__users': relationship(User, secondary=user_reviews_table),
     })

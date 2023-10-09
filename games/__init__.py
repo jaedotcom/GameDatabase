@@ -46,7 +46,7 @@ def create_app(test_config=None):
         repo.repo_instance = MemoryRepository()
         # fill the content of the repository from the provided csv files (has to be done every time we start app!)
         database_mode = False
-        repository_populate.populate(data_path, repo.repo_instance, database_mode)
+        repository_populate.populate(data_path, repo.repo_instance)
         print("working from mem")
     elif app.config['REPOSITORY'] == 'database':
         # Configure database.

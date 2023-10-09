@@ -9,6 +9,7 @@ def get_game_by_id(game_id, repo: AbstractRepository):
             return game
     return None
 
+
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 

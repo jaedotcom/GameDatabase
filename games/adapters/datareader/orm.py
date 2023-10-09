@@ -41,8 +41,7 @@ users_table = Table(
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('username', String(64), nullable=False),
     Column('password', String(64), nullable=False),
-    Column('reviews', ForeignKey('user_reviews.id')),       #
-    Column('favourite_game', ForeignKey('user_game_favourites.id')),  #
+    # Column('reviews', ForeignKey('user_reviews.id')),       #
 )
 
 reviews_table = Table(
@@ -52,14 +51,6 @@ reviews_table = Table(
     Column('game_id', ForeignKey('games.game_id')),
     Column('rating', Integer, nullable=False),
     Column('comment', String(1024), nullable=False),
-)
-
-user_reviews_table = Table(
-    'user_reviews', metadata,
-    Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('user_id', ForeignKey('users.id')),
-    Column('review_id', ForeignKey('reviews.id')),
-    Column('game_id', ForeignKey('games.game_id')), # is it needed?
 )
 
 user_games_table = Table(                   #Favourite
@@ -75,7 +66,7 @@ def map_model_to_tables():
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
         '_User__reviews': relationship(Review),
-        '_User__favourite_game': relationship(Game, secondary=user_games_table),
+        '_User__favourite_games': relationship(Game, secondary=user_games_table)
     })
 
     mapper(Review, reviews_table, properties={
@@ -103,6 +94,6 @@ def map_model_to_tables():
         '_Game__website_url': games_table.c.game_website_url,
         '_Game__publisher': relationship(Publisher),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
-        '_Game__reviews': relationship(Review, secondary=user_reviews_table),
-        '_Game__users': relationship(User, secondary=user_games_table),
+        '_Game__reviews': relationship(Review),
+
     })

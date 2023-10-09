@@ -126,7 +126,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         pass
 
     def add_user(self, user: User):
-        pass
+        with self._session_cm as scm:
+            scm.session.add(user)
+            scm.commit()
 
     def add_review(self, review: Review) -> Review:
         pass
@@ -147,7 +149,8 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         pass
 
     def get_user(self, user_name) -> User:
-        pass
+        user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
+        return user
 
 
 

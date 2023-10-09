@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField, DecimalField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from better_profanity import profanity
 from games.authentication.authentication import login_required
 from games.domainmodel.model import User, Review
@@ -10,7 +10,6 @@ from games.games.services import get_game_by_id
 from games.profile import services as profile_services
 from games.adapters import repository as repo
 from games.home import services as sv
-from games.reviews.reviews import ProfanityFree
 
 descriptions_blueprint = Blueprint('descriptions_bp', __name__)
 
@@ -36,7 +35,7 @@ def descriptions():
 
 @descriptions_blueprint.route('/gameDescription/review', methods=['GET', 'POST'])
 @login_required
-def submit_review(): #### after submit button
+def submit_review():  #### after submit button
     print("description/submit_review")
     current_game = request.args.get('current_game')
     print(current_game)
@@ -61,7 +60,8 @@ def submit_review(): #### after submit button
             game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
             current_game.reviews.append(game_review)
             print(type(current_game_dict))
-            return redirect(url_for('browse/DescriptionReview.html', review=game_review, games=current_game_dict, game_id=game_id))
+            return redirect(
+                url_for('browse/DescriptionReview.html', review=game_review, games=current_game_dict, game_id=game_id))
 
         except ValueError:
             pass
@@ -142,6 +142,17 @@ def favourite():
     form = CommentForm()
 
     return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)
+
+
+class ProfanityFree:
+    def __init__(self, message=None):
+        if not message:
+            message = u'Field must not contain profanity'
+        self.message = message
+
+    def __call__(self, form, field):
+        if profanity.contains_profanity(field.data):
+            raise ValidationError(self.message)
 
 
 class CommentForm(FlaskForm):

@@ -110,8 +110,6 @@ def create_app(test_config=None):
         from .profile import profile
         app.register_blueprint(profile.profile_blueprint)
 
-        from .reviews import reviews
-        app.register_blueprint(reviews.reviews_blueprint)
 
         # Register a callback the makes sure that database sessions are associated with http requests
         # We reset the session inside the database repository before a new flask request is generated

@@ -21,6 +21,7 @@ def descriptions():
     global current_game_dict
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')
+    current_game_type = description_services.get_game(repo.repo_instance, int(game_id))
     try:
         current_game_dict = eval(current_game)
     except SyntaxError:
@@ -32,7 +33,11 @@ def descriptions():
     # Create an instance of CommentForm
     form = CommentForm()
 
-    return render_template('browse/gameDescription.html', games=current_game_dict, all_genres=all_genres, form=form)
+    return render_template('browse/gameDescription.html',
+                           games=current_game_dict,
+                           all_genres=all_genres,
+                           form=form,
+                           reviews=current_game_type.reviews)
 
 
 @descriptions_blueprint.route('/gameDescription/review', methods=['GET', 'POST'])
@@ -68,6 +73,7 @@ def submit_review():  #### after submit button
             #current_game needs to be a Game not dict or string
             game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
             current_game.reviews.append(game_review)
+            description_services.add_review_to_database(repo.repo_instance, game_review)
             print(type(current_game_dict))
             #return render_template('browse/gameDescription.html', review=game_review, games=current_game_dict, game_id=game_id))
 

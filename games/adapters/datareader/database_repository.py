@@ -128,12 +128,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_user(self, user: User):
         with self._session_cm as scm:
-            scm.session.add(user)
+            scm.session.merge(user)
             scm.commit()
 
     def add_review(self, review: Review) -> Review:
         with self._session_cm as scm:
-            scm.session.add(review)
+            scm.session.merge(review)
             scm.commit()
         return review
 

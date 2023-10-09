@@ -68,13 +68,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_game(self, game: Game):
         with self._session_cm as scm:
-            scm.session.merge(game)
+            scm.session.add(game)
             scm.commit()
 
     def add_multiple_games(self, games: List[Game]):
         with self._session_cm as scm:
             for game in games:
-                scm.session.merge(game)
+                scm.session.add(game)
             scm.commit()
 
     def get_number_of_games(self):
@@ -89,13 +89,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def add_publisher(self, publisher: Publisher):
         with self._session_cm as scm:
-            scm.session.merge(publisher)
+            scm.session.add(publisher)
             scm.commit()
 
     def add_multiple_publishers(self, publishers: List[Publisher]):
         with self._session_cm as scm:
             for publisher in publishers:
-                scm.session.merge(publisher)
+                scm.session.add(publisher)
             scm.commit()
 
     def get_number_of_publishers(self) -> int:
@@ -108,16 +108,15 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         genres = self._session_cm.session.query(Genre).all()
         return genres
 
-
     def add_genre(self, genre: Genre):
         with self._session_cm as scm:
-            scm.session.merge(genre)
+            scm.session.add(genre)
             scm.commit()
 
     def add_multiple_genres(self, genres: List[Genre]):
         with self._session_cm as scm:
             for genre in genres:
-                scm.session.merge(genre)
+                scm.session.add(genre)
             scm.commit()
 
     # endregion

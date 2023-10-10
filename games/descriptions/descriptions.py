@@ -6,10 +6,8 @@ from better_profanity import profanity
 from games.authentication.authentication import login_required
 from games.domainmodel.model import User, Review
 from games.games import services as game_services
-from games.games.services import get_game_by_id
 from games.profile import services as profile_services
 from games.adapters import repository as repo
-#from games.adapters.repository import AbstractRepository as repo
 from games.home import services as sv
 from games.descriptions import services as description_services
 
@@ -46,9 +44,7 @@ def submit_review():  #### after submit button
     print("description/submit_review")
     current_game_str = request.args.get('current_game')
     current_game = None
-    print(current_game)
     game_id = int(request.args.get('game_id'))
-    print(game_id)
 
     username = session.get('username')
     password = session.get('password')
@@ -57,30 +53,19 @@ def submit_review():  #### after submit button
     if current_game is None:
         current_game = description_services.get_game(repo.repo_instance, game_id)
         all_games = game_services.get_games(repo.repo_instance)
-        for game in all_games:
-            if game.get('game_id') == int(game_id):
-                current_game_str = game
-
-    print(type(current_game))
 
     form = CommentForm()
     if form.validate_on_submit():
         try:
             comment = form.comment.data
             rating = int(form.rating.data)
-            print(type(current_game))
-
-            #current_game needs to be a Game not dict or string
             game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
             current_game.reviews.append(game_review)
             description_services.add_review_to_database(repo.repo_instance, game_review)
-            print(type(current_game_dict))
-            #return render_template('browse/gameDescription.html', review=game_review, games=current_game_dict, game_id=game_id))
 
         except ValueError:
             pass
-    print("game reviews: ")
-    print(current_game.reviews)
+
     return render_template(
         'browse/gameDescription.html',
         games=current_game_dict,

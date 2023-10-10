@@ -46,9 +46,6 @@ def descriptions():
 def submit_review():
     game_id = int(request.args.get('game_id'))
     username = session.get('username')
-    password = session.get('password')
-    #don't create a new user, get the current user
-    # user = User(username=username, password=password)
     user = auth_services.get_current_user(username, repo.repo_instance)
     current_game = description_services.get_game(repo.repo_instance, game_id)
 
@@ -76,28 +73,19 @@ def submit_review():
 @login_required
 def favourite():
     current_game = request.args.get('current_game')
-    game_id = request.args.get('current_game_id')
+    game_id = int(request.args.get('current_game_id'))
+    current_game = description_services.get_game(repo.repo_instance, game_id)
 
-    try:
-        current_game_dict = eval(current_game)
-    except SyntaxError:
-        all_games = game_services.get_games(repo.repo_instance)
-        for game in all_games:
-            if game.get('game_id') == int(game_id):
-                current_game_dict = game
+    #get current user
+    username = session.get('username')
+    user = auth_services.get_current_user(username, repo.repo_instance)
 
-    user = session.get('username')
-    if user:
-        current_user = profile_services.get_user(user, repo.repo_instance)
+    #add game to users favourites list
+    description_services.add_to_faves(current_game, user, repo.repo_instance)
+    print(user.favourite_games)
 
-        if current_user:
-            game1 = repo.repo_instance.get_game_by_id(current_game_dict['game_id'])
-
-            if game1:
-                profile_services.add_to_favourites(current_user, game1)
-
+    #get genres for genre bar
     all_genres = sv.get_genres(repo.repo_instance)
-
     # Create an instance of CommentForm
     form = CommentForm()
 

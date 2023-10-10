@@ -39,8 +39,6 @@ def get_user_details(username: str, repo: AbstractRepository):
 
 def get_current_user(username: str, repo: AbstractRepository):
     user = repo.get_user(username)
-    print(user)
-    print(type(user))
     return user
 
 

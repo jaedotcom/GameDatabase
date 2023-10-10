@@ -13,13 +13,14 @@ profile_blueprint = Blueprint('profile_bp', __name__)
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-
     user = session['username']
     current_user = profile_services.get_user(user, repo.repo_instance)
-    if current_user == None:
+    if current_user is None:
         return redirect(url_for("authentication_bp.login"))
 
-    favourite_list = profile_services.get_favourites(current_user)
+    favourite_list = current_user.favourite_games
+    print(current_user.username)
+    print(favourite_list)
     return render_template('profile.html', favourites=favourite_list, current_user=current_user)
 
 

@@ -33,7 +33,8 @@ def descriptions():
     all_genres = sv.get_genres(repo.repo_instance)
     # Create an instance of CommentForm
     form = CommentForm()
-
+    print(current_game_type.reviews)
+    print(type(current_game_type))
     return render_template('browse/gameDescription.html',
                            games=current_game_dict,
                            all_genres=all_genres,
@@ -43,19 +44,13 @@ def descriptions():
 
 @descriptions_blueprint.route('/gameDescription/review', methods=['GET', 'POST'])
 @login_required
-def submit_review():  #### after submit button
-    print("description/submit_review")
-    current_game_str = request.args.get('current_game')
-    current_game = None
+def submit_review():
     game_id = int(request.args.get('game_id'))
-
     username = session.get('username')
     password = session.get('password')
     user = User(username=username, password=password)
 
-    if current_game is None:
-        current_game = description_services.get_game(repo.repo_instance, game_id)
-        all_games = game_services.get_games(repo.repo_instance)
+    current_game = description_services.get_game(repo.repo_instance, game_id)
 
     form = CommentForm()
     if form.validate_on_submit():
@@ -65,7 +60,6 @@ def submit_review():  #### after submit button
             game_review = Review(user=user, game=current_game, rating=rating, comment=comment)
             current_game.reviews.append(game_review)
             description_services.add_review_to_database(repo.repo_instance, game_review)
-
         except ValueError:
             pass
 

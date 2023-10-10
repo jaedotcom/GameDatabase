@@ -12,12 +12,12 @@
             <div class="search-container">
                 <form method="POST" action="{{ url_for('home_bp.search_results') }}">
                     <input type="text" id="search-input" name="search" placeholder="Search games..." value="{{ request.form['search'] }}">
-                       <select id="selected-genre" name="genre">
-                        <option value="" selected disabled>Select a genre...</option>
-                        {% for genre in all_genres %}
-                            <option value="{{ genre }}">{{ genre }}</option>
-                        {% endfor %}
-                         </select>
+{#                       <select id="selected-genre" name="genre">#}
+{#                        <option value="" selected disabled>Select a genre...</option>#}
+{#                        {% for genre in all_genres %}#}
+{#                            <option value="{{ genre }}">{{ genre }}</option>#}
+{#                        {% endfor %}#}
+{#                         </select>#}
                     <input type="submit" id="search-button" value="Search">
                 </form>
             </div>

@@ -63,6 +63,7 @@ user_games_table = Table(                   #Favourite
 
 def map_model_to_tables():
     mapper(User, users_table, properties={
+        '_User__id': users_table.c.id,
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
         '_User__reviews': relationship(Review),
@@ -71,7 +72,7 @@ def map_model_to_tables():
 
     mapper(Review, reviews_table, properties={
         '_Review__user_id': relationship(User),
-        '_Review__game_id': relationship(Game),
+        '_Review__game': relationship(Game),
         '_Review__rating': reviews_table.c.rating,
         '_Review__comment': reviews_table.c.comment,
     })

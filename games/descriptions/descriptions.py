@@ -20,6 +20,9 @@ def descriptions():
     current_game = request.args.get('current_game')
     game_id = request.args.get('current_game_id')
     current_game_type = description_services.get_game(repo.repo_instance, int(game_id))
+    username = session.get('username')
+    password = session.get('password')
+    user = User(username=username, password=password)
     try:
         current_game_dict = eval(current_game)
     except SyntaxError:

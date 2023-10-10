@@ -63,9 +63,9 @@
             <!-- Display Existing Reviews -->
             <div id="existing-reviews">
                 <h3>Existing Reviews</h3>
-                {% for review in games['reviews'] %}
+                {% for review in reviews %}
                     <div class="review">
-                        <p><strong>User:</strong> {{ review.user.username }}</p>
+                        <p><strong>User:</strong> {{ review.user }}</p>
                         <p><strong>Rating:</strong> {{ review.rating }}</p>
                     </div>
                     <div class="review-comment">

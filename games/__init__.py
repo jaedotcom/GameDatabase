@@ -101,9 +101,6 @@ def create_app(test_config=None):
         from .genreBar import genreBar
         app.register_blueprint(genreBar.genreBar_blueprint)
 
-        from .searchresults import search
-        app.register_blueprint(search.search_bp)
-
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 

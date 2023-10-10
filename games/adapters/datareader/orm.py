@@ -71,7 +71,7 @@ def map_model_to_tables():
     })
 
     mapper(Review, reviews_table, properties={
-        '_Review__user_id': relationship(User),
+        '_Review__user': relationship(User),
         '_Review__game': relationship(Game),
         '_Review__rating': reviews_table.c.rating,
         '_Review__comment': reviews_table.c.comment,

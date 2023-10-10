@@ -37,6 +37,13 @@ def get_user_details(username: str, repo: AbstractRepository):
     return user_to_dict(user)
 
 
+def get_current_user(username: str, repo: AbstractRepository):
+    user = repo.get_user(username)
+    print(user)
+    print(type(user))
+    return user
+
+
 def authenticate_user(username: str, password: str, repo: AbstractRepository):
     #authenticated = False
 

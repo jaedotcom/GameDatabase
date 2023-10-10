@@ -10,6 +10,7 @@ from games.profile import services as profile_services
 from games.adapters import repository as repo
 from games.home import services as sv
 from games.descriptions import services as description_services
+from games.authentication import services as auth_services
 
 descriptions_blueprint = Blueprint('descriptions_bp', __name__)
 
@@ -33,8 +34,6 @@ def descriptions():
     all_genres = sv.get_genres(repo.repo_instance)
     # Create an instance of CommentForm
     form = CommentForm()
-    print(current_game_type.reviews)
-    print(type(current_game_type))
     return render_template('browse/gameDescription.html',
                            games=current_game_dict,
                            all_genres=all_genres,
@@ -48,8 +47,9 @@ def submit_review():
     game_id = int(request.args.get('game_id'))
     username = session.get('username')
     password = session.get('password')
-    user = User(username=username, password=password)
-
+    #don't create a new user, get the current user
+    # user = User(username=username, password=password)
+    user = auth_services.get_current_user(username, repo.repo_instance)
     current_game = description_services.get_game(repo.repo_instance, game_id)
 
     form = CommentForm()

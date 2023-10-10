@@ -75,22 +75,6 @@ def submit_review():  #### after submit button
     )
 
 
-@descriptions_blueprint.route('/gameDescription/<int:game_id>', methods=['GET'])
-def search_game_description():
-    print("description search_game_description")
-    game_id = request.args.get('current_game_id')
-    game = game_services.get_game_by_id(game_id, repo.repo_instance)
-    # game = request.args.get('current_game')
-    if game is None:
-        pass
-
-    all_genres = sv.get_genres(repo.repo_instance)
-
-    form = CommentForm()
-
-    return render_template('browse/gameDescription.html', games=game, all_genres=all_genres, form=form)
-
-
 @descriptions_blueprint.route('/gameDescription/favourite', methods=['GET', 'POST'])
 @login_required
 def favourite():

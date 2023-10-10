@@ -2,7 +2,6 @@ from games.adapters.repository import AbstractRepository
 from functools import cmp_to_key
 
 
-
 def get_game_by_id(game_id, repo: AbstractRepository):
     for game in repo:
         if game.game_id == game_id:

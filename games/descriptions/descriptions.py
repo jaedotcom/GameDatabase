@@ -91,28 +91,6 @@ def search_game_description():
     return render_template('browse/gameDescription.html', games=game, all_genres=all_genres, form=form)
 
 
-@descriptions_blueprint.route('/gameDescription/withReviews', methods=['GET'])
-def descriptions_with_reviews():
-    print("description used!!!!!")
-    global current_game_dict
-    current_game = request.args.get('current_game')
-    game_id = request.args.get('current_game_id')
-    try:
-        current_game_dict = eval(current_game)
-    except SyntaxError:
-        all_games = game_services.get_games(repo.repo_instance)
-        for game in all_games:
-            if game.get('game_id') == int(game_id):
-                current_game_dict = game
-    all_genres = sv.get_genres(repo.repo_instance)
-
-    # Create an instance of CommentForm
-    form = CommentForm()
-    review = repo.get_reviews_by_game_id(int(game_id))
-    return render_template('browse/gameDescription.html', reviews=review, games=current_game_dict,
-                           all_genres=all_genres, form=form)
-
-
 @descriptions_blueprint.route('/gameDescription/favourite', methods=['GET', 'POST'])
 @login_required
 def favourite():

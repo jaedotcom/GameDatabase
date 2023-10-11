@@ -1,3 +1,5 @@
+import pytest
+import os.path
 from sqlalchemy import select, inspect
 from games.adapters.datareader.orm import metadata
 

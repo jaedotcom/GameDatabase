@@ -1,3 +1,5 @@
+import pytest
+
 from games import SqlAlchemyRepository
 from games.domainmodel.model import User
 

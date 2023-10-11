@@ -15,3 +15,4 @@ def add_review_to_database(repo: AbstractRepository, review: Review):
 
 def add_to_faves(current_game: Game, current_user: User, repo: AbstractRepository):
     current_user.add_favourite_game(current_game)
+    repo.add_user(current_user)

@@ -9,10 +9,6 @@ def get_game_by_id(game_id, repo: AbstractRepository):
     return None
 
 
-def get_number_of_games(repo: AbstractRepository):
-    return repo.get_number_of_games()
-
-
 def get_games(repo: AbstractRepository):
     games = repo.get_games()
     sorted_games = sorted(games, key=cmp_to_key(compare_games_by_title))
@@ -38,19 +34,3 @@ def get_games(repo: AbstractRepository):
 
 def compare_games_by_title(game1, game2):
     return (game1.title > game2.title) - (game1.title < game2.title)
-
-
-def compare_games_by_release_date(game1, game2):
-    return (game1.release_date > game2.release_date) - (game1.release_date < game2.release_date)
-
-
-def get_games_by_search_key(search_key: str, repo):
-    games = repo.get_games()
-    if not search_key or not isinstance(search_key, str):
-        raise ValueError("Invalid search key")
-    matching_games = []
-    for game in games:
-        if search_key.lower() in game.title.lower():
-            matching_games.append(game)
-    return matching_games
-

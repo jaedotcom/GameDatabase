@@ -9,6 +9,7 @@ from games.authentication.authentication import login_required
 
 profile_blueprint = Blueprint('profile_bp', __name__)
 
+
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -26,12 +27,8 @@ def profile():
 @profile_blueprint.route('/profile/delete/<int:game_id>', methods=['GET', 'POST'])
 @login_required
 def delete_favourite(game_id):
-    # Get user
     user = session['username']
     current_user = profile_services.get_user(user, repo.repo_instance)
-
     game1 = repo.repo_instance.get_game_by_id(game_id)
-
     profile_services.remove_from_fav(game1, current_user, repo.repo_instance)
-
     return redirect(url_for('profile_bp.profile'))

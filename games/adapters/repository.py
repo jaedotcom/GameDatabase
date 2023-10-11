@@ -71,3 +71,7 @@ class AbstractRepository(abc.ABC):
     def get_first_review(self) -> Review:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def update_user(self, user: User):
+        raise NotImplementedError
+

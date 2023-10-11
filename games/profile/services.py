@@ -18,3 +18,7 @@ def get_user(username: str, repo: AbstractRepository):
 def delete_favourites(user: User, game: Game):
     user.remove_favourite_game(game)
 
+def remove_from_fav(current_game: Game, current_user: User, repo: AbstractRepository):
+    current_user.remove_favourite_game(current_game)
+    repo.update_user(current_user)
+

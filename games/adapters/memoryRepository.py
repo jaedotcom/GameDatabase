@@ -72,5 +72,3 @@ class MemoryRepository(AbstractRepository):
         first_review = self.__reviews[0]
         return first_review
 
-
-

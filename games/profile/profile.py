@@ -33,6 +33,6 @@ def delete_favourite(game_id):
 
     game1 = repo.repo_instance.get_game_by_id(game_id)
 
-    profile_services.delete_favourites(current_user, game1)
+    profile_services.remove_from_fav(game1, current_user, repo.repo_instance)
 
     return redirect(url_for('profile_bp.profile'))

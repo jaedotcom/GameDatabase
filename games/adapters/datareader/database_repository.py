@@ -171,6 +171,22 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
         return user
 
+    def add_to_favourites(self, game):
+        with self._session_cm as scm:
+            scm.session.merge(game)
+            scm.commit()
 
+    def get_favourites(self):
+        games = self._session_cm.session.query(User).filter(Game._Game__game_id == ).all()
+        return reviews
+        return user.favourite_games
+
+
+    def get_user(username: str, repo: AbstractRepository):
+        user = repo.get_user(username)
+        return user
+
+    def delete_favourites(user: User, game: Game):
+        user.remove_favourite_game(game)
 
 

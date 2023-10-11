@@ -5,6 +5,7 @@
 {% block head %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
 {% endblock %}
 
 {% block content %}
@@ -21,35 +22,41 @@
                 <div class="user-activities">
                     <h3>Favourites:</h3>
                     <div class="favorite-games">
-    {% for game in favourites %}
-        <div class="favorite-game-item">
-            <a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">
-                <img src="{{ game.image_url }}" alt="{{ game.title }}">
-            </a>
-            <p style="font-family: Roboto Light, Arial, sans-serif" class="favorite-game-title">
-                {{ game['title'] }}
-            </p>
-            <a style="font-family: Roboto Light, Arial, sans-serif" href="{{ url_for('profile_bp.delete_favourite', game_id=game['game_id']) }}" class="delete-button">Delete</a>
-        </div>
-    {% endfor %}
-</div>
+                        {% for game in favourites %}
+                            <div class="favorite-game-item">
+                                <a href="{{ url_for('descriptions_bp.descriptions', current_game=game, current_game_id=game['game_id']) }}">
+                                    <img src="{{ game.image_url }}" alt="{{ game.title }}">
+                                </a>
+                                <p style="font-family: Roboto Light, Arial, sans-serif" class="favorite-game-title">
+                                    {{ game['title'] }}
+                                </p>
+                                <a style="font-family: Roboto Light, Arial, sans-serif" href="{{ url_for('profile_bp.delete_favourite', game_id=game['game_id']) }}" class="delete-button">Delete</a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
 
+                <!-- Display Existing Reviews -->
+                <div id="existing-reviews">
+                    <h3> All Reviews </h3>
+                    {% for review in reviews %}
+                        <div class="review">
+                            <p><strong>User:</strong> {{ review.user.username }}</p>
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                        </div>
+                        <div class="review-comment">
+                            <p><strong>Comment:</strong> {{ review.comment }}</p>
+                        </div>
 
-            <!-- Display Existing Reviews -->
-            <div id="existing-reviews">
-                <h3>Existing Reviews</h3>
-                {% for review in reviews %}
-                    <div class="review">
-<!--                        <p><strong>User:</strong> {{ review.user.username }}</p>-->
-                        <p><strong>Rating:</strong> {{ review.rating }}</p>
-                        <p><strong>Rating:</strong> {{ reviews }}</p>
-                    </div>
-                    <div class="review-comment">
-                        <p><strong>Comment:</strong> {{ review.comment }}</p>
-                    </div>
-                {% endfor %}
-            </div>
+                        <!-- Display Game Information in the Review -->
+                        <div class="review-game">
+                            <p><strong>Game:</strong> <a href="{{ url_for('descriptions_bp.descriptions', current_game=review.game, current_game_id=review.game.game_id) }}">{{ review.game.title }}</a></p>
+                            <a href="{{ url_for('descriptions_bp.descriptions', current_game=review.game, current_game_id=review.game.game_id) }}">
+                                <img src="{{ review.game.image_url }}" alt="{{ review.game.title }}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </main>
     </div>

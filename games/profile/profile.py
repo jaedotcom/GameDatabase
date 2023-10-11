@@ -9,7 +9,6 @@ from games.authentication.authentication import login_required
 
 profile_blueprint = Blueprint('profile_bp', __name__)
 
-
 @profile_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -19,9 +18,9 @@ def profile():
         return redirect(url_for("authentication_bp.login"))
 
     favourite_list = current_user.favourite_games
-    print(current_user.username)
-    print(favourite_list)
-    return render_template('profile.html', favourites=favourite_list, current_user=current_user)
+    reviews = current_user.reviews
+
+    return render_template('profile.html', favourites=favourite_list, current_user=current_user, reviews=reviews)
 
 
 @profile_blueprint.route('/profile/delete/<int:game_id>', methods=['GET', 'POST'])

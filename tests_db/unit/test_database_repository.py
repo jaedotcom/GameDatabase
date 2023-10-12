@@ -67,8 +67,6 @@ def test_repository_returns_none_when_there_are_no_previous_reviews(session_fact
 def test_repository_can_add_a_favourite(session_factory):
     pass
 
-def test_repository_can_add_a_user(session_factory):
-    pass
 
 def test_repository_can_add_a_review(session_factory):
     pass

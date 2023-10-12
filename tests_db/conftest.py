@@ -11,6 +11,7 @@ from utils import get_project_root
 TEST_DATA_PATH_DATABASE_FULL = get_project_root() / "games" / "adapters" / "data"
 TEST_DATA_PATH_DATABASE_LIMITED = get_project_root() / "tests" / "data"
 TEST_DATA_PATH = 'tests/data'
+TEST_FULL_DATA_PATH = 'games/adapters/data'
 
 TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
 TEST_DATABASE_URI_FILE = 'sqlite:///games.db'
@@ -47,9 +48,10 @@ def session_factory():
     # Create the SQLAlchemy DatabaseRepository instance for an sqlite3-based repository.
     repo_instance = database_repository.SqlAlchemyRepository(session_factory)
     database_mode = True
-    repository_populate.populate(TEST_DATA_PATH_DATABASE_FULL, repo_instance, database_mode)
+    repository_populate.populate(TEST_FULL_DATA_PATH, repo_instance)
     yield session_factory
     metadata.drop_all(engine)
+
 
 @pytest.fixture
 def empty_session():

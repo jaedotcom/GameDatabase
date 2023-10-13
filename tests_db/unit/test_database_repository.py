@@ -87,17 +87,7 @@ def test_repository_returns_none_when_there_are_no_previous_reviews(session_fact
     pass
 
 
-def test_repository_can_add_a_review(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    pass
-
-
 def test_repository_does_not_add_a_review_without_a_user(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    pass
-
-
-def test_repository_can_retrieve_reviews(session_factory):
     repo = SqlAlchemyRepository(session_factory)
     pass
 
@@ -109,4 +99,25 @@ def make_review():
     return review
 
 
+def can_add_genres():
+    pass
 
+
+def search_for_games_by_genre():
+    pass
+
+
+def can_add_a_game():
+    pass
+
+
+def can_retrieve_a_game_on_id():
+    pass
+
+
+def can_retrieve_a_game_by_publisher():
+    pass
+
+
+def can_retrieve_game_by_title(): 
+    pass

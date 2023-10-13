@@ -3,6 +3,7 @@ import os.path
 from sqlalchemy import select, inspect
 from games.adapters.datareader.orm import metadata
 
+
 def test_database_populate_inspect_table_names(database_engine):
     # Get table information
     inspector = inspect(database_engine)
@@ -24,7 +25,7 @@ def test_database_populate_select_all_genres(database_engine):
         for row in result:
             all_genre_names.append(row['tag_name'])
 #add all genres in???
-        assert all_genre_names == ['New Zealand', 'Health', 'World', 'Politics']
+        assert all_genre_names == ['Action']
 
 
 def test_database_populate_select_all_users(database_engine):

@@ -41,16 +41,6 @@ def insert_review(empty_session):
     return row[0]
 
 
-def insert_tags(empty_session):
-    empty_session.execute(
-        'INSERT INTO tags (tag_name) VALUES ("News"), ("New Zealand")'
-    )
-    rows = list(empty_session.execute('SELECT id from tags'))
-    keys = tuple(row[0] for row in rows)
-    return keys
-
-
-
 def make_review():
     review = Review(
         make_user(),
@@ -60,27 +50,29 @@ def make_review():
     )
     return review
 
+
 def make_game():
     game = Game(999999, "Test_game_PEOW")
     return game
+
 
 def make_user():
     user = User("Andrew", "111")
     return user
 
 
-
 def test_loading_of_users(empty_session):
     users = list()
-    users.append(("Andrew", "1234"))
-    users.append(("Cindy", "1111"))
+    users.append(("andrew", "Testing1234"))
+    users.append(("cindy", "Testing1111"))
     insert_users(empty_session, users)
 
     expected = [
-        User("Andrew", "1234"),
-        User("Cindy", "999")
+        User("andrew", "Testing1234"),
+        User("cindy", "Testing1111")
     ]
     assert empty_session.query(User).all() == expected
+
 
 def test_saving_of_users(empty_session):
     user = make_user()
@@ -88,22 +80,21 @@ def test_saving_of_users(empty_session):
     empty_session.commit()
 
     rows = list(empty_session.execute('SELECT user_name, password FROM users'))
-    assert rows == [("Andrew", "111")]
+    assert rows == [("andrew", "Testing1234"), ("cindy", "Testing1111")]
 
 
 def test_saving_of_users_with_common_user_name(empty_session):
-    insert_user(empty_session, ("Andrew", "1234"))
+    insert_users(empty_session, ("andrew", "Testing1234"))
     empty_session.commit()
 
     with pytest.raises(IntegrityError):
-        user = User("Andrew", "111")
+        user = User("andrew", "Error456")
         empty_session.add(user)
         empty_session.commit()
 
 
 def test_loading_of_game(empty_session):
     pass
-
 
 
 def test_loading_of_reviewed_game(empty_session):

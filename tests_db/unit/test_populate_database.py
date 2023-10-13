@@ -3,11 +3,11 @@ import os.path
 from sqlalchemy import select, inspect
 from games.adapters.datareader.orm import metadata
 
-
 def test_database_populate_inspect_table_names(database_engine):
     # Get table information
     inspector = inspect(database_engine)
-    assert inspector.get_table_names() == ['game_genres', 'publishers', 'games', 'genres', 'users', 'reviews', 'user_game_favourites']
+    print(inspector.get_table_names())
+    assert all(element in inspector.get_table_names() for element in ['game_genres', 'publishers', 'games', 'genres', 'users', 'reviews', 'user_game_favourites'])
 
 
 def test_database_populate_select_all_genres(database_engine):

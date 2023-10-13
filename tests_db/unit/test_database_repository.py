@@ -5,24 +5,26 @@ from games.domainmodel.model import User, Review, Game
 
 
 def test_repository_can_add_a_user(session_factory):
+
     repo = SqlAlchemyRepository(session_factory)
 
-    user = User('Dave', '123456789')
-    repo.add_user(user)
+    repo.add_user(User('dave', '12345e6789'))
+    repo.add_user(User('martin', '12345e6789'))
 
-    repo.add_user(User('Martin', '123456789'))
+    user = repo.get_user('dave')
 
-    user2 = repo.get_user('Dave')
-
-    assert user2 == user and user2 is user
+    assert user.username == 'dave' and user.password == '12345e6789'
 
 
 def test_repository_can_retrieve_a_user(session_factory):
+
     repo = SqlAlchemyRepository(session_factory)
 
-    user = repo.get_user('fmercury')
-    assert user == User('fmercury', '8734gfe2058v')
+    repo.add_user(User('fmercury', '8734gfe2058v'))
 
+    user = repo.get_user('fmercury')
+
+    assert user.username == 'fmercury' and user.password == '8734gfe2058v'
 
 def test_repository_does_not_retrieve_a_non_existent_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)

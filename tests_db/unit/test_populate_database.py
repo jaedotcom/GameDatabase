@@ -84,3 +84,22 @@ def test_database_populate_select_all_publishers(database_engine):
         assert all_publishers[0] == (1, 'Coronavirus: First case of virus in New Zealand')
 
 
+def test_database_populate_select_all_games(database_engine):
+    inspector = inspect(database_engine)
+    games_table_name = inspector.get_table_names()[1]
+    print(games_table_name)
+
+    with database_engine.connect() as connection:
+        select_statement = select([metadata.tables[games_table_name]])
+        result = connection.execute(select_statement)
+
+        game_details = []
+        for row in result:
+            game_details.append((row['game_id'], row['game_title']))
+
+        number_of_games = len(game_details)
+        assert number_of_games == 800
+
+        assert game_details[0] == (7940, 'Call of Duty® 4: Modern Warfare®')
+
+

@@ -164,7 +164,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
 
     def get_reviews_by_game_id(self, game_id) -> List[Review]:
-        reviews = self._session_cm.session.query(Review).filter(Review._Game__game_id == game_id).all()
+        reviews = self._session_cm.session.query(Review).filter(Game._Game__game_id == game_id).all()
         return reviews
 
     def get_user(self, user_name) -> User:

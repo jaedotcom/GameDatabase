@@ -1,7 +1,7 @@
 import pytest
 
 from games import SqlAlchemyRepository
-from games.domainmodel.model import User, Review, Game
+from games.domainmodel.model import User, Review, Game, Genre, Publisher
 
 
 def test_repository_can_add_a_user(session_factory):
@@ -99,25 +99,29 @@ def make_review():
     return review
 
 
-def can_add_genres():
+def test_repository_can_add_genres(session_factory):
+    repo = SqlAlchemyRepository(session_factory)
+    genre = Genre("Fantasy")
+    repo.add_genre(genre)
+    genre_list = repo.get_genres()
+    assert genre in genre_list
+
+
+def test_repository_search_for_games_by_genre():
     pass
 
 
-def search_for_games_by_genre():
+def test_repository_can_add_a_game():
     pass
 
 
-def can_add_a_game():
+def test_repository_can_retrieve_a_game_on_id():
     pass
 
 
-def can_retrieve_a_game_on_id():
+def test_repository_can_retrieve_a_game_by_publisher():
     pass
 
 
-def can_retrieve_a_game_by_publisher():
-    pass
-
-
-def can_retrieve_game_by_title(): 
+def test_repository_can_retrieve_game_by_title():
     pass

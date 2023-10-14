@@ -92,18 +92,26 @@ def test_repository_can_get_last_review(session_factory):
 
 def test_repository_can_get_review_by_ids(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    user = User("Martin", "Martin123")
+    game = Game(123, "Amazing Game")
+    review = Review(user, game, 5, "Fantastic Game!")
+    repo.add_review(review)
 
+    review_result = repo.get_reviews_by_game_id(123)
+    assert review == review_result[0]
 
 def test_repository_does_not_retrieve_review_for_non_existent_id(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    review_result = repo.get_reviews_by_game_id(999)
+
+    assert review_result == []
 
 
 def test_repository_returns_none_when_there_are_no_previous_reviews(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    result = repo.get_last_review()
 
+    assert result is None
 
 def test_repository_does_not_add_a_review_without_a_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)
@@ -156,5 +164,10 @@ def test_repository_can_retrieve_a_game_by_publisher():
     pass
 
 
-def test_repository_can_retrieve_game_by_title():
-    pass
+def test_repository_can_retrieve_game_by_title(session_factory):
+    repo = SqlAlchemyRepository(session_factory)
+    game = Game(3000, "The Quest for the Lost Ark")
+    repo.add_game(game)
+
+    result_games = repo.search_games_by_title("Lost Ark")
+    assert game in result_games

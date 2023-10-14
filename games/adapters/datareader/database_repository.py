@@ -167,11 +167,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         reviews = self._session_cm.session.query(Review).filter(Game._Game__game_id == game_id).all()
         return reviews
 
+
     def get_user(self, user_name) -> Any | None:
         try:
             user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
             return user
-        except ValueError:
+        except NoResultFound:
             return None
 
     def update_user(self, user: User):

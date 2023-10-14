@@ -5,42 +5,45 @@ from games.domainmodel.model import User, Review, Game, Genre, Publisher
 
 
 def test_repository_can_add_a_user(session_factory):
-
     repo = SqlAlchemyRepository(session_factory)
-
     repo.add_user(User('dave', '12345e6789'))
     repo.add_user(User('martin', '12345e6789'))
-
     user = repo.get_user('dave')
-
     assert user.username == 'dave' and user.password == '12345e6789'
 
 
 def test_repository_can_retrieve_a_user(session_factory):
-
     repo = SqlAlchemyRepository(session_factory)
-
     repo.add_user(User('fmercury', '8734gfe2058v'))
-
     user = repo.get_user('fmercury')
-
     assert user.username == 'fmercury' and user.password == '8734gfe2058v'
+
 
 def test_repository_does_not_retrieve_a_non_existent_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-
+    user = repo.add_user(User('felicity', 'pleasE1234'))
     user = repo.get_user('prince')
     assert user is None
 
 
 def test_repository_can_add_review(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    user = User("Davy", "seaweed123")
+    game = Game(89, "Boring Game 3")
+    review = Review(user, game, 3, "This was boring.")
+    repo.add_review(review)
+
+    assert repo.get_first_review() == review
 
 
 def test_repository_can_retrieve_review(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    user = User("Davy", "seaweed123")
+    game = Game(89, "Boring Game 3")
+    review = Review(user, game, 3, "This was boring.")
+    repo.add_review(review)
+
+    assert review in repo.get_reviews_by_game_id(89)
 
 
 def test_repository_can_retrieve_reviews_of_game(session_factory):
@@ -64,12 +67,27 @@ def test_repository_can_retrieve_genres(session_factory):
 
 
 def test_repository_can_get_first_review(session_factory):
-    pass
+    repo = SqlAlchemyRepository(session_factory)
+    user = User("Davy", "seaweed123")
+    game = Game(89, "Boring Game 3")
+    review = Review(user, game, 3, "This was boring.")
+    repo.add_review(review)
+
+    assert repo.get_first_review() == review
 
 
 def test_repository_can_get_last_review(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    pass
+    user = User("Davy", "seaweed123")
+    game = Game(89, "Boring Game 3")
+    review = Review(user, game, 3, "This was boring.")
+
+    user1 = User("Nina", "apricOt456")
+    game1 = Game(89, "Sleep Phones")
+    review1 = Review(user1, game1, 3, "This put me to sleep.")
+    repo.add_review(review1)
+
+    assert repo.get_last_review() == review1
 
 
 def test_repository_can_get_review_by_ids(session_factory):
@@ -107,8 +125,13 @@ def test_repository_can_add_genres(session_factory):
     assert genre in genre_list
 
 
-def test_repository_search_for_games_by_genre():
-    pass
+def test_repository_search_for_games_by_genre(session_factory):
+    repo = SqlAlchemyRepository(session_factory)
+    game = Game(890, "My New Game")
+    repo.add_game(game)
+
+    fetched_game = repo.get_game(890)
+    assert fetched_game == game
 
 
 def test_repository_can_add_a_game():

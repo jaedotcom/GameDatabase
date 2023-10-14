@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import List
+from typing import List, Any
 
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.exc import NoResultFound
@@ -167,9 +167,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         reviews = self._session_cm.session.query(Review).filter(Game._Game__game_id == game_id).all()
         return reviews
 
-    def get_user(self, user_name) -> User:
-        user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
-        return user
+    def get_user(self, user_name) -> Any | None:
+        try:
+            user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
+            return user
+        except ValueError:
+            return None
 
     def update_user(self, user: User):
         with self._session_cm as scm:

@@ -134,12 +134,22 @@ def test_repository_search_for_games_by_genre(session_factory):
     assert fetched_game == game
 
 
-def test_repository_can_add_a_game():
-    pass
+def test_repository_can_add_a_game(session_factory):
+    repo = SqlAlchemyRepository(session_factory)
+    game1 = Game(890, "My New Game")
+
+    repo.add_game(game1)
+    game_list = repo.get_games()
+    assert game1 in game_list
 
 
-def test_repository_can_retrieve_a_game_on_id():
-    pass
+def test_repository_can_retrieve_a_game_on_id(session_factory):
+    repo = SqlAlchemyRepository(session_factory)
+    game1 = Game(890, "My New Game")
+
+    repo.add_game(game1)
+    result_game = repo.get_game_by_id(890)
+    assert game1 == result_game
 
 
 def test_repository_can_retrieve_a_game_by_publisher():

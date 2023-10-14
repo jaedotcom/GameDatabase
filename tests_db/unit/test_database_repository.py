@@ -51,7 +51,7 @@ def test_repository_can_retrieve_reviews_of_game(session_factory):
 
 def test_repository_does_not_retrieve_a_review_when_there_are_no_reviews_for_a_given_game(session_factory):
     repo = SqlAlchemyRepository(session_factory)
-    reviews = repo.get_reviews_by_game_id(900)
+    reviews = repo.get_reviews_by_game_id(300)
 
     assert reviews == []
 

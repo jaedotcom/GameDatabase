@@ -75,23 +75,24 @@ def test_loading_of_users(empty_session):
 
 
 def test_saving_of_users(empty_session):
-    user = make_user()
+    user = User("andrew", "Password123")
     empty_session.add(user)
     empty_session.commit()
 
-    rows = list(empty_session.execute('SELECT user_name, password FROM users'))
-    assert rows == [("andrew", "Testing1234"), ("cindy", "Testing1111")]
+    rows = list(empty_session.execute('SELECT username, password FROM users'))
+    assert rows == [("andrew", "Password123")]
+
 
 
 def test_saving_of_users_with_common_user_name(empty_session):
-    insert_users(empty_session, ("andrew", "Testing1234"))
+    user1 = User("andrew", "Testing1234")
+    empty_session.add(user1)
     empty_session.commit()
 
     with pytest.raises(IntegrityError):
-        user = User("andrew", "Error456")
-        empty_session.add(user)
+        user2 = User("andrew", "Error456")
+        empty_session.add(user2)
         empty_session.commit()
-
 
 def test_loading_of_game(empty_session):
     pass

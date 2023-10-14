@@ -39,7 +39,7 @@ genres_table = Table(
 users_table = Table(
     'users', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('username', String(64), nullable=False),
+    Column('username', String(64), nullable=False, unique=True),
     Column('password', String(64), nullable=False),
     # Column('reviews', ForeignKey('user_reviews.id')),
 )

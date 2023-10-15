@@ -113,10 +113,6 @@ def test_repository_returns_none_when_there_are_no_previous_reviews(session_fact
 
     assert result is None
 
-def test_repository_does_not_add_a_review_without_a_user(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-    pass
-
 
 def make_review():
     user = User("Davy", "seaweed123")
@@ -158,10 +154,6 @@ def test_repository_can_retrieve_a_game_on_id(session_factory):
     repo.add_game(game1)
     result_game = repo.get_game_by_id(890)
     assert game1 == result_game
-
-
-def test_repository_can_retrieve_a_game_by_publisher():
-    pass
 
 
 def test_repository_can_retrieve_game_by_title(session_factory):

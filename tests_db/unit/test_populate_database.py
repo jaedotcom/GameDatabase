@@ -58,7 +58,7 @@ def test_database_populate_select_all_users(database_engine):
 
         all_users = []
         for row in result:
-            all_users.append(row['user_name'])
+            all_users.append(row['username'])
 
         assert all_users == ['thorke', 'fmercury']
 

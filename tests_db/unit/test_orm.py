@@ -21,6 +21,7 @@ def insert_user(empty_session, values=None):
                                 {'username': new_name}).fetchone()
     return row[0]
 
+
 def insert_users(empty_session, values):
     for value in values:
         empty_session.execute('INSERT INTO users (username, password) VALUES (:username, :password)',
@@ -28,6 +29,7 @@ def insert_users(empty_session, values):
     rows = list(empty_session.execute('SELECT id from users'))
     keys = tuple(row[0] for row in rows)
     return keys
+
 
 def insert_review(empty_session):
     empty_session.execute(
@@ -83,7 +85,6 @@ def test_saving_of_users(empty_session):
     assert rows == [("andrew", "Password123")]
 
 
-
 def test_saving_of_users_with_common_user_name(empty_session):
     user1 = User("andrew", "Testing1234")
     empty_session.add(user1)
@@ -94,19 +95,24 @@ def test_saving_of_users_with_common_user_name(empty_session):
         empty_session.add(user2)
         empty_session.commit()
 
+
 def test_loading_of_game(empty_session):
-    pass
+    game = Game(999999, "Test_game_PEOW")
+    empty_session.add(game)
+    empty_session.commit()
 
-
-def test_loading_of_reviewed_game(empty_session):
-    pass
-
-
-def test_saving_of_favourite(empty_session):
-    pass
+    rows = list(empty_session.execute('SELECT game_title FROM games'))
+    assert rows == [("Test_game_PEOW",)]
 
 
 def test_saving_of_review(empty_session):
-    pass
+    game = Game(999999, "Test_game_PEOW")
+    user1 = User("andrew", "Testing1234")
+    review = Review(user1, game, 4, "so lost")
+    empty_session.add(review)
+    empty_session.commit()
+
+    rows = list(empty_session.execute('SELECT rating FROM reviews'))
+    assert rows == [(4,)]
 
 
